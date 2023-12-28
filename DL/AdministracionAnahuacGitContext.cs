@@ -129,7 +129,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Autor>(entity =>
         {
-            entity.HasKey(e => e.IdAutor).HasName("PK__Autor__DD33B031134533A4");
+            entity.HasKey(e => e.IdAutor).HasName("PK__Autor__DD33B0315943B210");
 
             entity.ToTable("Autor");
 
@@ -152,7 +152,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Colonium>(entity =>
         {
-            entity.HasKey(e => e.IdColonia).HasName("PK__Colonia__A1580F66096CEB70");
+            entity.HasKey(e => e.IdColonia).HasName("PK__Colonia__A1580F66B534046B");
 
             entity.Property(e => e.IdColonia).ValueGeneratedOnAdd();
             entity.Property(e => e.CodigoPostal)
@@ -169,7 +169,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Direccion>(entity =>
         {
-            entity.HasKey(e => e.IdDireccion).HasName("PK__Direccio__1F8E0C766FD3537E");
+            entity.HasKey(e => e.IdDireccion).HasName("PK__Direccio__1F8E0C76D4D3BC96");
 
             entity.ToTable("Direccion");
 
@@ -195,7 +195,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Editorial>(entity =>
         {
-            entity.HasKey(e => e.IdEditorial).HasName("PK__Editoria__EF838671A8601EFC");
+            entity.HasKey(e => e.IdEditorial).HasName("PK__Editoria__EF838671FE642A7C");
 
             entity.ToTable("Editorial");
 
@@ -207,7 +207,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Estado>(entity =>
         {
-            entity.HasKey(e => e.IdEstado).HasName("PK__Estado__FBB0EDC168DD2043");
+            entity.HasKey(e => e.IdEstado).HasName("PK__Estado__FBB0EDC12C8D59D4");
 
             entity.ToTable("Estado");
 
@@ -223,7 +223,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Idioma>(entity =>
         {
-            entity.HasKey(e => e.IdIdioma).HasName("PK__Idioma__C867BD3652A95FA5");
+            entity.HasKey(e => e.IdIdioma).HasName("PK__Idioma__C867BD36F7D1F46A");
 
             entity.ToTable("Idioma");
 
@@ -235,7 +235,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Medio>(entity =>
         {
-            entity.HasKey(e => e.IdMedio).HasName("PK__Medio__EF801860CB53A0DD");
+            entity.HasKey(e => e.IdMedio).HasName("PK__Medio__EF801860CC74F7E6");
 
             entity.ToTable("Medio");
 
@@ -269,7 +269,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Municipio>(entity =>
         {
-            entity.HasKey(e => e.IdMunicipio).HasName("PK__Municipi__610059784783F6CD");
+            entity.HasKey(e => e.IdMunicipio).HasName("PK__Municipi__61005978582E78E9");
 
             entity.ToTable("Municipio");
 
@@ -285,7 +285,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Pai>(entity =>
         {
-            entity.HasKey(e => e.IdPais).HasName("PK__Pais__FC850A7B370AC6AD");
+            entity.HasKey(e => e.IdPais).HasName("PK__Pais__FC850A7B6860D8D4");
 
             entity.Property(e => e.IdPais).ValueGeneratedOnAdd();
             entity.Property(e => e.Nombre)
@@ -295,7 +295,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<TipoAutor>(entity =>
         {
-            entity.HasKey(e => e.IdTipoAutor).HasName("PK__TipoAuto__B033C3B0BA2B02CF");
+            entity.HasKey(e => e.IdTipoAutor).HasName("PK__TipoAuto__B033C3B0D23A2331");
 
             entity.ToTable("TipoAutor");
 
@@ -307,7 +307,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<TipoMedio>(entity =>
         {
-            entity.HasKey(e => e.IdTipoMedio).HasName("PK__TipoMedi__7A9964B24F545ED5");
+            entity.HasKey(e => e.IdTipoMedio).HasName("PK__TipoMedi__7A9964B2A61F911D");
 
             entity.ToTable("TipoMedio");
 

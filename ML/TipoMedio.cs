@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ML
 {
-    public class Editorial
+    public class TipoMedio
     {
-        public byte? IdEditorial { get; set; }
+        public byte? IdTipoMedio { get; set; }
         public string Nombre { get; set; }
-        public List<object> Editoriales { get; set; }
+        public List<object> TipoMedios { get; set; }
     }
 }

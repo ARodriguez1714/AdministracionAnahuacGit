@@ -8,7 +8,7 @@ namespace ML
 {
     public class Idioma
     {
-        public int? IdIdioma { get; set; }
+        public byte? IdIdioma { get; set; }
         public string Nombre { get; set; }
         public List<object> Idiomas { get; set; }
     }

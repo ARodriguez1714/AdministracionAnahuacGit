@@ -8,7 +8,7 @@ namespace ML
 {
     public class Autor
     {
-        public byte IdAutor { get; set; }
+        public byte? IdAutor { get; set; }
 
         public string? Nombre { get; set; }
 

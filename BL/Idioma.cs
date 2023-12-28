@@ -8,7 +8,7 @@ namespace BL
 {
     public class Idioma
     {
-        public static ML.Result GetAllLINQ()
+        public static ML.Result GetAllIdioma()
         {
             ML.Result result = new ML.Result();
 

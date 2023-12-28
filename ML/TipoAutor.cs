@@ -8,7 +8,7 @@ namespace ML
 {
     public class TipoAutor
     {
-        public byte IdTipoAutor { get; set; }
+        public byte? IdTipoAutor { get; set; }
 
         public string? Nombre { get; set; }
     }

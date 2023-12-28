@@ -1,0 +1,68 @@
+﻿@model ML.Autor
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Autores</h2>
+        </div>
+    </div>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.ActionLink("+", "Form", "Autor", "", new { @class = "btn btn-success" })
+        </div>
+    </div>
+    <br />
+
+    @if (Model.Autores != null)
+    {
+        <div class="row">
+            <div class="col-md-12 table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center" hidden>IdAutor</th>
+                            <th class="text-center">Nombre Completo</th>
+                            <th class="text-center">Foto</th>
+                            <th class="text-center">Tipo de Autor</th>
+                            <th class="text-center">Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.Autor autor in Model.Autores)
+                        {
+                            <tr>
+                                <td hidden>@autor.IdAutor</td>
+                                <td class="text-center">@autor.Nombre @autor.ApellidoPaterno @autor.ApellidoMaterno</td>
+                                <td class="text-center">
+                                    @if (autor.Foto == null)
+                                    {
+                                        <img src="~/Images/userDefault.jpg" width="50px" height="50px" />
+                                    }
+                                    else
+                                    {
+                                        <img src="data:image/png;base64, @Convert.ToBase64String(autor.Foto)" width="50px" height="50px" />
+                                    }
+                                </td>
+                                <td class="text-center">@autor.TipoAutor.Nombre</td>
+                                <td class="text-center"><button class="btn btn-warning">Editar</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Error
+        </div>
+    }
+</div>
+

@@ -1,0 +1,89 @@
+﻿@model ML.Autor
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Autores</h2>
+        </div>
+    </div>
+    <hr />
+
+    @using (Html.BeginForm("Form", "Autor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.IdAutor, null, new { @style = "display: none;" })
+                @Html.TextBoxFor(model => model.IdAutor, new { @style = "display: none;" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Nombre)
+                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.ApellidoPaterno)
+                @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.ApellidoMaterno)
+                @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.Label("Tipo de Autor: ")
+                @if (Model.TipoAutor.TipoAutores == null)
+                {
+                    @Html.DropDownListFor(model => model.TipoAutor.IdTipoAutor, new SelectList(string.Empty, "Value", "Text"), "Seleccione una opción",
+                             new { @class = "form-control" })
+                }
+                else
+                {
+                    @Html.DropDownListFor(model => model.TipoAutor.IdTipoAutor, new SelectList(Model.TipoAutor.TipoAutores, "IdTipoAutor", "Nombre"), "Seleccione una opción",
+                             new { @class = "form-control" })
+                }
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.Foto)
+                <input type="file" id="fuImagen" name="fuImagen" class="form-control" value="@Model.Foto" onchange="PreviewImage(event)" />
+
+                <br />
+                @if (Model.Foto == null)
+                {
+                    <img src="/Images/userDefault.jpg" id="imgAutor" width="150px" height="150px" />
+                }
+                else
+                {
+                    <img src="data:image/png;base64, @Convert.ToBase64String(Model.Foto)" id="imgAutor" width="150px" height="150px" />
+                }
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <input type="submit" class="btn btn-success" value="Guardar" />
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+        function PreviewImage(event) {
+            var output = document.getElementById('imgAutor');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function () {
+                URL.revokeObjectURL(output.src) // free memory
+            }
+        };
+    </script>
+}
+

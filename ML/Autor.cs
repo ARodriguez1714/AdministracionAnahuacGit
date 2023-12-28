@@ -8,7 +8,7 @@ namespace ML
 {
     public class Autor
     {
-        public byte? IdAutor { get; set; }
+        public byte IdAutor { get; set; }
 
         public string? Nombre { get; set; }
 
@@ -17,6 +17,8 @@ namespace ML
         public string? ApellidoMaterno { get; set; }
 
         public byte[]? Foto { get; set; }
+
+        public List<object>? Autores { get; set; }
 
         public ML.TipoAutor? TipoAutor { get; set; }
     }

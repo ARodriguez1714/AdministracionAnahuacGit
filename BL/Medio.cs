@@ -59,7 +59,7 @@ namespace BL
                             medio.Imagen = obj.Imagen;
 
                             medio.Autor = new ML.Autor();
-                            medio.Autor.IdAutor = obj.IdAutor;
+                            medio.Autor.IdAutor = obj.IdAutor.Value;
                             medio.Autor.Nombre = obj.AutorNombre;
                             medio.Autor.ApellidoPaterno = obj.AutorApellidoPaterno;
                             medio.Autor.ApellidoMaterno = obj.AutorApellidoMaterno;

@@ -27,4 +27,11 @@
     <ProjectReference Include="..\ML\ML.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Medio\Form.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

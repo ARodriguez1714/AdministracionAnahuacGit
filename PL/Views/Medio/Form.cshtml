@@ -1,0 +1,132 @@
+﻿@model ML.Medio
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Medios</h2>
+        </div>
+    </div>
+    <hr />
+
+    @using (Html.BeginForm("Form", "Medio", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.IdMedio, null, new { @style = "display: none;" })
+                @Html.TextBoxFor(model => model.IdMedio, new { @style = "display: none;" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Nombre)
+                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Archivo)
+
+                <input type="file" id="file" name="myFile" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Descripcion)
+                @Html.TextBoxFor(model => model.Descripcion, new { @class = "form-control" })
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Disponibilidad)
+                @Html.TextBoxFor(model => model.Disponibilidad, new { @class = "form-control" })
+            </div>
+
+        </div>
+         <div class="row">
+            <br />
+            <div class="row">
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.Imagen)
+                    <input type="file" id="fuImagen" name="fuImagen" class="form-control" value="@Model.Imagen" onchange="PreviewImage(event)" />
+
+                    <br />
+                    @if (Model.Imagen == null)
+                    {
+                        <img src="/Images/medio.png" id="imgMedio" width="150px" height="150px" />
+                    }
+                    else
+                    {
+                        <img src="data:image/png;base64, @Convert.ToBase64String(Model.Imagen)" id="imgMedio" width="150px" height="150px" />
+                    }
+                </div>
+            </div>
+            <div class="col-md-6">
+                @Html.Label("Autor: ")
+                @if (Model.Autor.Autores == null)
+                {
+                    @Html.DropDownListFor(model => model.Autor.IdAutor, new SelectList(string.Empty, "Value", "Text"), "Seleccione una opción", new { @class = "form-control" })
+                }
+                else
+                {
+                    @Html.DropDownListFor(model => model.Autor.IdAutor, new SelectList(Model.Autor.Autores, "IdAutor", "Nombre"), "Seleccione una opción", new { @class = "form-control" })
+                }
+            </div>
+            <div class="col-md-6">
+                @Html.Label("Idioma: ")
+                @if (Model.Idioma.Idiomas == null)
+                {
+                    @Html.DropDownListFor(model => model.Idioma.IdIdioma, new SelectList(string.Empty, "Value", "Text"), "Seleccione una opción", new { @class = "form-control" })
+                }
+                else
+                {
+                    @Html.DropDownListFor(model => model.Idioma.IdIdioma, new SelectList(Model.Idioma.Idiomas, "IdIdioma", "Nombre"), "Seleccione una opción", new { @class = "form-control" })
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @Html.Label("TipoMedio: ")
+                @if (Model.TipoMedio.TipoMedios == null)
+                {
+                    @Html.DropDownListFor(model => model.TipoMedio.IdTipoMedio, new SelectList(string.Empty, "Value", "Text"), "Seleccione una opción", new { @class = "form-control" })
+                }
+                else
+                {
+                    @Html.DropDownListFor(model => model.TipoMedio.IdTipoMedio, new SelectList(Model.TipoMedio.TipoMedios, "IdTipoMedio", "Nombre"), "Seleccione una opción", new { @class = "form-control" })
+                }
+            </div>
+            <div class="col-md-6">
+                @Html.Label("Editorial: ")
+                @if (Model.Editorial.Editoriales == null)
+                {
+                    @Html.DropDownListFor(model => model.Editorial.IdEditorial, new SelectList(string.Empty, "Value", "Text"), "Seleccione una opción", new { @class = "form-control" })
+                }
+                else
+                {
+                    @Html.DropDownListFor(model => model.Editorial.IdEditorial, new SelectList(Model.Editorial.Editoriales, "IdEditorial", "Nombre"), "Seleccione una opción", new { @class = "form-control" })
+                }
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <input type="submit" class="btn btn-success" value="Guardar" />
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+        function PreviewImage(event) {
+            var output = document.getElementById('imgMedio');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function () {
+                URL.revokeObjectURL(output.src) 
+            }
+        };
+    </script>
+}
+

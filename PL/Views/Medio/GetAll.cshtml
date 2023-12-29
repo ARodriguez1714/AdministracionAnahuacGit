@@ -1,0 +1,90 @@
+﻿@model ML.Medio
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Medios</h2>
+        </div>
+    </div>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.ActionLink("Agregar ", "Form", "Medio", new { @class = "btn btn-success bi bi-person-fill-add" })
+        </div>
+    </div>
+    <br />
+
+    @if (Model.Medios != null)
+    {
+        <div class="row">
+            <div class="col-md-12 table-responsive">
+                <table class="table table-bordered table-responsive" id="myTable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="text-center">Editar</th>
+                            <th class="text-center" hidden>IdMedio</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Archivo</th>
+                            <th class="text-center">Descrpcion</th>
+                            <th class="text-center">Disponibilidad</th>
+                            <th class="text-center">Imagen</th>
+                            <th class="text-center">Autor</th>
+                            <th class="text-center">Idioma</th>
+                            <th class="text-center">Tipo Medio</th>
+                            <th class="text-center">Editorial</th>
+                            <th class="text-center">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.Medio medio in Model.Medios)
+                        {
+                            <tr>
+                                <td class="text-center"><a class="btn btn-warning bi bi-pencil-fill" href="@Url.Action("Form", "Medio", new { IdMedio = medio.IdMedio })"></a></td>
+
+                                <td hidden>@medio.IdMedio</td>
+                                <td class="text-center">@medio.Nombre</td>
+                                <td class="text-center">@medio.Archivo</td>
+                                <td class="text-center">@medio.Descripcion</td>
+                                <td class="text-center">@medio.Disponibilidad</td>
+                                <td class="text-center">
+                                    @if (medio.Imagen == null)
+                                    {
+                                        <img src="~/Images/medio.png" width="50px" height="50px" />
+                                    }
+                                    else
+                                    {
+                                        <img src="data:image/png;base64, @Convert.ToBase64String(medio.Imagen)" width="50px" height="50px" />
+                                    }
+                                </td>
+                                <td class="visually-hidden">@medio.Autor.IdAutor</td>
+                                <td class="text-center">@medio.Autor.Nombre</td>
+                                <td class="visually-hidden">@medio.Idioma.IdIdioma</td>
+                                <td class="text-center">@medio.Idioma.Nombre</td>
+                                <td class="visually-hidden">@medio.TipoMedio.IdTipoMedio</td>
+                                <td class="text-center">@medio.TipoMedio.Nombre</td>
+                                <td class="visually-hidden">@medio.Editorial.IdEditorial</td>
+                                <td class="text-center">@medio.Editorial.Nombre</td>
+                                <td class="text-center"><button class="btn btn-warning">Editar</button></td>
+
+                                <td class="text-center"><a class="btn btn-danger bi bi-trash-fill" href="@Url.Action("Delete", "Medio", new { IdMedio = medio.IdMedio})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Error
+        </div>
+    }
+</div>
+

@@ -3,6 +3,8 @@
     ViewData["Title"] = "GetAll";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@* <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="~/js/Autor/AutorCRUD.js"></script> *@
 
 <div class="container">
     <div class="row">
@@ -14,7 +16,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            @Html.ActionLink("+", "Form", "Autor", "", new { @class = "btn btn-success" })
+            <button type="button" class="btn btn-success" id="btnAdd">+</button>
         </div>
     </div>
     <br />
@@ -33,26 +35,7 @@
                             <th class="text-center">Editar</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach (ML.Autor autor in Model.Autores)
-                        {
-                            <tr>
-                                <td hidden>@autor.IdAutor</td>
-                                <td class="text-center">@autor.Nombre @autor.ApellidoPaterno @autor.ApellidoMaterno</td>
-                                <td class="text-center">
-                                    @if (autor.Foto == null)
-                                    {
-                                        <img src="~/Images/userDefault.jpg" width="50px" height="50px" />
-                                    }
-                                    else
-                                    {
-                                        <img src="data:image/png;base64, @Convert.ToBase64String(autor.Foto)" width="50px" height="50px" />
-                                    }
-                                </td>
-                                <td class="text-center">@autor.TipoAutor.Nombre</td>
-                                <td class="text-center"><button class="btn btn-warning">Editar</button></td>
-                            </tr>
-                        }
+                    <tbody id="tBodyAutor">
                     </tbody>
                 </table>
             </div>
@@ -66,3 +49,234 @@
     }
 </div>
 
+<div class="container">
+    @using (Html.BeginForm("Form", "Autor", FormMethod.Post, new { enctype = "multipart/form-data", @id = "myForm" }))
+    {
+        <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Tarea</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.LabelFor(model => model.IdAutor, null, new { @style = "display: none;" })
+                                @Html.TextBoxFor(model => model.IdAutor, new { @style = "display: none;", @id = "txtIdAutor" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.LabelFor(model => model.Nombre)
+                                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.LabelFor(model => model.ApellidoPaterno)
+                                @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.LabelFor(model => model.ApellidoMaterno)
+                                @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.Label("Tipo de Autor: ")
+                                @if (Model.TipoAutor.TipoAutores == null)
+                                {
+                                    @Html.DropDownListFor(model => model.TipoAutor.IdTipoAutor, new SelectList(string.Empty, "Value", "Text"), "Seleccione una opción",
+                                             new { @class = "form-control", @id = "ddlTipoAutor" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(model => model.TipoAutor.IdTipoAutor, new SelectList(Model.TipoAutor.TipoAutores, "IdTipoAutor", "Nombre"), "Seleccione una opción",
+                                             new { @class = "form-control", @id = "ddlTipoAutor" })
+                                }
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.LabelFor(model => model.Foto)
+                                <input type="file" id="fuImagen" name="fuImagen" class="form-control" onchange="PreviewImage(event)" />
+                                <br />
+                                <div id="cargarFoto">
+                                    @if (Model.Foto == null)
+                                    {
+                                        <img src="/Images/userDefault.jpg" id="imgAutor" width="150px" height="150px" />
+                                    }
+                                    else
+                                    {
+                                        <img src="data:image/png;base64, @Convert.ToBase64String(Model.Foto)" id="imgAutor" width="150px" height="150px" />
+                                    }
+                                </div>
+                                @Html.HiddenFor(model => model.Foto)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            GetAll();
+        });
+
+        function PreviewImage(event) {
+            var output = document.getElementById('imgAutor');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function () {
+                URL.revokeObjectURL(output.src) // free memory
+            }
+        };
+
+        function GetAll() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAutores")',
+                success: function (result) {
+                    $('#tBodyAutor').empty();
+
+                    $.each(result.objects, function (i, autor) {
+                        var imagen;
+                        if (autor.foto == null) {
+                            imagen = '<img src="/Images/userDefault.jpg" width = "50px" height = "50px"/>'
+                        }
+                        else {
+                            imagen = '<img src="data:image/png;base64,' + autor.foto + '" width = "50px" height = "50px"/>'
+                        }
+                        var fila =
+                            '<tr>'
+                            + '<td hidden>' + autor.idAutor + '</td>'
+                            + '<td class="text-center">' + autor.nombre + ' ' + autor.apellidoPaterno + ' ' + autor.apellidoMaterno + '</td>'
+                            + '<td class="text-center">'
+                            + imagen
+                            + '</td>'
+                            + '<td class="text-center">' + autor.tipoAutor.nombre + '</td>'
+                            + '<td class="text-center"><button type="button" class="btn btn-warning" id="btnUpdate" onclick="Modal(this)"  value="' + autor.idAutor + '">Editar</button></td>'
+                            + '</tr>';
+                        $('#tBodyAutor').append(fila);
+                    });
+                }
+            });
+        };
+
+        $('#btnAdd').click(function () {
+            $("#txtIdAutor").val("");
+            $("#txtNombre").val("");
+            $("#txtApellidoPaterno").val("");
+            $('#txtApellidoMaterno').val("");
+            $('#ddlTipoAutor').val("");
+            $('#fuImagen').val("");
+            $('#imgAutor').attr('src', '/Images/userDefault.jpg');
+            $('#modal').modal('show');
+        });
+
+        function Modal(boton) {
+
+            $.ajax({
+                url: '@Url.Action("GetById")',
+
+                data: { idAutor: boton.value },
+
+                type: 'GET',
+
+                dataType: 'json',
+
+                success: function (data) {
+
+                    $('#txtIdAutor').val(data.object.idAutor)
+                    $('#txtNombre').val(data.object.nombre)
+                    $('#txtApellidoPaterno').val(data.object.apellidoPaterno)
+                    $('#txtApellidoMaterno').val(data.object.apellidoMaterno)
+                    $('#ddlTipoAutor').val(data.object.tipoAutor.idTipoAutor)
+
+                    $('#cargarFoto').empty();
+
+                    var imagen;
+
+
+                    if (data.object.foto == null) {
+                        imagen = '<img src="/Images/userDefault.jpg" id="imgAutor" width = "150px" height = "150px"/>'
+                    }
+                    else {
+                        imagen = '<img src="data:image/png;base64,' + data.object.foto + '" id="imgAutor" width = "150px" height = "150px"/>'
+                    }
+
+                    $('#cargarFoto').append(imagen);
+
+                    $('#modal').modal('show');
+                },
+                error: function () {
+                    alert('Disculpe, existió un problema');
+                },
+            });
+        };
+
+        $('#btnGuardar').click(function () {
+
+            var formData = new FormData(document.getElementById('myForm'));
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Form")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function () {
+                    $('#modal').modal('hide');
+
+                    $('#tBodyAutor').empty();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("GetAutores")',
+                        success: function (result) {
+                            $.each(result.objects, function (i, autor) {
+                                var imagen;
+                                if (autor.foto == null) {
+                                    imagen = '<img src="/Images/userDefault.jpg" width = "50px" height = "50px"/>'
+                                }
+                                else {
+                                    imagen = '<img src="data:image/png;base64,' + autor.foto + '" width = "50px" height = "50px"/>'
+                                }
+                                var fila =
+                                    '<tr>'
+                                    + '<td hidden>' + autor.idAutor + '</td>'
+                                    + '<td class="text-center">' + autor.nombre + ' ' + autor.apellidoPaterno + ' ' + autor.apellidoMaterno + '</td>'
+                                    + '<td class="text-center">'
+                                    + imagen
+                                    + '</td>'
+                                    + '<td class="text-center">' + autor.tipoAutor.nombre + '</td>'
+                                    + '<td class="text-center"><button type="button" class="btn btn-warning" id="btnUpdate" onclick="Modal(this)"  value="' + autor.idAutor + '">Editar</button></td>'
+                                    + '</tr>';
+                                $('#tBodyAutor').append(fila);
+                            });
+                        },
+                        error: function (result) {
+                            alert('Error en la consulta.');
+                        }
+
+                    });
+
+                }
+            });
+        });
+
+    </script>
+}

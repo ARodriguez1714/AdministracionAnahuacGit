@@ -17,6 +17,7 @@ namespace ML
         public string? ApellidoMaterno { get; set; }
 
         public byte[]? Foto { get; set; }
+        public string? FotoInput { get; set; }
 
         public List<object>? Autores { get; set; }
 

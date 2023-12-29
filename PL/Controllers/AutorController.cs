@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Drawing;
+using System.Text;
 
 namespace PL.Controllers
 {
@@ -8,6 +10,10 @@ namespace PL.Controllers
         {
             ML.Result result = BL.Autor.GetAllAutor();
             ML.Autor autor = new ML.Autor();
+
+            ML.Result resultTipoAutor = BL.TipoAutor.GetAllTipoAutor();
+            autor.TipoAutor = new ML.TipoAutor();
+            autor.TipoAutor.TipoAutores = resultTipoAutor.Objects;
             if (result.Correct)
             {
                 autor.Autores = result.Objects;
@@ -16,18 +22,48 @@ namespace PL.Controllers
             else
             {
                 ViewBag.Error = result.Message;
-                return View(autor);
+                return View("Modal");
+            }
+
+        }
+
+        [HttpGet]
+        public  ActionResult GetAutores()
+        {
+            ML.Result result = BL.Autor.GetAllAutor();
+            if (result.Correct)
+            {
+                //autor.Autores = result.Objects;
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
             }
         }
 
         [HttpGet]
-        public IActionResult Form(ML.Autor autor)
+        public JsonResult GetById(byte idAutor)
         {
+
+            ML.Result result = BL.Autor.GetByIdAutor(idAutor);
+            if (result.Correct)
+            {
+                return Json(result);
+            }
+
+            return Json(result);
+
+        }
+        [HttpGet]
+        public IActionResult Form(byte idAutor)
+        {
+            ML.Autor autor = new ML.Autor();
             ML.Result resultTipoAutor = BL.TipoAutor.GetAllTipoAutor();
             autor.TipoAutor = new ML.TipoAutor();
             autor.TipoAutor.TipoAutores = resultTipoAutor.Objects;
 
-            if (autor.IdAutor == 0)
+            if (idAutor == 0)
             {
                 //add
                 return View(autor);
@@ -35,14 +71,20 @@ namespace PL.Controllers
             else
             {
                 //Update
-                ML.Result result = BL.Autor.GetByIdAutor(autor.IdAutor);
+                ML.Result result = BL.Autor.GetByIdAutor(idAutor);
                 if (result.Correct)
                 {
-
+                    autor = (ML.Autor)result.Object;
+                    autor.TipoAutor.TipoAutores = resultTipoAutor.Objects;
+                    return View(autor);
+                }
+                else
+                {
+                    ViewBag.Alert = "danger";
+                    ViewBag.Message = result.Message;
+                    return View("Modal");
                 }
             }
-
-            return View();
         }
         [HttpPost]
         public IActionResult Form(ML.Autor autor, IFormFile fuImagen)
@@ -73,6 +115,18 @@ namespace PL.Controllers
             else
             {
                 //Update
+                autor.Foto = ConvertToBytes(fuImagen);
+                result = BL.Autor.UpdateAutor(autor);
+                if (result.Correct)
+                {
+                    return RedirectToAction("GetAll");
+                }
+                else
+                {
+                    ViewBag.Alert = "danger";
+                    ViewBag.Message = result.Message;
+                    return View("Modal");
+                }
             }
 
             return View();
@@ -85,6 +139,13 @@ namespace PL.Controllers
             {
                 fuImagen.CopyTo(memoryStream);
                 return memoryStream.ToArray();
+            }
+        }
+        public Image ConvertToImage(byte[] imageBytes)
+        {
+            using (var ms = new MemoryStream(imageBytes))
+            {
+                return Image.FromStream(ms);
             }
         }
     }

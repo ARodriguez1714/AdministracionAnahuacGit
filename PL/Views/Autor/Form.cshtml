@@ -51,8 +51,7 @@
         <div class="row">
             <div class="col-md-4">
                 @Html.LabelFor(model => model.Foto)
-                <input type="file" id="fuImagen" name="fuImagen" class="form-control" value="@Model.Foto" onchange="PreviewImage(event)" />
-
+                <input type="file" name="fuImagen" class="form-control" onchange="PreviewImage(event)" />
                 <br />
                 @if (Model.Foto == null)
                 {
@@ -62,6 +61,7 @@
                 {
                     <img src="data:image/png;base64, @Convert.ToBase64String(Model.Foto)" id="imgAutor" width="150px" height="150px" />
                 }
+                @Html.HiddenFor(model => model.Foto)
             </div>
         </div>
         <br />

@@ -41,7 +41,7 @@ namespace BL
 
                             autor.IdAutor = item.IdAutor;
                             autor.Nombre = item.NombreAutor;
-                            autor.ApellidoPaterno = item.ApellidoMaterno;
+                            autor.ApellidoPaterno = item.ApellidoPaterno;
                             autor.ApellidoMaterno = item.ApellidoMaterno;
                             autor.Foto = item.Foto;
                             autor.TipoAutor = new ML.TipoAutor();
@@ -158,7 +158,7 @@ namespace BL
 
                         autor.IdAutor = item.IdAutor;
                         autor.Nombre = item.NombreAutor;
-                        autor.ApellidoPaterno = item.ApellidoMaterno;
+                        autor.ApellidoPaterno = item.ApellidoPaterno;
                         autor.ApellidoMaterno = item.ApellidoMaterno;
                         autor.Foto = item.Foto;
                         autor.TipoAutor = new ML.TipoAutor();

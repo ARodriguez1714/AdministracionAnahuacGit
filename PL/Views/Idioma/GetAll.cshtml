@@ -1,0 +1,60 @@
+﻿@model ML.Idioma
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Idiomas</h2>
+        </div>
+    </div>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.ActionLink("Agregar ", "Form", "Idioma", new { @class = "btn btn-success bi bi-person-fill-add" })
+        </div>
+    </div>
+    <br />
+
+    @if (Model.Idiomas != null)
+    {
+        <div class="row">
+            <div class="col-md-12 table-responsive">
+                <table class="table table-bordered table-responsive" id="myTable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="text-center">Editar</th>
+                            <th class="text-center" hidden>IdIdioma</th>
+                            <th class="text-center">Nombre</th>>
+                            <th class="text-center">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.Idioma idioma in Model.Idiomas)
+                        {
+                            <tr>
+                                <td class="text-center"><a class="btn btn-warning bi bi-pencil-fill" href="@Url.Action("Form", "Idioma", new { IdIdioma = idioma.IdIdioma })"></a></td>
+
+                                <td hidden>@idioma.IdIdioma</td>
+                                <td class="text-center">@idioma.Nombre</td>
+
+                                <td class="text-center"><a class="btn btn-danger bi bi-trash-fill" href="@Url.Action("Delete", "Idioma", new { IdIdioma = idioma.IdIdioma})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Error
+        </div>
+    }
+</div>
+

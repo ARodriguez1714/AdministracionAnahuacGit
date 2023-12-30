@@ -101,7 +101,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        @* <div class="row">
                             <div class="col-md-12">
                                 @Html.Label("*", new { @style = "color: red;" })
                                 @Html.LabelFor(model => model.Direccion.Colonia.Municipio.Estado.Pais.Nombre, new { @class = "control-label" })
@@ -200,7 +200,7 @@
                                 @Html.TextBoxFor(model => model.Direccion.NumeroInterior, new { @class = "form-control", @onblur = "return soloNumerosyLetras(event, 'lblNumeroInterior')" })
                                 <label id="lblNumeroInterior"></label>
                             </div>
-                        </div>
+                        </div> *@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

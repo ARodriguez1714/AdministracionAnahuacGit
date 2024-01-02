@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h2>Autores</h2>
+            <h2>Editoriales</h2>
         </div>
     </div>
     <hr />
@@ -19,7 +19,7 @@
     </div>
     <br />
 
-    @if (Model.Editoriales != null)
+    @if (Model.Editoriales.Count != 0)
     {
         <div class="row">
             <div class="col-md-12 table-responsive">
@@ -29,35 +29,11 @@
                             <th class="text-center">Editar</th>
                             <th class="text-center" hidden>IdEditorial</th>
                             <th class="text-center">Nombre Editorial</th>
-                            <th class="text-center">Calle</th>
-                            <th class="text-center">Número Interior</th>
-                            <th class="text-center">Número Exterior</th>
-                            <th class="text-center">Colonia</th>
-                            <th class="text-center">Codigo Postal</th>
-                            <th class="text-center">Municipio</th>
-                            <th class="text-center">Estado</th>
-                            <th class="text-center">País</th>
+                            <th class="text-center">Dirección</th>
                             <th class="text-center">Eliminar</th>
                         </tr>
                     </thead>
-                    <tbody id="tBodyAutor">
-                        @foreach (ML.Editorial editorial in Model.Editoriales)
-                        {
-                            <tr>
-                                <td><button class="btn btn-warning">Editar</button></td>
-                                <td>@editorial.IdEditorial</td>
-                                <td>@editorial.Nombre</td>
-                                <td>@editorial.Direccion.Calle</td>
-                                <td>@editorial.Direccion.NumeroInterior</td>
-                                <td>@editorial.Direccion.NumeroExterior</td>
-                                <td>@editorial.Direccion.Colonia.Nombre</td>
-                                <td>@editorial.Direccion.Colonia.CodigoPostal</td>
-                                <td>@editorial.Direccion.Colonia.Municipio.Nombre</td>
-                                <td>@editorial.Direccion.Colonia.Municipio.Estado.Nombre</td>
-                                <td>@editorial.Direccion.Colonia.Municipio.Estado.Pais.Nombre</td>
-                                <td><button class="btn btn-danger">Eliminar</button></td>
-                            </tr>
-                        }
+                    <tbody id="tBodyEditorial">
                     </tbody>
                 </table>
             </div>
@@ -66,7 +42,7 @@
     else
     {
         <div class="alert alert-danger" role="alert">
-            @ViewBag.Error
+            @ViewBag.Message
         </div>
     }
 </div>
@@ -96,14 +72,14 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                @Html.LabelFor(model => model.Direccion.IdDireccion, new { @class = "hidden" })
-                                @Html.TextBoxFor(model => model.Direccion.IdDireccion, new { @class = "hidden" })
+                                @Html.LabelFor(model => model.Direccion.IdDireccion, new { @style = "display: none;" })
+                                @Html.TextBoxFor(model => model.Direccion.IdDireccion, new { @style = "display: none;", @id = "txtIdDireccion" })
                             </div>
                         </div>
 
-                        @* <div class="row">
+                        <div class="row">
                             <div class="col-md-12">
-                                @Html.Label("*", new { @style = "color: red;" })
+                                @Html.Label("*", null, new { @style = "color: red;" })
                                 @Html.LabelFor(model => model.Direccion.Colonia.Municipio.Estado.Pais.Nombre, new { @class = "control-label" })
                                 @if (Model.Direccion.Colonia.Municipio.Estado.Pais.Paises == null)
                                 {
@@ -121,23 +97,23 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                @Html.Label("*", new { @style = "color: red;" })
+                                @Html.Label("*", null, new { @style = "color: red;" })
                                 @Html.LabelFor(model => model.Direccion.Colonia.Municipio.Estado.Nombre, new { @class = "control-label" })
                                 @if (Model.Direccion.Colonia.Municipio.Estado.Estados == null)
                                 {
                                     @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.Estado.IdEstado, new SelectList(string.Empty, "Value", "Text"),
-                                             "Selecciona un estado", new { @id = "ddlEstado", @class = "form-control" })
+                                             "Selecciona un Estado", new { @id = "ddlEstado", @class = "form-control" })
                                 }
                                 else
                                 {
                                     @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.Estado.IdEstado,
-                                             new SelectList(Model.Direccion.Colonia.Municipio.Estado.Estados, "IdEstado", "Nombre"), "Selecciona un estado", new { @id = "ddlEstado", @class = "form-control" })
+                                             new SelectList(Model.Direccion.Colonia.Municipio.Estado.Estados, "IdEstado", "Nombre"), "Selecciona un Estado", new { @id = "ddlEstado", @class = "form-control" })
                                 }
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                @Html.Label("*", new { @style = "color: red;" })
+                                @Html.Label("*", null, new { @style = "color: red;" })
                                 @Html.LabelFor(model => model.Direccion.Colonia.Municipio.Nombre, new { @class = "control-label" })
                                 @if (Model.Direccion.Colonia.Municipio.Municipios == null)
                                 {
@@ -153,7 +129,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                @Html.Label("*", new { @style = "color: red;" })
+                                @Html.Label("*", null, new { @style = "color: red;" })
                                 @Html.LabelFor(model => model.Direccion.Colonia.Nombre, new { @class = "control-label" })
                                 @if (Model.Direccion.Colonia.Municipio.Municipios == null)
                                 {
@@ -170,37 +146,27 @@
                         <br />
                         <div class="row">
                             <div class="col-md-12">
-                                @Html.LabelFor(model => model.Foto)
-                                <input type="file" id="fuImagen" name="fuImagen" class="form-control" onchange="PreviewImage(event)" />
-                                <br />
-                                <div id="cargarFoto">
-                                    @if (Model.Foto == null)
-                                    {
-                                        <img src="/Images/userDefault.jpg" id="imgAutor" width="150px" height="150px" />
-                                    }
-                                    else
-                                    {
-                                        <img src="data:image/png;base64, @Convert.ToBase64String(Model.Foto)" id="imgAutor" width="150px" height="150px" />
-                                    }
-                                </div>
-                                @Html.HiddenFor(model => model.Foto)
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                @Html.Label("*", new { @style = "color: red;" })
+                                @Html.Label("*", null, new { @style = "color: red;" })
                                 @Html.LabelFor(model => model.Direccion.Calle)
-                                @Html.TextBoxFor(model => model.Direccion.Calle, new { @class = "form-control" })
+                                @Html.TextBoxFor(model => model.Direccion.Calle, new { @class = "form-control", @id = "txtCalle" })
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                @Html.Label("*", new { @style = "color: red;" })
+                                @Html.Label("*", null, new { @style = "color: red;" })
                                 @Html.LabelFor(model => model.Direccion.NumeroInterior)
-                                @Html.TextBoxFor(model => model.Direccion.NumeroInterior, new { @class = "form-control", @onblur = "return soloNumerosyLetras(event, 'lblNumeroInterior')" })
-                                <label id="lblNumeroInterior"></label>
+                                @Html.TextBoxFor(model => model.Direccion.NumeroInterior, new { @class = "form-control", @id = "txtNumeroInterior" })
+                                <label id="txtNumeroInterior"></label>
                             </div>
-                        </div> *@
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.Label("*", null, new { @style = "color: red;" })
+                                @Html.LabelFor(model => model.Direccion.NumeroExterior)
+                                @Html.TextBoxFor(model => model.Direccion.NumeroExterior, new { @class = "form-control", @id = "txtNumeroExterior" })
+                                <label id="txtNumeroExterior"></label>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -212,4 +178,361 @@
     }
 </div>
 
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            GetAll();
 
+            $("#ddlPais").change(function () {
+                $("#ddlEstado").empty();
+                $("#ddlMunicipio").empty();
+                $("#ddlColonia").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetEstado")',
+                    dataType: 'json',
+                    data: { IdPais: $("#ddlPais").val() },
+                    success: function (estados) {
+                        $("#ddlEstado").append('<option value="0">' + 'Seleccione una opción' + '</option>');
+                        $("#ddlMunicipio").append('<option value="0">' + 'Seleccione una opción' + '</option>');
+                        $("#ddlColonia").append('<option value="0">' + 'Seleccione una opción' + '</option>');
+                        $.each(estados, function (i, estados) {
+                            $("#ddlEstado").append('<option value ="'
+                                + estados.idEstado + '">'
+                                + estados.nombre + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed. ' + ex)
+                    }
+                });
+            });
+
+            $("#ddlEstado").change(function () {
+                $("#ddlMunicipio").empty();
+                $("#ddlColonia").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetMunicipio")',
+                    dataType: 'json',
+                    data: { IdEstado: $("#ddlEstado").val() },
+                    success: function (municipios) {
+                        $("#ddlMunicipio").append('<option value="0">' + 'Seleccione una opción' + '</option>');
+                        $("#ddlColonia").append('<option value="0">' + 'Seleccione una opción' + '</option>');
+                        $.each(municipios, function (i, municipios) {
+                            $("#ddlMunicipio").append('<option value ="'
+                                + municipios.idMunicipio + '">'
+                                + municipios.nombre + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed. ' + ex)
+                    }
+                });
+            });
+
+            $("#ddlMunicipio").change(function () {
+                $("#ddlColonia").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetColonia")',
+                    dataType: 'json',
+                    data: { IdMunicipio: $("#ddlMunicipio").val() },
+                    success: function (colonias) {
+                        $("#ddlColonia").append('<option value="0">' + 'Seleccione una opción' + '</option>');
+                        $.each(colonias, function (i, colonias) {
+                            $("#ddlColonia").append('<option value ="'
+                                + colonias.idColonia + '">'
+                                + colonias.nombre + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed. ' + ex)
+                    }
+                });
+            });
+        });
+
+        function GetAll() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllEditorial")',
+                success: function (result) {
+                    $('#tBodyEditorial').empty();
+
+                    $.each(result.objects, function (i, editorial) {
+                        var fila =
+                            '<tr>'
+                            + '<td class="text-center"><button type="button" class="btn btn-warning" id="btnUpdate" onclick="Modal(this)"  value="' + editorial.idEditorial + '">Editar</button></td>'
+                            + '<td hidden>' + editorial.idEditorial + '</td>'
+                            + '<td class="text-center">' + editorial.nombre + '</td>'
+                            + '<td class="text-center">' + editorial.direccion.calle + ', ' + editorial.direccion.numeroInterior
+                            + ', ' + editorial.direccion.colonia.nombre + ', ' + editorial.direccion.colonia.codigoPostal + '</td>'
+                            + '<td class="text-center"><button type="button" class="btn btn-danger" onclick="Delete(this)"  value="' + editorial.idEditorial + '">Eliminar</button></td>'
+                            + '</tr>';
+                        $('#tBodyEditorial').append(fila);
+                    });
+                }
+            });
+        };
+
+        $('#btnAdd').click(function () {
+            $("#txtIdEditorial").val("");
+            $("#txtNombre").val("");
+            $("#txtIdDireccion").val("");
+            $('#ddlPais').val("");
+            $("#ddlEstado").empty();
+            $("#ddlMunicipio").empty();
+            $("#ddlColonia").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetEstado")',
+                dataType: 'json',
+                data: { IdPais: $("#ddlPais").val() },
+                success: function (estados) {
+                    $("#ddlEstado").append('<option value="0">' + 'Seleccione un Estado' + '</option>');
+                    $("#ddlMunicipio").append('<option value="0">' + 'Seleccione un Municipio' + '</option>');
+                    $("#ddlColonia").append('<option value="0">' + 'Seleccione una Colonia' + '</option>');
+                    $.each(estados, function (i, estados) {
+                        $("#ddlEstado").append('<option value ="'
+                            + estados.idEstado + '">'
+                            + estados.nombre + '</option>');
+                    });
+
+                    $("#ddlMunicipio").empty();
+                    $("#ddlColonia").empty();
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("GetMunicipio")',
+                        dataType: 'json',
+                        data: { IdEstado: $("#ddlEstado").val() },
+                        success: function (municipios) {
+                            $("#ddlMunicipio").append('<option value="0">' + 'Seleccione un Municipio' + '</option>');
+                            $("#ddlColonia").append('<option value="0">' + 'Seleccione una Colonia' + '</option>');
+                            $.each(municipios, function (i, municipios) {
+                                $("#ddlMunicipio").append('<option value ="'
+                                    + municipios.idMunicipio + '">'
+                                    + municipios.nombre + '</option>');
+                            });
+
+                            $("#ddlColonia").empty();
+                            $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("GetColonia")',
+                                dataType: 'json',
+                                data: { IdMunicipio: $("#ddlMunicipio").val() },
+                                success: function (colonias) {
+                                    $("#ddlColonia").append('<option value="0">' + 'Seleccione una Colonia' + '</option>');
+                                    $.each(colonias, function (i, colonias) {
+                                        $("#ddlColonia").append('<option value ="'
+                                            + colonias.idColonia + '">'
+                                            + colonias.nombre + '</option>');
+                                    });
+                                },
+                                error: function (ex) {
+                                    alert('Failed. ' + ex)
+                                }
+                            });
+                        },
+                        error: function (ex) {
+                            alert('Failed. ' + ex)
+                        }
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed. ' + ex)
+                }
+            });
+
+
+            $('#ddlMunicipio').val("0");
+            $('#ddlColonia').val("0");
+            $('#txtCalle').val("");
+            $('#txtNumeroInterior').val("");
+            $('#txtNumeroExterior').val("");
+            $('#modal').modal('show');
+        });
+
+        $('#btnGuardar').click(function () {
+
+            var formData = new FormData(document.getElementById('myForm'));
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Form")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function () {
+                    $('#modal').modal('hide');
+
+                    $('#tBodyEditorial').empty();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("GetAllEditorial")',
+                        success: function (result) {
+                            $('#tBodyEditorial').empty();
+
+                            $.each(result.objects, function (i, editorial) {
+                                var fila =
+                                    '<tr>'
+                                    + '<td class="text-center"><button type="button" class="btn btn-warning" id="btnUpdate" onclick="Modal(this)"  value="' + editorial.idEditorial + '">Editar</button></td>'
+                                    + '<td hidden>' + editorial.idEditorial + '</td>'
+                                    + '<td class="text-center">' + editorial.nombre + '</td>'
+                                    + '<td class="text-center">' + editorial.direccion.calle + ', ' + editorial.direccion.numeroInterior
+                                    + ', ' + editorial.direccion.colonia.nombre + ', ' + editorial.direccion.colonia.codigoPostal + '</td>'
+                                    + '<td class="text-center"><button type="button" class="btn btn-danger" id="btnDelete" onclick="Delete(this)"  value="' + editorial.idEditorial + '">Eliminar</button></td>'
+                                    + '</tr>';
+                                $('#tBodyEditorial').append(fila);
+                            });
+                        },
+                        error: function (result) {
+                            alert('Error en la consulta.');
+                        }
+
+                    });
+
+                }
+            });
+        });
+
+        function Modal(boton) {
+
+
+            $.ajax({
+                url: '@Url.Action("GetByIdEditorial")',
+
+                data: { idEditorial: boton.value },
+
+                type: 'GET',
+
+                dataType: 'json',
+
+                success: function (data) {
+
+                    $('#txtIdEditorial').val(data.idEditorial)
+                    $('#txtNombre').val(data.nombre)
+                    $('#ddlPais').val(data.direccion.colonia.municipio.estado.pais.idPais);
+                    $("#ddlEstado").empty();
+                    $("#ddlMunicipio").empty();
+                    $("#ddlColonia").empty();
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("GetEstado")',
+                        dataType: 'json',
+                        data: { IdPais: $("#ddlPais").val() },
+                        success: function (estados) {
+                            $("#ddlEstado").append('<option value="0">' + 'Seleccione un Estado' + '</option>');
+                            $.each(estados, function (i, estados) {
+                                $("#ddlEstado").append('<option value ="'
+                                    + estados.idEstado + '">'
+                                    + estados.nombre + '</option>');
+                            });
+                            $('#ddlEstado').val(data.direccion.colonia.municipio.estado.idEstado);
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("GetMunicipio")',
+                                dataType: 'json',
+                                data: { IdEstado: $("#ddlEstado").val() },
+                                success: function (municipios) {
+                                    $("#ddlMunicipio").append('<option value="0">' + 'Seleccione un Municipio' + '</option>');
+                                    $.each(municipios, function (i, municipios) {
+                                        $("#ddlMunicipio").append('<option value ="'
+                                            + municipios.idMunicipio + '">'
+                                            + municipios.nombre + '</option>');
+                                    });
+
+                                    $('#ddlMunicipio').val(data.direccion.colonia.municipio.idMunicipio);
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '@Url.Action("GetColonia")',
+                                        dataType: 'json',
+                                        data: { IdMunicipio: $("#ddlMunicipio").val() },
+                                        success: function (colonias) {
+                                            $("#ddlColonia").append('<option value="0">' + 'Seleccione una Colonia' + '</option>');
+                                            $.each(colonias, function (i, colonias) {
+                                                $("#ddlColonia").append('<option value ="'
+                                                    + colonias.idColonia + '">'
+                                                    + colonias.nombre + '</option>');
+                                            });
+
+                                            $('#ddlColonia').val(data.direccion.colonia.idColonia);
+                                        },
+                                        error: function (ex) {
+                                            alert('Failed. ' + ex)
+                                        }
+                                    });
+                                },
+                                error: function (ex) {
+                                    alert('Failed. ' + ex)
+                                }
+                            });
+                        },
+                        error: function (ex) {
+                            alert('Failed. ' + ex)
+                        }
+                    });
+                    $('#txtCalle').val(data.direccion.calle);
+                    $('#txtNumeroInterior').val(data.direccion.numeroInterior);
+                    $('#txtNumeroExterior').val(data.direccion.numeroExterior);
+                    $('#txtIdDireccion').val(data.direccion.idDireccion);
+
+                    $('#modal').modal('show');
+                },
+                error: function () {
+                    alert('Disculpe, existió un problema');
+                },
+            });
+        };
+
+        function Delete(datos) {
+            var checkconfirm = confirm('¿Estas seguro de eliminarlo?');
+            if (checkconfirm == true) {
+                $.ajax({
+                    url: '@Url.Action("Delete")',
+                    data: { idEditorial: datos.value },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function () {
+                        $('#tBodyEditorial').empty();
+
+                        $.ajax({
+                            type: 'GET',
+                            url: '@Url.Action("GetAllEditorial")',
+                            success: function (result) {
+                                $('#tBodyEditorial').empty();
+
+                                $.each(result.objects, function (i, editorial) {
+                                    var fila =
+                                        '<tr>'
+                                        + '<td class="text-center"><button type="button" class="btn btn-warning" id="btnUpdate" onclick="Modal(this)"  value="' + editorial.idEditorial + '">Editar</button></td>'
+                                        + '<td hidden>' + editorial.idEditorial + '</td>'
+                                        + '<td class="text-center">' + editorial.nombre + '</td>'
+                                        + '<td class="text-center">' + editorial.direccion.calle + ', ' + editorial.direccion.numeroInterior
+                                        + ', ' + editorial.direccion.colonia.nombre + ', ' + editorial.direccion.colonia.codigoPostal + '</td>'
+                                        + '<td class="text-center"><button type="button" class="btn btn-danger" id="btnDelete" onclick="Delete(this)"  value="' + editorial.idEditorial + '">Eliminar</button></td>'
+                                        + '</tr>';
+                                    $('#tBodyEditorial').append(fila);
+                                });
+                            },
+                            error: function (result) {
+                                alert('Error en la consulta.');
+                            }
+                        });
+                    },
+                    error: function (result) {
+                        alert('Error en la consulta.');
+                    }
+                });
+            } else {
+                return false;
+            }
+        }
+
+
+    </script>
+}

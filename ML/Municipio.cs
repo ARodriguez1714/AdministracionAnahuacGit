@@ -9,7 +9,7 @@ namespace ML
 {
     public class Municipio
     {
-        public int? IdMunicipio { get; set; }
+        public byte? IdMunicipio { get; set; }
         [Display(Name = "Municipio:")]
         public string? Nombre { get; set; }
         public ML.Estado? Estado { get; set; }

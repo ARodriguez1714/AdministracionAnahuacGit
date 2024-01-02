@@ -9,7 +9,7 @@ namespace ML
 {
     public class Colonia
     {
-        public int IdColonia { get; set; }
+        public byte IdColonia { get; set; }
         [Display(Name = "Colonia:")]
         public string? Nombre { get; set; }
         public string? CodigoPostal { get; set; }

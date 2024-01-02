@@ -9,7 +9,7 @@ namespace ML
 {
     public class Direccion
     {
-        public int? IdDireccion { get; set; }
+        public byte? IdDireccion { get; set; }
         [Display(Name = "Calle:")]
         public string? Calle { get; set; }
         [MaxLength(50, ErrorMessage = "*Solo se permiten 50 carácteres")]

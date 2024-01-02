@@ -9,7 +9,7 @@ namespace ML
 {
     public class Estado
     {
-        public int? IdEstado { get; set; }
+        public byte? IdEstado { get; set; }
         [Display(Name = "Estado:")]
         public string? Nombre { get; set; }
         public ML.Pais? Pais { get; set; }

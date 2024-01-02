@@ -129,7 +129,7 @@ namespace PL.Controllers
                 if (result.Correct)
                 {
                     ViewBag.Mensaje = result.Message;
-                    return View("Modal");
+                    return RedirectToAction("GetAll");
                 }
                 else
                 {
@@ -145,7 +145,7 @@ namespace PL.Controllers
                 if (result.Correct)
                 {
                     ViewBag.Mensaje = result.Message;
-                    return View("Modal");
+                    return RedirectToAction("GetAll");
                 }
                 else
                 {

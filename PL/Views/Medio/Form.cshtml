@@ -38,7 +38,10 @@
             </div>
             <div class="col-md-6">
                 @Html.LabelFor(model => model.Disponibilidad)
-                @Html.TextBoxFor(model => model.Disponibilidad, new { @class = "form-control" })
+               @*  @Html.TextBoxFor(model => model.Disponibilidad, new { @class = "form-control" })*@
+                <label> @Html.RadioButtonFor(model => model.Disponibilidad, "Si", new { @class = "form-control", @id = "rbtnSi" }) Si</label>
+                <label> @Html.RadioButtonFor(model => model.Disponibilidad, "No", new { @class = "form-control", @id = "rbtnNo" }) No</label>
+
             </div>
 
         </div>
@@ -128,5 +131,15 @@
             }
         };
     </script>
+
+   @*  <script type="text/javascript">
+        function PreviewImagen(event) {
+            var output = document.getElementById('imgMedio');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function () {
+                URL.revokeObjectURL(output.src)
+            }
+        }
+    </script> *@
 }
 

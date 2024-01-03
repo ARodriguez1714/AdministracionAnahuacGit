@@ -35,9 +35,10 @@ namespace PL.Controllers
         {
             ML.Idioma idioma = new ML.Idioma();
 
-            if (idIdioma == null)
+            if (idIdioma == 0) //null
             {
-                ViewBag.Accion = "Agregar";
+               // ViewBag.Accion = "Agregar";
+                return View(idioma);
             }
             else
             {
@@ -46,6 +47,7 @@ namespace PL.Controllers
                 if (result.Correct)
                 {
                     idioma = (ML.Idioma)result.Object;
+                    return View(idioma);
 
                 }
                 ViewBag.Accion = "Actualizar";
@@ -63,7 +65,7 @@ namespace PL.Controllers
         {
             ML.Result result = new ML.Result();
 
-            if (idioma.IdIdioma == 0)
+            if (idioma.IdIdioma == null)
             {
                 //add 
                 result = BL.Idioma.AddIdioma(idioma);
@@ -96,28 +98,28 @@ namespace PL.Controllers
                 }
 
             }
-            //  return View(idioma);
+            //return View(idioma);
 
 
         }
 
 
-        //[HttpGet]
-        //public ActionResult Delete(int idIdioma)
-        //{
-        //    //ML.Idioma idioma = new ML.Idioma();
-        //    ML.Result result = BL.Idioma.DeleteIdioma(idIdioma);
+        [HttpGet]
+        public ActionResult Delete(int idIdioma)
+        {
+            //ML.Idioma idioma = new ML.Idioma();
+            ML.Result result = BL.Idioma.DeleteIdioma(idIdioma);
 
-        //    if (result.Correct)
-        //    {
-        //        ViewBag.Mensaje = "Se ha eliminado correctamente";
-        //    }
-        //    else
-        //    {
-        //        ViewBag.Mensaje = "No se ha eliminado correctamente" + result.Message;
-        //    }
-        //    return PartialView("Modal");
+            if (result.Correct)
+            {
+                ViewBag.Mensaje = "Se ha eliminado correctamente";
+            }
+            else
+            {
+                ViewBag.Mensaje = "No se ha eliminado correctamente" + result.Message;
+            }
+            return PartialView("Modal");
 
-        //}
+        }
     }
 }

@@ -153,19 +153,22 @@ namespace BL
 
             return result;
         }
-        public static Result DeleteMedio(int IdMedio)
+        public static Result DeleteMedio(int idMedio)
         {
             ML.Result result = new ML.Result();
-            ML.Medio medio = new ML.Medio();
+           // ML.Medio medio = new ML.Medio();
             try
             {
                 using (DL.AdministracionAnahuacGitContext context = new DL.AdministracionAnahuacGitContext())
                 {
 
-                    var query = context.Database.ExecuteSqlRaw($"MedioDelete {medio.IdMedio}");
-                    
-                    //context.Medios.Remove(query);
-                    context.SaveChanges();
+                    var query = context.Database.ExecuteSqlRaw($"MedioDelete {idMedio}");
+
+                    if (query > 0)
+                    {
+                        result.Correct = true;
+                        result.Message = "Se elimino correctamente.";
+                    }
                 }
             }
 
@@ -179,7 +182,6 @@ namespace BL
 
             return result;
         }
-
         public static ML.Result GetByIdMedio(int idMedio)
         {
             ML.Result result = new ML.Result();

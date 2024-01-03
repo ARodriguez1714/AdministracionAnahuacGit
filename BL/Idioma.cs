@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ML;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,7 +91,7 @@ namespace BL
             {
                 using (DL.AdministracionAnahuacGitContext context = new DL.AdministracionAnahuacGitContext())
                 {
-                    var query = context.Database.ExecuteSqlRaw($"IdiomaUpdate {idioma.IdIdioma}, '{idioma.Nombre}'");
+                    var query = context.Database.ExecuteSqlRaw($"IdiomaUpdate '{idioma.IdIdioma}', '{idioma.Nombre}'");
                     if (query > 0)
                     {
                         result.Correct = true;
@@ -108,7 +109,35 @@ namespace BL
 
             return result;
         }
+        public static Result DeleteIdioma(int idIdioma)
+        {
+            ML.Result result = new ML.Result();
+            // ML.Idioma idioma = new ML.Idioma();
+            try
+            {
+                using (DL.AdministracionAnahuacGitContext context = new DL.AdministracionAnahuacGitContext())
+                {
 
+                    var query = context.Database.ExecuteSqlRaw($"IdiomaDelete {idIdioma}");
+
+                    if (query > 0)
+                    {
+                        result.Correct = true;
+                        result.Message = "Se elimino correctamente.";
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.Message = "No puede ser eliminado correctamente  " + result.Ex;
+
+            }
+
+            return result;
+        }
         public static ML.Result GetByIdIdioma(int idIdioma)
         {
             ML.Result result = new ML.Result();

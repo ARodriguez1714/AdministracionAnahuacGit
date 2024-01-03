@@ -111,14 +111,14 @@ namespace PL.Controllers
         if (ModelState.IsValid)
         {
 
-            //if (file.ContentLength > 0)
-            //{
-            //    medio.Imagen = ConvertToBytes(file);
+                //if (fuImagen.ContentLength > 0)
+                //{
+                //    medio.Imagen = ConvertToBytes(fuImagen);
 
-            //    string imagenBase64 = Convert.ToBase64String(medio.Imagen);
-            //}
+                //    string imagenBase64 = Convert.ToBase64String(medio.Imagen);
+                //}
 
-            ML.Result result = new ML.Result();
+                ML.Result result = new ML.Result();
 
             if (medio.IdMedio == 0)
             {
@@ -128,8 +128,8 @@ namespace PL.Controllers
 
                 if (result.Correct)
                 {
-                    ViewBag.Mensaje = result.Message;
-                    return RedirectToAction("GetAll");
+                   // ViewBag.Mensaje = result.Message;
+                    return RedirectToAction("Modal");
                 }
                 else
                 {
@@ -139,13 +139,14 @@ namespace PL.Controllers
             }
             else
             {
-                //update
-                result = BL.Medio.UpdateMedio(medio);
+                    //update
+                    medio.Imagen = ConvertToBytes(fuImagen);
+                    result = BL.Medio.UpdateMedio(medio);
 
                 if (result.Correct)
                 {
                     ViewBag.Mensaje = result.Message;
-                    return RedirectToAction("GetAll");
+                    return RedirectToAction("Modal");
                 }
                 else
                 {
@@ -167,10 +168,9 @@ namespace PL.Controllers
     }
 
     [HttpGet]
-    public IActionResult Delete(int IdMedio)
+    public ActionResult Delete(int IdMedio)
     {
-        ML.Medio medio = new ML.Medio();
-        //medio.IdMedio = IdMedio;
+       // ML.Medio medio = new ML.Medio();
 
         ML.Result result = BL.Medio.DeleteMedio(IdMedio);
 
@@ -186,7 +186,7 @@ namespace PL.Controllers
         return PartialView("Modal");
     }
 
-
+    [HttpGet]
     public byte[] ConvertToBytes(IFormFile fuImagen)
     {
         using (MemoryStream memoryStream = new MemoryStream())

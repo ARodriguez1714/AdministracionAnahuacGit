@@ -113,7 +113,10 @@
         <br />
         <div class="row">
             <div class="col-md-12">
-                <input type="submit" class="btn btn-success" value="Guardar" />
+                <input type="submit" class="btn btn-success bi bi-box-arrow-left" value="Guardar" />
+
+
+                @Html.ActionLink(" Regresar", "GetAll", "Medio", htmlAttributes: new { @class = "btn btn-danger bi bi-box-arrow-left" })
             </div>
         </div>
     }
@@ -132,7 +135,7 @@
         };
     </script>
 
-   @*  <script type="text/javascript">
+    @* <script type="text/javascript">
         function PreviewImagen(event) {
             var output = document.getElementById('imgMedio');
             output.src = URL.createObjectURL(event.target.files[0]);

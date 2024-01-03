@@ -14,7 +14,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            @Html.ActionLink("Agregar ", "Form", "Medio", new { @class = "btn btn-success bi bi-person-fill-add" })
+            @Html.ActionLink(" Agregar ", "Form", "Medio", htmlAttributes: new { @class = "btn btn-success bi bi-plus-circle-fill" })
         </div>
     </div>
     <br />
@@ -86,4 +86,16 @@
         </div>
     }
 </div>
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
+
 

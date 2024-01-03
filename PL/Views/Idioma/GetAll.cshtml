@@ -14,13 +14,14 @@
 
     <div class="row">
         <div class="col-md-12">
+            @*
+            @Html.ActionLink(" Agregar", "Form", "Idioma", htmlAttributes: new { @class = "btn btn-success bi bi-plus-circle-fill" }) *@
 
-            @Html.ActionLink(" Agregar", "Form", "Idioma", htmlAttributes: new { @class = "btn btn-success bi bi-plus-circle-fill" })
+            <button type="button" class="btn btn-success" id="btnAdd">Agregar</button>
         </div>
     </div>
     <br />
-
-    @if (Model.Idiomas != null)
+    @if (Model.Idiomas.Count != 0)
     {
         <div class="row">
             <div class="col-md-12 table-responsive">
@@ -33,19 +34,21 @@
                             <th class="text-center">Eliminar</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach (ML.Idioma idioma in Model.Idiomas)
-                        {
-                            <tr>
-                                <td class="text-center"><a class="btn btn-warning bi bi-pencil-fill" href="@Url.Action("Form", "Idioma", new { IdIdioma = idioma.IdIdioma })"></a></td>
 
-                                <td hidden>@idioma.IdIdioma</td>
-                                <td class="text-center">@idioma.Nombre</td>
+                    <tbody id="tBodyIdioma">
+                        @* <tbody>
+                    @foreach (ML.Idioma idioma in Model.Idiomas)
+                    {
+                    <tr>
+                    <td class="text-center"><a class="btn btn-warning bi bi-pencil-fill" href="@Url.Action("Form", "Idioma", new { IdIdioma = idioma.IdIdioma })"></a></td>
 
-                                <td class="text-center"><a class="btn btn-danger bi bi-trash-fill" href="@Url.Action("Delete", "Idioma", new { IdIdioma = idioma.IdIdioma})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+                    <td hidden>@idioma.IdIdioma</td>
+                    <td class="text-center">@idioma.Nombre</td>
 
-                            </tr>
-                        }
+                    <td class="text-center"><a class="btn btn-danger bi bi-trash-fill" href="@Url.Action("Delete", "Idioma", new { IdIdioma = idioma.IdIdioma})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+
+                    </tr>
+                    } *@
                     </tbody>
                 </table>
             </div>
@@ -59,16 +62,190 @@
     }
 </div>
 
+<div class="container">
+    @using (Html.BeginForm("Form", "Idioma", FormMethod.Post, new { enctype = "multipart/form-data", @id = "myForm" }))
+    {
+        <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Idioma</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
 
-@section Scripts {
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.LabelFor(model => model.IdIdioma, null, new { @style = "display: none;" })
+                                @Html.TextBoxFor(model => model.IdIdioma, new { @style = "display: none;", @id = "txtIdIdioma" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.LabelFor(model => model.Nombre)
+                                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btnGuardar"> Guardar</button>
+                        <button type="button" class="btn btn-danger bi bi-box-arrow-left" data-bs-dismiss="modal"> Salir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
-
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#myTable').DataTable();
+            GetAll();
         });
-    </script>
+
+        function GetAll() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetAllIdioma")',
+                success: function (result) {
+                    $('#tBodyIdioma').empty();
+
+                    $.each(result.objects, function (i, idioma) {
+                        var fila =
+                            '<tr>'
+                            + '<td class="text-center"><button type="button" class="btn btn-warning bi bi-pencil-fill" id="btnUpdate" onclick="Modal(this)"  value="' + idioma.idIdioma + '"></button></td>'
+                            + '<td hidden>' + idioma.idIdioma + '</td>'
+                            + '<td class="text-center">' + idioma.nombre + '</td>'
+                            + '<td class="text-center"><button type="button" class="btn btn-danger bi bi-trash-fill" onclick="Delete(this)"  value="' + idioma.idIdioma + '"></button></td>'
+                            + '</tr>';
+                        $('#tBodyIdioma').append(fila);
+                    });
+                }
+            });
+        };
+
+        $('#btnAdd').click(function () {
+            $("#txtIdioma").val("");
+            $("#txtNombre").val("");
+
+            $('#modal').modal('show');
+        });
+
+
+
+        $('#btnGuardar').click(function () {
+
+            var formData = new FormData(document.getElementById('myForm'));
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Form")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function () {
+                    $('#modal').modal('hide');
+
+                    $('#tBodyIdioma').empty();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("GetAllIdioma")',
+                        success: function (result) {
+                            $('#tBodyIdioma').empty();
+
+                            $.each(result.objects, function (i, idioma) {
+                                var fila =
+                                    '<tr>'
+                                    + '<td class="text-center"><button type="button" class="btn btn-warning bi bi-pencil-fill" id="btnUpdate" onclick="Modal(this)"  value="' + idioma.idIdioma + '"></button></td>'
+                                    + '<td hidden>' + idioma.idIdioma + '</td>'
+                                    + '<td class="text-center">' + idioma.nombre + '</td>'
+                                    + '<td class="text-center"><button type="button" class="btn btn-danger bi bi-trash-fill" id="btnDelete" onclick="Delete(this)"  value="' + idioma.idIdioma + '"></button></td>'
+                                    + '</tr>';
+                                $('#tBodyIdioma').append(fila);
+                            });
+                        },
+                        error: function (result) {
+                            alert('Error en la consulta.');
+                        }
+
+                    });
+
+                }
+            });
+        });
+
+        function Modal(boton) {
+
+
+            $.ajax({
+                url: '@Url.Action("GetByIdIdioma")',
+
+                data: { idIdioma: boton.value },
+
+                type: 'GET',
+
+                dataType: 'json',
+
+                success: function (data) {
+
+                    $('#txtIdIdioma').val(data.idIdioma)
+                    $('#txtNombre').val(data.nombre)
+                    
+                    $('#modal').modal('show');
+                },
+                error: function () {
+                    alert('Error en la consulta');
+                },
+            });
+        };
+
+
+        function Delete(datos) {
+            var checkconfirm = confirm('¿Estas seguro que desea elimianr este registro?');
+            if (checkconfirm == true) {
+                $.ajax({
+                    url: '@Url.Action("Delete")',
+                    data: { idIdioma: datos.value },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function () {
+                        $('#tBodyIdioma').empty();
+
+                        $.ajax({
+                            type: 'GET',
+                            url: '@Url.Action("GetAllIdioma")',
+                            success: function (result) {
+                                $('#tBodyIdioma').empty();
+
+                                $.each(result.objects, function (i, idioma) {
+                                    var fila =
+                                        '<tr>'
+                                        + '<td class="text-center"><button type="button" class="btn btn-warning bi bi-pencil-fill" id="btnUpdate" onclick="Modal(this)"  value="' + idioma.idIdioma + '"></button></td>'
+                                        + '<td hidden>' + idioma.idIdioma + '</td>'
+                                        + '<td class="text-center">' + idioma.nombre + '</td>'
+                                        + '<td class="text-center"><button type="button" class="btn btn-danger bi bi-trash-fill" id="btnDelete" onclick="Delete(this)"  value="' + idioma.idIdioma + '"></button></td>'
+                                        + '</tr>';
+                                    $('#tBodyIdioma').append(fila);
+                                });
+                            },
+                            error: function (result) {
+                                alert('Error en la consulta.');
+                            }
+                        });
+                    },
+                    error: function (result) {
+                        alert('Error en la consulta.');
+                    }
+                });
+            } else {
+                return false;
+            }
+        }
+
+
+     </script>
 }
 

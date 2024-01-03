@@ -75,6 +75,24 @@ namespace PL.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult GetByIdIdioma(int idIdioma)
+        {
+            ML.Result result = BL.Idioma.GetByIdIdioma(idIdioma);
+            if (result.Correct)
+            {
+                ML.Idioma idioma = new ML.Idioma();
+
+
+                idioma = (ML.Idioma)result.Object;
+
+                return Ok(idioma);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
+        }
 
         //[HttpGet]
         //public ActionResult Form(int idIdioma)

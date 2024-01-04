@@ -17,7 +17,7 @@
             @*
             @Html.ActionLink(" Agregar", "Form", "Idioma", htmlAttributes: new { @class = "btn btn-success bi bi-plus-circle-fill" }) *@
 
-            <button type="button" class="btn btn-success" id="btnAdd">Agregar</button>
+            <button type="button" class="btn btn-success  bi bi-plus-circle-fil" id="btnAdd"> Agregar</button>
         </div>
     </div>
     <br />
@@ -245,7 +245,12 @@
             }
         }
 
-
      </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+
 }
 

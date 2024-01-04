@@ -28,7 +28,7 @@ namespace PL.Controllers
         }
 
         [HttpGet]
-        public  ActionResult GetAutores()
+        public  IActionResult GetAutores()
         {
             ML.Result result = BL.Autor.GetAllAutor();
             if (result.Correct)
@@ -128,8 +128,6 @@ namespace PL.Controllers
                     return View("Modal");
                 }
             }
-
-            return View();
         }
 
         [HttpGet]

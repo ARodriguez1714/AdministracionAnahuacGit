@@ -140,7 +140,6 @@ public partial class AdministracionAnahuacGitContext : DbContext
             entity.Property(e => e.ApellidoPaterno)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.Foto).HasMaxLength(50);
             entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
                 .IsUnicode(false);

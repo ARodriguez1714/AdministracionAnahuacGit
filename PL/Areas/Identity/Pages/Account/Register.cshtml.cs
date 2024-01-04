@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
@@ -130,6 +132,39 @@ namespace PL.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
+
+                    var smtpClient = new SmtpClient("smtp.gmail.com")
+                    {
+                        Port = 587,
+                        Credentials = new NetworkCredential("jantoniochavezr14@gmail.com", "ygjedkwsusokhlfw"),
+                        EnableSsl = true,
+                    };
+
+                    // Tu HTML existente
+                    string htmlString = @"<html>
+                    <body>
+                    <p>¡Hola Bienvenido!</p>";
+
+                    htmlString += @"<p>Confirma tu correo dando clic al siguiente botón.</p>";
+
+                    // Concatenar la variable dentro de htmlString
+                    htmlString += $"<a href='{callbackUrl}' style='background-color: #04AA6D; border: none; color: white;padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 10px; margin: 4px 2px; cursor: pointer;' class='button'>Confirmar Correo</a>";
+
+                    // Continuación del HTML original
+                    htmlString += @"<p>Atentamente,<br>-Biblioteca AJ</br></p>
+                    </body>
+                    </html>";
+
+                    var mailMessage = new MailMessage
+                    {
+                        From = new MailAddress("jantoniochavezr14@gmail.com", "Biblioteca AJ"),
+                        Subject = "Confirmar Correo",
+                        Body = htmlString,
+                        IsBodyHtml = true,
+                    };
+                    mailMessage.To.Add(Input.Email);
+
+                    smtpClient.Send(mailMessage);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

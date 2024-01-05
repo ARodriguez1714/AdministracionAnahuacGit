@@ -65,7 +65,7 @@ namespace BL
                 using (DL.AdministracionAnahuacGitContext context = new DL.AdministracionAnahuacGitContext())
                 {
                     var query =
-                        context.Database.ExecuteSqlRaw($"AddAspNetUserRoles '{user.IdUsuario}', '{user.Rol.RoleId}'");
+                        context.Database.ExecuteSqlRaw($"AddAspNetUserRoles '{user.IdUsuario}', '{user.RoleId}'");
 
                     if (query > 0)
                     {

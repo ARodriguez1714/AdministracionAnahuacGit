@@ -66,56 +66,82 @@
 
 
 <div class="container">
-    <div class="modal fade" id="modalAgregar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Rol</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="col-md-12" style="display: none;">
-                        @* @Html.TextBoxFor(model => model.Id, new { @class = "form-control", @id = "txtIdRol" }) *@
-                        <input type="text" class="form-control" id="txtIdRol" />
+    <form id="formAgregar" enctype="multipart/form-data" method="post">
+        <div class="modal fade" id="modalAgregar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Rol</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <div class="modal-body">
+                        <div class="col-md-12" style="display: none;">
+                            @* @Html.TextBoxFor(model => model.Id, new { @class = "form-control", @id = "txtIdRol" }) *@
+                            <input type="text" class="form-control" name="id" id="txtIdRol" />
+                        </div>
 
-                    <div class="col-md-12">
-                        @Html.Label("Nombre del Rol:")
-                        @* @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @id = "txtNombre", @placeholder = "ejem. Administrador" })
-                        @Html.TextBoxFor(model => model.Id, new { @class = "visually-hidden" }) *@
-                        <input type="text" class="form-control" id="txtNombre" placeholder="ejem. Administrador" />
-                        <label id="lblNombre"></label>
+                        <div class="col-md-12">
+                            @Html.Label("Nombre del Rol:")
+                            @* @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @id = "txtNombre", @placeholder = "ejem. Administrador" })
+                            @Html.TextBoxFor(model => model.Id, new { @class = "visually-hidden" }) *@
+                            <input type="text" class="form-control" name="name" id="txtNombre" placeholder="ejem. Administrador" />
+                            <label id="lblNombre"></label>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 
 <div class="container">
-    <div class="modal fade" id="modalAsignar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <form id="formAsignar" enctype="multipart/form-data" method="post">
+        <div class="modal fade" id="modalAsignar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Rol</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12" style="display: none;">
+                            <input type="text" name="roleId" class="form-control" id="txtIdRole" />
+                        </div>
+                        <div class="col-md-12">
+                            <select id="ddlAsignar" name="idUsuario" class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-success" id="btnAsignar">Asignar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container">
+    <div class="modal fade" id="modalAsignado" tabindex="-1" aria-labelledby="modalAsignadoLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Rol</h5>
+                    <h5 class="modal-title" id="modalAsignadoLabel">Modal title</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="col-md-12" style="display: none;">
-                        <input type="text" class="form-control" id="txtIdRole" />
-                    </div>
-                    <div class="col-md-12">
-                        <select id="ddlAsignar" class="form-control">
-                        </select>
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        Se asignó el rol correctamente.
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-success" id="btnAsignar">Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -128,6 +154,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             GetAll();
+            Usuarios();
         });
 
         function GetAll() {
@@ -164,7 +191,7 @@
                     $('#ddlAsignar').append('<option value="' + 0 + '">' + 'Seleccione una opción' + '</option>');
                     $.each(result.objects, function (i, user) {
                         var select =
-                            '<option value="' + user.idUsuario + '">' + user.userName + '</option>';
+                            '<option id="idUsuario" value="' + user.idUsuario + '">' + user.userName + '</option>';
                         $("#ddlAsignar").append(select);
                     });
                 },
@@ -184,7 +211,7 @@
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Form")',
-                data: $('#myForm').serialize(),
+                data: $('#formAgregar').serialize(),
                 dataType: 'json',
                 success: function (result) {
                     $('#modalAgregar').modal('hide');
@@ -249,7 +276,7 @@
                 dataType: 'json',
                 success: function (result) {
                     $('#txtIdRole').val(result.rol.roleId);
-                    $('#ddlAsignar').val(result.identityUsers.roleId);
+                    $('#ddlAsignar').val('0');
                     $('#modalAsignar').modal('show');
                 },
                 error: function () {
@@ -257,6 +284,23 @@
                 }
             });
         };
+
+        $('#btnAsignar').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Asignar")',
+                data: $('#formAsignar').serialize(),
+                dataType: 'json',
+                success: function (result) {
+                    $('#modalAsignar').modal('hide');
+
+                    $('#modalAsignado').modal('show');
+                },
+                error: function (result) {
+                    alert('Error en la consulta.');
+                }
+            });
+        });
     </script>
 
 }

@@ -17,6 +17,13 @@ namespace PL.Controllers
         [HttpGet]
         public IActionResult GetAllRoles()
         {
+            var result = roleManager.Roles.ToList();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public IActionResult GetAllUsuarios()
+        {
             ML.Result result = BL.UserIdentity.GetAll();
             if (result.Correct)
             {
@@ -26,13 +33,6 @@ namespace PL.Controllers
             {
                 return BadRequest(result);
             }
-        }
-
-        [HttpGet]
-        public IActionResult GetAllUsuarios()
-        {
-            var result = roleManager.Roles.ToList();
-            return Ok(result);
         }
 
 
@@ -126,6 +126,22 @@ namespace PL.Controllers
                 return Json(user);
             }
             return Json(result);
+        }
+
+        [HttpPost]
+        public JsonResult Asignar(ML.UserIdentity user)
+        {
+            ML.Result result = new ML.Result();
+            result = BL.UserIdentity.Asignar(user);
+
+            if (result.Correct)
+            {
+                return Json(result);
+            }
+            else
+            {
+                return Json(result);
+            }
         }
     }
 }

@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Drawing;
 using System.Text;
 
 namespace PL.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class AutorController : Controller
     {
         public IActionResult GetAll()

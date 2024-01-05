@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using ML;
@@ -6,6 +7,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PL.Controllers
 {
+
+    [Authorize(Roles = "Administrador")]
     public class RolController : Controller
     {
         private RoleManager<IdentityRole> roleManager;
@@ -60,7 +63,7 @@ namespace PL.Controllers
             }
             else
             {
-                IdentityRole role = new IdentityRole();
+                IdentityRole role = await roleManager.FindByIdAsync(rol.Id.ToString());
                 role.Id = await roleManager.GetRoleIdAsync(rol);
                 role.Name = await roleManager.GetRoleNameAsync(rol);
 

@@ -14,8 +14,18 @@ namespace PL.Controllers
         {
             ML.Medio medio = new ML.Medio();
             ML.Result result = BL.Medio.GetAllMedio();
+
             medio.Autor = new ML.Autor();
             ML.Result resultAutor = BL.Autor.GetAllAutor();
+
+            medio.Idioma = new ML.Idioma();
+            ML.Result resultIdioma = BL.Idioma.GetAllIdioma();
+
+            medio.TipoMedio = new ML.TipoMedio();
+            ML.Result resultTipoMedio = BL.TipoMedio.GetAllTipoMedio();
+
+            medio.Editorial = new ML.Editorial();
+            ML.Result resultEditorial = BL.Editorial.GetAllEditorial();
 
             medio.Medios = new List<object>();
 
@@ -32,8 +42,22 @@ namespace PL.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult GetAllMedio()
+        {
+            ML.Result result = BL.Medio.GetAllMedio();
+            if (result.Correct)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
+        }
 
 
+        
 
         [HttpGet]
         public IActionResult Form(int? IdMedio)
@@ -42,6 +66,7 @@ namespace PL.Controllers
             medio.Autor = new ML.Autor();
 
             ML.Result resultAutor = BL.Autor.GetAllAutor();
+            medio.Autor = new ML.Autor();
             medio.Autor.Autores = resultAutor.Objects;
 
             ML.Result resultTipoAutor = BL.TipoAutor.GetAllTipoAutor();
@@ -62,7 +87,7 @@ namespace PL.Controllers
 
             if (IdMedio == null)
             {
-                ViewBag.Accion = "Agregar";
+                ViewBag.Accion = "Agregar"; //return View(autor);
             }
             else
             {
@@ -98,27 +123,28 @@ namespace PL.Controllers
                     medio.Editorial.IdEditorial = ((ML.Medio)result.Object).Editorial.IdEditorial;
                     medio.Editorial.Nombre = ((ML.Medio)result.Object).Editorial.Nombre;
 
-
                 }
                 ViewBag.Accion = "Actualizar";
+             }
+             return View(medio);
         }
-         return View(medio);
-    }
 
     [HttpPost]
     public IActionResult Form(ML.Medio medio, IFormFile fuImagen)
     {
-        if (ModelState.IsValid)
-        {
+            ML.Result result = new ML.Result();
 
-                //if (fuImagen.ContentLength > 0)
-                //{
-                //    medio.Imagen = ConvertToBytes(fuImagen);
+        //    if (ModelState.IsValid)
+        //{
 
-                //    string imagenBase64 = Convert.ToBase64String(medio.Imagen);
-                //}
+        //        //if (fuImagen.ContentLength > 0)
+        //        //{
+        //        //    medio.Imagen = ConvertToBytes(fuImagen);
 
-                ML.Result result = new ML.Result();
+        //        //    string imagenBase64 = Convert.ToBase64String(medio.Imagen);
+        //        //}
+
+        //       // ML.Result result = new ML.Result();
 
             if (medio.IdMedio == 0)
             {
@@ -129,7 +155,7 @@ namespace PL.Controllers
                 if (result.Correct)
                 {
                    // ViewBag.Mensaje = result.Message;
-                    return RedirectToAction("Modal");
+                    return RedirectToAction("GetAll");
                 }
                 else
                 {
@@ -146,7 +172,7 @@ namespace PL.Controllers
                 if (result.Correct)
                 {
                     ViewBag.Mensaje = result.Message;
-                    return RedirectToAction("Modal");
+                    return RedirectToAction("GetAll");
                 }
                 else
                 {
@@ -156,35 +182,41 @@ namespace PL.Controllers
 
             }
 
-        }
-        else
-        {
+        //}
+        //else
+        //{
 
-            ML.Result resultAutor = BL.Autor.GetAllAutor();//DDL INDEPENIENTES
+        //    ML.Result resultAutor = BL.Autor.GetAllAutor();//DDL INDEPENIENTES
 
-            medio.Autor.Autores = resultAutor.Objects;
-            return View(medio);
-        }
+        //    medio.Autor.Autores = resultAutor.Objects;
+        //    return View(medio);
+        //}
     }
+    [HttpGet]
+        public IActionResult GetByIdMedio(int idMedio)
+        {
+            ML.Result result = BL.Medio.GetByIdMedio(idMedio);
+            if (result.Correct)
+            {
+                ML.Medio medio = new ML.Medio();
+
+
+                medio = (ML.Medio)result.Object;
+
+                return Ok(medio);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
+        }
 
     [HttpGet]
-    public ActionResult Delete(int IdMedio)
-    {
-       // ML.Medio medio = new ML.Medio();
-
-        ML.Result result = BL.Medio.DeleteMedio(IdMedio);
-
-        if (result.Correct)
+    public JsonResult Delete(int idMedio)
         {
-            ViewBag.Mensaje = "Se ha eliminado correctamente";
+            ML.Result result = BL.Medio.DeleteMedio(idMedio);
+            return Json(result);
         }
-        else
-        {
-            ViewBag.Mensaje = "No se ha eliminado correctamente " + result.Message;
-        }
-
-        return PartialView("Modal");
-    }
 
     [HttpGet]
     public byte[] ConvertToBytes(IFormFile fuImagen)

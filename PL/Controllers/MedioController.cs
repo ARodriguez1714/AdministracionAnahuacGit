@@ -46,6 +46,8 @@ namespace PL.Controllers
         public IActionResult GetAllMedio()
         {
             ML.Result result = BL.Medio.GetAllMedio();
+            
+           
             if (result.Correct)
             {
                 return Ok(result);
@@ -85,9 +87,9 @@ namespace PL.Controllers
             medio.Editorial = new ML.Editorial();
             medio.Editorial.Editoriales = resultEditorial.Objects;
 
-            if (IdMedio == null)
+            if (IdMedio == 0)
             {
-                ViewBag.Accion = "Agregar"; //return View(autor);
+                ViewBag.Accion = "Agregar"; //return View(medio);
             }
             else
             {
@@ -96,6 +98,7 @@ namespace PL.Controllers
 
                 if (result.Correct)
                 {
+
                     medio.IdMedio = ((ML.Medio)result.Object).IdMedio;
                     medio.Nombre = ((ML.Medio)result.Object).Nombre;
                     medio.Archivo = ((ML.Medio)result.Object).Archivo;
@@ -132,19 +135,11 @@ namespace PL.Controllers
     [HttpPost]
     public IActionResult Form(ML.Medio medio, IFormFile fuImagen)
     {
+            
+
+            //if (ModelState.IsValid)
+            //{
             ML.Result result = new ML.Result();
-
-        //    if (ModelState.IsValid)
-        //{
-
-        //        //if (fuImagen.ContentLength > 0)
-        //        //{
-        //        //    medio.Imagen = ConvertToBytes(fuImagen);
-
-        //        //    string imagenBase64 = Convert.ToBase64String(medio.Imagen);
-        //        //}
-
-        //       // ML.Result result = new ML.Result();
 
             if (medio.IdMedio == 0)
             {
@@ -165,9 +160,9 @@ namespace PL.Controllers
             }
             else
             {
-                    //update
-                    medio.Imagen = ConvertToBytes(fuImagen);
-                    result = BL.Medio.UpdateMedio(medio);
+                //update
+                medio.Imagen = ConvertToBytes(fuImagen);
+                result = BL.Medio.UpdateMedio(medio);
 
                 if (result.Correct)
                 {
@@ -182,15 +177,15 @@ namespace PL.Controllers
 
             }
 
-        //}
-        //else
-        //{
+            //}
+            //else
+            //{
 
-        //    ML.Result resultAutor = BL.Autor.GetAllAutor();//DDL INDEPENIENTES
+            //    ML.Result resultAutor = BL.Autor.GetAllAutor();//DDL INDEPENIENTES
 
-        //    medio.Autor.Autores = resultAutor.Objects;
-        //    return View(medio);
-        //}
+            //    medio.Autor.Autores = resultAutor.Objects;
+            //    return View(medio);
+            //}
     }
     [HttpGet]
         public IActionResult GetByIdMedio(int idMedio)
@@ -215,6 +210,14 @@ namespace PL.Controllers
     public JsonResult Delete(int idMedio)
         {
             ML.Result result = BL.Medio.DeleteMedio(idMedio);
+            return Json(result);
+        }
+
+    [HttpPost]
+        public JsonResult CambiarStatus(int idMedio, bool disponibilidad)
+        {
+            ML.Result result = BL.Medio.ChangeStatus(idMedio, disponibilidad);
+
             return Json(result);
         }
 

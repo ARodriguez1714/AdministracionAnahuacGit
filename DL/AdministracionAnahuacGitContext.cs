@@ -51,7 +51,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=.; Database= AdministracionAnahuacGit; TrustServerCertificate=True; User ID=sa; Password=pass@word1;");
+        => optionsBuilder.UseSqlServer("Server=.; Database=AdministracionAnahuacGit; TrustServerCertificate=True; Trusted_Connection=True; User ID=sa; Password=pass@word1;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -129,7 +129,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Autor>(entity =>
         {
-            entity.HasKey(e => e.IdAutor).HasName("PK__Autor__DD33B0315943B210");
+            entity.HasKey(e => e.IdAutor).HasName("PK__Autor__DD33B0316C84A4F5");
 
             entity.ToTable("Autor");
 
@@ -140,6 +140,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
             entity.Property(e => e.ApellidoPaterno)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.Foto).HasMaxLength(50);
             entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -151,7 +152,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Colonium>(entity =>
         {
-            entity.HasKey(e => e.IdColonia).HasName("PK__Colonia__A1580F66B534046B");
+            entity.HasKey(e => e.IdColonia).HasName("PK__Colonia__A1580F666C858372");
 
             entity.Property(e => e.IdColonia).ValueGeneratedOnAdd();
             entity.Property(e => e.CodigoPostal)
@@ -168,7 +169,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Direccion>(entity =>
         {
-            entity.HasKey(e => e.IdDireccion).HasName("PK__Direccio__1F8E0C76D4D3BC96");
+            entity.HasKey(e => e.IdDireccion).HasName("PK__Direccio__1F8E0C76B241CD7D");
 
             entity.ToTable("Direccion");
 
@@ -194,7 +195,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Editorial>(entity =>
         {
-            entity.HasKey(e => e.IdEditorial).HasName("PK__Editoria__EF838671FE642A7C");
+            entity.HasKey(e => e.IdEditorial).HasName("PK__Editoria__EF8386715045E70F");
 
             entity.ToTable("Editorial");
 
@@ -206,7 +207,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Estado>(entity =>
         {
-            entity.HasKey(e => e.IdEstado).HasName("PK__Estado__FBB0EDC12C8D59D4");
+            entity.HasKey(e => e.IdEstado).HasName("PK__Estado__FBB0EDC1B76B68C3");
 
             entity.ToTable("Estado");
 
@@ -222,7 +223,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Idioma>(entity =>
         {
-            entity.HasKey(e => e.IdIdioma).HasName("PK__Idioma__C867BD36F7D1F46A");
+            entity.HasKey(e => e.IdIdioma).HasName("PK__Idioma__C867BD36FCCC2588");
 
             entity.ToTable("Idioma");
 
@@ -234,7 +235,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Medio>(entity =>
         {
-            entity.HasKey(e => e.IdMedio).HasName("PK__Medio__EF801860CC74F7E6");
+            entity.HasKey(e => e.IdMedio).HasName("PK__Medio__EF801860D8168343");
 
             entity.ToTable("Medio");
 
@@ -268,7 +269,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Municipio>(entity =>
         {
-            entity.HasKey(e => e.IdMunicipio).HasName("PK__Municipi__61005978582E78E9");
+            entity.HasKey(e => e.IdMunicipio).HasName("PK__Municipi__61005978B706DE5B");
 
             entity.ToTable("Municipio");
 
@@ -284,7 +285,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<Pai>(entity =>
         {
-            entity.HasKey(e => e.IdPais).HasName("PK__Pais__FC850A7B6860D8D4");
+            entity.HasKey(e => e.IdPais).HasName("PK__Pais__FC850A7B14FFD248");
 
             entity.Property(e => e.IdPais).ValueGeneratedOnAdd();
             entity.Property(e => e.Nombre)
@@ -294,7 +295,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<TipoAutor>(entity =>
         {
-            entity.HasKey(e => e.IdTipoAutor).HasName("PK__TipoAuto__B033C3B0D23A2331");
+            entity.HasKey(e => e.IdTipoAutor).HasName("PK__TipoAuto__B033C3B0188A3C47");
 
             entity.ToTable("TipoAutor");
 
@@ -306,7 +307,7 @@ public partial class AdministracionAnahuacGitContext : DbContext
 
         modelBuilder.Entity<TipoMedio>(entity =>
         {
-            entity.HasKey(e => e.IdTipoMedio).HasName("PK__TipoMedi__7A9964B2A61F911D");
+            entity.HasKey(e => e.IdTipoMedio).HasName("PK__TipoMedi__7A9964B2FD29252F");
 
             entity.ToTable("TipoMedio");
 

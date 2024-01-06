@@ -114,6 +114,7 @@
                                 @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre" })
                             </div>
                         </div>
+                        <br />
                         <div class="row">
                             <div class="col-md-6">
                                 @Html.LabelFor(model => model.Archivo)
@@ -121,22 +122,38 @@
                                 <input type="file" id="file" name="myFile" />
                             </div>
                         </div>
+                        <br />
                         <div class="row">
                             <div class="col-md-12">
                                 @Html.LabelFor(model => model.Descripcion)
                                 @Html.TextBoxFor(model => model.Descripcion, new { @class = "form-control", @id = "txtDescripcion" })
                             </div>
                         </div>
+                        <br />
                         <div class="row">
                             <div class="col-md-6">
                                 @Html.LabelFor(model => model.Disponibilidad)
-                                @*  @Html.TextBoxFor(model => model.Disponibilidad, new { @class = "form-control" })*@
-                                <label> @Html.RadioButtonFor(model => model.Disponibilidad, "Si", new { @class = "form-control", @id = "rbtnSi" }) Si</label>
-                                <label> @Html.RadioButtonFor(model => model.Disponibilidad, "No", new { @class = "form-control", @id = "rbtnNo" }) No</label>
+                                @if (Model.Disponibilidad == null)
+                                {
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked onchange="ChangeStatus(medio.IdMedio, this)">
+                                        </div>
+                                    </td>
 
+                                }
+                                else
+                                {
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onchange="ChangeStatus(medio.IdMedio, this);">
+                                        </div>
+                                    </td>
+                                }
                             </div>
                         </div>
-
+                        
+                        
                         <br />
                         <div class="row">
                             <div class="col-md-12">
@@ -233,7 +250,31 @@
     <script type="text/javascript">
         $(document).ready(function () {
             GetAll();
+
+
+            $("#ddlAutor").change(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetAllAutor")',
+                    dataType: 'json',
+                    data: { IdAutor: $("#ddlAutor").val() },
+                    success: function (autores) {
+                        $("#ddlAutor").append('<option value="0">' + 'Seleccione una opción' + '</option>');
+                        $.each(autores, function (i, autores) {
+                            $("#ddlAutores").append('<option value ="'
+                                + autores.idAutor + '">'
+                                + autores.nombre + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed. ' + ex)
+                    }
+                });
+            });
+
         });
+
+
 
         function PreviewImage(event) {
             var output = document.getElementById('imgMedio');
@@ -290,7 +331,7 @@
             $('#ddlIdioma').val("");
             $('#ddlTipoMedio').val("");
             $('#ddlEditorial').val("");
-            $('#imgMedio').attr('src', '/Images/medio,png');
+            $('#imgMedio').attr('src', '/Images/medio.png');
             $('#modal').modal('show');
         });
 
@@ -378,7 +419,7 @@
                     $('#ddlTipoMedio').val(data.tipoMedio.idTipoMedio)
                     $('#ddlEditorial').val(data.editorial.idEditorial)
 
-                    $('#subirFoto').empty();
+                    $('#subirImagen').empty();
 
                     var imagen;
 
@@ -388,7 +429,7 @@
                     else {
                         imagen = '<img src="data:image/png;base64,' + data.imagen + '"id="imgMedio" width = "50px" height = "50px"/>'
                     }
-                    $('#subirFoto').append(imagen);
+                    $('#subirImagen').append(imagen);
 
                     $('#modal').modal('show');
 
@@ -456,7 +497,19 @@
                 return false;
             }
         }
-
+        function ChangeStatus(idMedio, e) {
+            var disponibilidad = e.checked
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CambiarStatus")',
+                dataType: 'json',
+                data: { idMedio, disponibilidad },
+                success: {},
+                error: function (ex) {
+                    alert('Failed.' + ex);
+                }
+            });
+        }
     </script>
 }
 

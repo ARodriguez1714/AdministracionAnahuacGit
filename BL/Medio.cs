@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using DL;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ML;
 using System;
@@ -48,13 +49,16 @@ namespace BL
 
                                  }).ToList();
 
-                    result.Objects = new List<object>();
 
-                    if (query != null && query.ToList().Count > 0)
+                    if (query.Count > 0) //query != null && query.ToList().Count > 0
                     {
+
+                        result.Objects = new List<object>();
+
                         foreach (var obj in query)
                         {
                             ML.Medio medio = new ML.Medio();
+
                             medio.IdMedio = obj.IdMedio;
                             medio.Nombre = obj.Nombre;
                             medio.Archivo = obj.Archivo;
@@ -271,6 +275,32 @@ namespace BL
                 throw;
             }
 
+            return result;
+        }
+
+        public static ML.Result ChangeStatus(int idMedio, bool disponibilidad)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL.AdministracionAnahuacGitContext context = new DL.AdministracionAnahuacGitContext())
+                {
+                   var query = context.Database.ExecuteSqlRaw($"MedioDisponibilidad {idMedio}, '{disponibilidad}'");
+
+                    if (query >= 1)
+                    {
+                        result.Correct = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.Message = "Error al realizar la consulta. " + result.Ex;
+                throw;
+            }
             return result;
         }
     }

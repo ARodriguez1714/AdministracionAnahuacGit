@@ -21,6 +21,6 @@ namespace ML
         [Display(Name = "Número Exterior:")]
         public string? NumeroExterior { get; set; }
         public ML.Colonia? Colonia { get; set; }
-        public ML.Editorial? Editorial { get; set; }
+        //public ML.Editorial? Editorial { get; set; }
     }
 }

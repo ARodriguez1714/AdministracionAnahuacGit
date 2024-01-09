@@ -13,12 +13,12 @@ function GetAll() {
             $.each(result, function (i, rol) {
                 var fila =
                     '<tr>'
-                    + '<td style="text-align: center; vertical-align: middle;"><button type="button" class="btn btn-info" id="btnAsignar" onclick="Asignar(this)" value="' + rol.id + '">Asignar</button></td>'
+                    + '<td style="text-align: center; vertical-align: middle;"><button type="button" class="btn btn-info" id="btnAsignar" onclick="Asignar(this)" value="' + rol.id + '"><i class="bi bi-person-fill-gear"></i></button></td>'
                     // + '<td style="display: none;"></td>'
                     + '<td style="text-align: center;">' + rol.name + '</td>'
-                    + '<td style="text-align: center; vertical-align: middle;"><button type="button" class="btn btn-warning" id="btnUpdate" onclick="Actualizar(this)"  value="' + rol.id + '">Editar</button></td>'
+                    + '<td style="text-align: center; vertical-align: middle;"><button type="button" class="btn btn-warning" id="btnUpdate" onclick="Actualizar(this)"  value="' + rol.id + '"><i class="bi bi-pencil"></i></button></td>'
                     // + '<td style="display: none;"></td>'
-                    + '<td style="text-align: center; vertical-align: middle;"><button type="button" class="btn btn-danger" onclick="Delete(this)"  value="' + rol.id + '">Eliminar</button></td>'
+                    + '<td style="text-align: center; vertical-align: middle;"><button type="button" class="btn btn-danger" onclick="Delete(this)"  value="' + rol.id + '"><i class="bi bi-trash3"></i></button></td>'
                     + '</tr>';
                 $('#tBodyRol').append(fila);
             });

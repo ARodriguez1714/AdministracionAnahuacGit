@@ -36,53 +36,53 @@ namespace PL.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult GetAllEditorial()
-        {
-            ML.Result result = BL.Editorial.GetAllEditorial();
-            if (result.Correct)
-            {
-                return Ok(result);
-            }
-            else
-            {
-                return BadRequest(result);
-            }
-        }
+        //[HttpGet]
+        //public IActionResult GetAllEditorial()
+        //{
+        //    ML.Result result = BL.Editorial.GetAllEditorial();
+        //    if (result.Correct)
+        //    {
+        //        return Ok(result);
+        //    }
+        //    else
+        //    {
+        //        return BadRequest(result);
+        //    }
+        //}
 
 
-        [HttpGet]
-        public IActionResult GetByIdEditorial(byte idEditorial)
-        {
-            ML.Result result = BL.Editorial.GetByIdEditorial(idEditorial);
-            if (result.Correct)
-            {
-                ML.Editorial editorial = new ML.Editorial();
-                editorial.Direccion = new ML.Direccion();
-                editorial.Direccion.Colonia = new ML.Colonia();
-                editorial.Direccion.Colonia.Municipio = new ML.Municipio();
-                editorial.Direccion.Colonia.Municipio.Estado = new ML.Estado();
-                editorial.Direccion.Colonia.Municipio.Estado.Pais = new ML.Pais();
+        //[HttpGet]
+        //public IActionResult GetByIdEditorial(byte idEditorial)
+        //{
+        //    ML.Result result = BL.Editorial.GetByIdEditorial(idEditorial);
+        //    if (result.Correct)
+        //    {
+        //        ML.Editorial editorial = new ML.Editorial();
+        //        editorial.Direccion = new ML.Direccion();
+        //        editorial.Direccion.Colonia = new ML.Colonia();
+        //        editorial.Direccion.Colonia.Municipio = new ML.Municipio();
+        //        editorial.Direccion.Colonia.Municipio.Estado = new ML.Estado();
+        //        editorial.Direccion.Colonia.Municipio.Estado.Pais = new ML.Pais();
 
 
-                editorial = (ML.Editorial)result.Object;
+        //        editorial = (ML.Editorial)result.Object;
 
-                ML.Result resultPaises = BL.Pais.GetAll();
-                ML.Result resultEstados = BL.Estado.GetByIdPais(editorial.Direccion.Colonia.Municipio.Estado.Pais.IdPais.Value);
-                ML.Result resultMunicipios = BL.Municipio.GetByIdEstado(editorial.Direccion.Colonia.Municipio.Estado.IdEstado.Value);
-                ML.Result resultColonias = BL.Colonia.GetByIdMunicipio(editorial.Direccion.Colonia.Municipio.IdMunicipio.Value);
+        //        ML.Result resultPaises = BL.Pais.GetAll();
+        //        ML.Result resultEstados = BL.Estado.GetByIdPais(editorial.Direccion.Colonia.Municipio.Estado.Pais.IdPais.Value);
+        //        ML.Result resultMunicipios = BL.Municipio.GetByIdEstado(editorial.Direccion.Colonia.Municipio.Estado.IdEstado.Value);
+        //        ML.Result resultColonias = BL.Colonia.GetByIdMunicipio(editorial.Direccion.Colonia.Municipio.IdMunicipio.Value);
 
-                editorial.Direccion.Colonia.Municipio.Estado.Pais.Paises = resultPaises.Objects;
-                editorial.Direccion.Colonia.Municipio.Estado.Estados = resultEstados.Objects;
-                editorial.Direccion.Colonia.Municipio.Municipios = resultMunicipios.Objects;
-                editorial.Direccion.Colonia.Colonias = resultColonias.Objects;
-                return Ok(editorial);
-            }
-            else
-            {
-                return BadRequest(result);
-            }
-        }
+        //        editorial.Direccion.Colonia.Municipio.Estado.Pais.Paises = resultPaises.Objects;
+        //        editorial.Direccion.Colonia.Municipio.Estado.Estados = resultEstados.Objects;
+        //        editorial.Direccion.Colonia.Municipio.Municipios = resultMunicipios.Objects;
+        //        editorial.Direccion.Colonia.Colonias = resultColonias.Objects;
+        //        return Ok(editorial);
+        //    }
+        //    else
+        //    {
+        //        return BadRequest(result);
+        //    }
+        //}
 
         [HttpPost]
         public JsonResult GetEstado(byte idPais)
@@ -138,10 +138,10 @@ namespace PL.Controllers
                 }
             }
         }
-        public JsonResult Delete(byte idEditorial)
-        {
-            ML.Result result = BL.Editorial.DeleteEditorial(idEditorial);
-            return Json(result);
-        }
+        //public JsonResult Delete(byte idEditorial)
+        //{
+        //    ML.Result result = BL.Editorial.DeleteEditorial(idEditorial);
+        //    return Json(result);
+        //}
     }
 }

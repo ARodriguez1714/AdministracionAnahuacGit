@@ -10,8 +10,7 @@ namespace ML
     {
         public byte? IdEditorial { get; set; }
         public string Nombre { get; set; }
-        public List<object> Editoriales { get; set; }
-
         public ML.Direccion? Direccion { get; set; }
+        public List<object> Editoriales { get; set; }
     }
 }

@@ -10,32 +10,30 @@ namespace PL.Controllers
     {
         public IActionResult GetAll()
         {
-            ML.Result result = BL.Autor.GetAllAutor();
-            ML.Autor autor = new ML.Autor();
-
-            ML.Result resultTipoAutor = BL.TipoAutor.GetAllTipoAutor();
-            autor.TipoAutor = new ML.TipoAutor();
-            autor.TipoAutor.TipoAutores = resultTipoAutor.Objects;
-            if (result.Correct)
-            {
-                autor.Autores = result.Objects;
-                return View(autor);
-            }
-            else
-            {
-                ViewBag.Error = result.Message;
-                return View("Modal");
-            }
+            return View();
 
         }
 
+        //[HttpGet]
+        //public  IActionResult GetAutores()
+        //{
+        //    ML.Result result = BL.Autor.GetAllAutor();
+        //    if (result.Correct)
+        //    {
+        //        //autor.Autores = result.Objects;
+        //        return Ok(result);
+        //    }
+        //    else
+        //    {
+        //        return BadRequest(result);
+        //    }
+        //}
         [HttpGet]
-        public  IActionResult GetAutores()
+        public  IActionResult GetAllTipoAutor()
         {
-            ML.Result result = BL.Autor.GetAllAutor();
+            ML.Result result = BL.TipoAutor.GetAllTipoAutor();
             if (result.Correct)
             {
-                //autor.Autores = result.Objects;
                 return Ok(result);
             }
             else
@@ -44,59 +42,54 @@ namespace PL.Controllers
             }
         }
 
-        [HttpGet]
-        public JsonResult GetById(byte idAutor)
-        {
+        //[HttpGet]
+        //public JsonResult GetById(byte idAutor)
+        //{
 
-            ML.Result result = BL.Autor.GetByIdAutor(idAutor);
-            if (result.Correct)
-            {
-                return Json(result);
-            }
+        //    ML.Result result = BL.Autor.GetByIdAutor(idAutor);
+        //    if (result.Correct)
+        //    {
+        //        return Json(result);
+        //    }
 
-            return Json(result);
+        //    return Json(result);
 
-        }
-        [HttpGet]
-        public IActionResult Form(byte idAutor)
-        {
-            ML.Autor autor = new ML.Autor();
-            ML.Result resultTipoAutor = BL.TipoAutor.GetAllTipoAutor();
-            autor.TipoAutor = new ML.TipoAutor();
-            autor.TipoAutor.TipoAutores = resultTipoAutor.Objects;
+        //}
+        //[HttpGet]
+        //public IActionResult Form(byte idAutor)
+        //{
+        //    ML.Autor autor = new ML.Autor();
+        //    ML.Result resultTipoAutor = BL.TipoAutor.GetAllTipoAutor();
+        //    autor.TipoAutor = new ML.TipoAutor();
+        //    autor.TipoAutor.TipoAutores = resultTipoAutor.Objects;
 
-            if (idAutor == 0)
-            {
-                //add
-                return View(autor);
-            }
-            else
-            {
-                //Update
-                ML.Result result = BL.Autor.GetByIdAutor(idAutor);
-                if (result.Correct)
-                {
-                    autor = (ML.Autor)result.Object;
-                    autor.TipoAutor.TipoAutores = resultTipoAutor.Objects;
-                    return View(autor);
-                }
-                else
-                {
-                    ViewBag.Alert = "danger";
-                    ViewBag.Message = result.Message;
-                    return View("Modal");
-                }
-            }
-        }
+        //    if (idAutor == 0)
+        //    {
+        //        //add
+        //        return View(autor);
+        //    }
+        //    else
+        //    {
+        //        //Update
+        //        ML.Result result = BL.Autor.GetByIdAutor(idAutor);
+        //        if (result.Correct)
+        //        {
+        //            autor = (ML.Autor)result.Object;
+        //            autor.TipoAutor.TipoAutores = resultTipoAutor.Objects;
+        //            return View(autor);
+        //        }
+        //        else
+        //        {
+        //            ViewBag.Alert = "danger";
+        //            ViewBag.Message = result.Message;
+        //            return View("Modal");
+        //        }
+        //    }
+        //}
         [HttpPost]
         public IActionResult Form(ML.Autor autor, IFormFile fuImagen)
         {
             ML.Result result = new ML.Result();
-
-            //ML.Result resultTipoAutor = BL.TipoAutor.GetAllTipoAutor();
-            //autor.TipoAutor = new ML.TipoAutor();
-            //autor.TipoAutor.TipoAutores = resultTipoAutor.Objects;
-
 
             if (autor.IdAutor == 0)
             {
@@ -141,12 +134,12 @@ namespace PL.Controllers
                 return memoryStream.ToArray();
             }
         }
-        public Image ConvertToImage(byte[] imageBytes)
-        {
-            using (var ms = new MemoryStream(imageBytes))
-            {
-                return Image.FromStream(ms);
-            }
-        }
+        //public Image ConvertToImage(byte[] imageBytes)
+        //{
+        //    using (var ms = new MemoryStream(imageBytes))
+        //    {
+        //        return Image.FromStream(ms);
+        //    }
+        //}
     }
 }

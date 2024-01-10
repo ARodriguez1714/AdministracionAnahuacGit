@@ -2,27 +2,26 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Iniciar Sesión";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
-                <hr />
+<body>
+    <div class="wrapper">
+        <div class="row">
+            <form id="account" method="post" class="form">
+
+                <h1 class="title"> @ViewData["Title"]</h1>
+
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                    <label asp-for="Input.Email" class="form-label">Email</label>
+
+                <div class="inp">
+                    <input asp-for="Input.Email" class="input" autocomplete="username" aria-required="true" placeholder="Correo" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label asp-for="Input.Password" class="form-label">Password</label>
+                <br />
+                    <input asp-for="Input.Password" class="input" autocomplete="current-password" aria-required="true" placeholder="Contraseña" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
+                <br />
                 <div class="checkbox mb-3">
                     <label asp-for="Input.RememberMe" class="form-label">
                         <input class="form-check-input" asp-for="Input.RememberMe" />
@@ -30,54 +29,147 @@
                     </label>
                 </div>
                 <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                    <button class="submit" id="login-submit">Iniciar sesión</button>
                 </div>
-                <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
+                <br />
+                <div> 
+                    <h6>
+                        <a class="link" id="forgot-password" asp-page="./ForgotPassword">¿Olvidaste tu contraseña?</a> <br />
+                        <a class="link" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registrarse como usuario nuevo</a> <br />
+                        <a class="link" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar confirmación por correo electrónico</a>
+                    </h6>
                 </div>
             </form>
-        </section>
+            <div></div>
+            <div class="banner">
+                <h1 class="wel_text">
+                    Bienvenido
+                </h1>
+                <p class="para">
+                    a la Biblioteca <img src="/Images/Logo.png" heigh="40px" width="35" alt=""></a>
+                </p>
+            </div>
+
+        </div>
     </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to log in.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
-</div>
+</body>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-}
+    }
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: arial;
+        color: #fff;
+    }
+
+
+    body {
+        width: 100vw;
+        height: 100vh;
+        background: #081b29;
+        display: grid;
+        justify-content: center;
+        align-content: center;
+    }
+
+    ::-webkit-input-placeholder {
+        color: #eee;
+    }
+
+    .wrapper {
+        position: relative;
+        width: 900px;
+        height: 65vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border: 3px solid #00ffff;
+        box-shadow: 0 0 50px 0 #00a6bc;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .title {
+        font-size: 35px;
+        color: #fff;
+    }
+
+    .inp {
+        padding-bottom: 5px;
+        border-bottom: 2px solid #eee;
+    }
+
+    .input {
+        border: none;
+        outline: none;
+        background: none;
+        width: 260px;
+        margin-top: 40px;
+        padding-right: 5px;
+        font-size: 17px;
+        color: #0ef;
+    }
+
+    .submit {
+        border: none;
+        outline: none;
+        width: 288px;
+        margin-top: 25px;
+        padding: 10px 0;
+        font-size: 20px;
+        border-radius: 40px;
+        letter-spacing: 1px;
+        cursor: pointer;
+        background: linear-gradient(45deg, #0ef, #c800ff);
+    }
+
+    .footer {
+        margin-top: 30px;
+        letter-spacing: 0.5px;
+        font-size: 14px;
+        color: #fff;
+    }
+
+    .link {
+        color: #0ef;
+        text-decoration: none;
+    }
+
+    .banner {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 450px;
+        height: 390px;
+        background: linear-gradient(to right,#0ef, #c800ff );
+        clip-path: polygon(0 0,100% 0,100% 100%, 60% 100%);
+        padding-right: 70px;
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    .wel_text {
+        font-size: 40px;
+        margin-top: -50px;
+        line-height: 50px;
+        color: #fff;
+    }
+
+    .para {
+        margin-top: 10px;
+        font-size: 18px;
+        line-height: 24px;
+        letter-spacing: 1px;
+    }
+</style>

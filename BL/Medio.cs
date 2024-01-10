@@ -139,7 +139,7 @@ namespace BL
             {
                 using (DL.AdministracionAnahuacGitContext context = new DL.AdministracionAnahuacGitContext())
                 {
-                    var query = context.Database.ExecuteSqlRaw($"MedioUpdate {medio.IdMedio}, '{medio.Nombre}','{medio.Archivo}','{medio.Descripcion}','{medio.Disponibilidad}', @Imagen, '{medio.Autor.IdAutor}','{medio.Idioma.IdIdioma}','{medio.TipoMedio.IdTipoMedio}','{medio.Editorial.IdEditorial}'", new SqlParameter("@Imagen", medio.Imagen));
+                    var query = context.Database.ExecuteSqlRaw($"MedioUpdate '{medio.IdMedio}', '{medio.Nombre}','{medio.Archivo}','{medio.Descripcion}','{medio.Disponibilidad}', @Imagen, '{medio.Autor.IdAutor}','{medio.Idioma.IdIdioma}','{medio.TipoMedio.IdTipoMedio}','{medio.Editorial.IdEditorial}'", new SqlParameter("@Imagen", medio.Imagen));
                     if (query > 0)
                     {
                         result.Correct = true;

@@ -9,7 +9,7 @@ namespace ML
     public class TipoMedio
     {
         public byte? IdTipoMedio { get; set; }
-        public string Nombre { get; set; }
-        public List<object> TipoMedios { get; set; }
+        public string? Nombre { get; set; }
+        public List<object>? TipoMedios { get; set; }
     }
 }

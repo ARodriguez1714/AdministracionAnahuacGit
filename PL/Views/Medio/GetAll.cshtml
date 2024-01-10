@@ -14,7 +14,7 @@
 
     <div class="row">
         <div class="col-md-12">
-          @*   @Html.ActionLink(" Agregar ", "Form", "Medio", htmlAttributes: new { @class = "btn btn-success bi bi-plus-circle-fill" }) *@
+            @*   @Html.ActionLink(" Agregar ", "Form", "Medio", htmlAttributes: new { @class = "btn btn-success bi bi-plus-circle-fill" }) *@
 
             <button type="button" class="btn btn-success  bi bi-plus-circle-fil" id="btnAdd"> Agregar</button>
         </div>
@@ -43,39 +43,39 @@
                         </tr>
                     </thead>
                     @* <tbody>
-                        @foreach (ML.Medio medio in Model.Medios)
-                        {
-                            <tr>
-                                <td class="text-center"><a class="btn btn-warning bi bi-pencil-fill" href="@Url.Action("Form", "Medio", new { IdMedio = medio.IdMedio })"></a></td>
+                @foreach (ML.Medio medio in Model.Medios)
+                {
+                <tr>
+                <td class="text-center"><a class="btn btn-warning bi bi-pencil-fill" href="@Url.Action("Form", "Medio", new { IdMedio = medio.IdMedio })"></a></td>
 
-                                <td hidden>@medio.IdMedio</td>
-                                <td class="text-center">@medio.Nombre</td>
-                                <td class="text-center">@medio.Archivo</td>
-                                <td class="text-center">@medio.Descripcion</td>
-                                <td class="text-center">@medio.Disponibilidad</td>
-                                <td class="text-center">
-                                    @if (medio.Imagen == null)
-                                    {
-                                        <img src="~/Images/medio.png" width="50px" height="50px" />
-                                    }
-                                    else
-                                    {
-                                        <img src="data:image/png;base64, @Convert.ToBase64String(medio.Imagen)" width="50px" height="50px" />
-                                    }
-                                </td>
-                                <td class="visually-hidden">@medio.Autor.IdAutor</td>
-                                <td class="text-center">@medio.Autor.Nombre</td>
-                                <td class="visually-hidden">@medio.Idioma.IdIdioma</td>
-                                <td class="text-center">@medio.Idioma.Nombre</td>
-                                <td class="visually-hidden">@medio.TipoMedio.IdTipoMedio</td>
-                                <td class="text-center">@medio.TipoMedio.Nombre</td>
-                                <td class="visually-hidden">@medio.Editorial.IdEditorial</td>
-                                <td class="text-center">@medio.Editorial.Nombre</td>
+                <td hidden>@medio.IdMedio</td>
+                <td class="text-center">@medio.Nombre</td>
+                <td class="text-center">@medio.Archivo</td>
+                <td class="text-center">@medio.Descripcion</td>
+                <td class="text-center">@medio.Disponibilidad</td>
+                <td class="text-center">
+                @if (medio.Imagen == null)
+                {
+                <img src="~/Images/medio.png" width="50px" height="50px" />
+                }
+                else
+                {
+                <img src="data:image/png;base64, @Convert.ToBase64String(medio.Imagen)" width="50px" height="50px" />
+                }
+                </td>
+                <td class="visually-hidden">@medio.Autor.IdAutor</td>
+                <td class="text-center">@medio.Autor.Nombre</td>
+                <td class="visually-hidden">@medio.Idioma.IdIdioma</td>
+                <td class="text-center">@medio.Idioma.Nombre</td>
+                <td class="visually-hidden">@medio.TipoMedio.IdTipoMedio</td>
+                <td class="text-center">@medio.TipoMedio.Nombre</td>
+                <td class="visually-hidden">@medio.Editorial.IdEditorial</td>
+                <td class="text-center">@medio.Editorial.Nombre</td>
 
-                                <td class="text-center"><a class="btn btn-danger bi bi-trash-fill" href="@Url.Action("Delete", "Medio", new { IdMedio = medio.IdMedio})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+                <td class="text-center"><a class="btn btn-danger bi bi-trash-fill" href="@Url.Action("Delete", "Medio", new { IdMedio = medio.IdMedio})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
 
-                            </tr>
-                        } *@
+                </tr>
+                } *@
                     <tbody id="tBodyMedio">
                     </tbody>
                 </table>
@@ -152,8 +152,8 @@
                                 }
                             </div>
                         </div>
-                        
-                        
+
+
                         <br />
                         <div class="row">
                             <div class="col-md-12">
@@ -182,7 +182,7 @@
                                 }
                                 else
                                 {
-                                    @Html.DropDownListFor(model => model.Autor.IdAutor, new SelectList(Model.Autor.Autores, "IdAutor", "Nombre"), "Seleccione una opción", new { @class = "form-control", @id = "ddlAutor" })
+                                    @Html.DropDownListFor(model => model.Autor.IdAutor, new SelectList(Model.Autor.Autores, "IdAutor", "Nombre"), "Seleccione una opción", htmlAttributes: new { @class = "form-control", @id = "ddlAutor" })
                                 }
                             </div>
                         </div>
@@ -195,7 +195,7 @@
                                 }
                                 else
                                 {
-                                    @Html.DropDownListFor(model => model.Idioma.IdIdioma, new SelectList(Model.Idioma.Idiomas, "IdIdioma", "Nombre"), "Seleccione una opción", new { @class = "form-control", @id = "ddlIdioma" })
+                                    @Html.DropDownListFor(model => model.Idioma.IdIdioma, new SelectList(Model.Idioma.Idiomas, "IdIdioma", "Nombre"), "Seleccione una opción", htmlAttributes: new { @class = "form-control", @id = "ddlIdioma" })
                                 }
                             </div>
                         </div>
@@ -208,7 +208,7 @@
                                 }
                                 else
                                 {
-                                    @Html.DropDownListFor(model => model.TipoMedio.IdTipoMedio, new SelectList(Model.TipoMedio.TipoMedios, "IdTipoMedio", "Nombre"), "Seleccione una opción", new { @class = "form-control", @id = "ddlTipoMedio" })
+                                    @Html.DropDownListFor(model => model.TipoMedio.IdTipoMedio, new SelectList(Model.TipoMedio.TipoMedios, "IdTipoMedio", "Nombre"), "Seleccione una opción", htmlAttributes: new { @class = "form-control", @id = "ddlTipoMedio" })
                                 }
                             </div>
                         </div>
@@ -221,7 +221,7 @@
                                 }
                                 else
                                 {
-                                    @Html.DropDownListFor(model => model.Editorial.IdEditorial, new SelectList(Model.Editorial.Editoriales, "IdEditorial", "Nombre"), "Seleccione una opción", new { @class = "form-control", @id = "ddlEditorial" })
+                                    @Html.DropDownListFor(model => model.Editorial.IdEditorial, new SelectList(Model.Editorial.Editoriales, "IdEditorial", "Nombre"), "Seleccione una opción", htmlAttributes: new { @class = "form-control", @id = "ddlEditorial" })
                                 }
                             </div>
                         </div>
@@ -250,37 +250,17 @@
     <script type="text/javascript">
         $(document).ready(function () {
             GetAll();
-
-
-            $("#ddlAutor").change(function () {
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("GetAllAutor")',
-                    dataType: 'json',
-                    data: { IdAutor: $("#ddlAutor").val() },
-                    success: function (autores) {
-                        $("#ddlAutor").append('<option value="0">' + 'Seleccione una opción' + '</option>');
-                        $.each(autores, function (i, autores) {
-                            $("#ddlAutores").append('<option value ="'
-                                + autores.idAutor + '">'
-                                + autores.nombre + '</option>');
-                        });
-                    },
-                    error: function (ex) {
-                        alert('Failed. ' + ex)
-                    }
-                });
-            });
-
+            GetAllAutor();
+            GetAllIdioma();
+            GetAllTipoMedio();
+            GetAllEditorial();
         });
-
-
 
         function PreviewImage(event) {
             var output = document.getElementById('imgMedio');
             output.src = URL.createObjectURL(event.target.files[0]);
             output.onload = function () {
-                URL.revokeObjectURL(output.src) 
+                URL.revokeObjectURL(output.src)
             }
         };
 
@@ -320,6 +300,86 @@
             });
         };
 
+        function GetAllAutor() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetAllAutor")',
+                dataType: 'json',
+                success: function (result) {
+                    $('#ddlAutor').empty();
+                    $('#ddlAutor').append('<option value="' + 0 + '">' + 'Seleccione una opción' + '</option>');
+                    $.each(result.objects, function (i, autor) {
+                        var select =
+                            '<option value="' + autor.idAutor + '">' + autor.nombre + '</option>';
+                        $("#ddlAutor").append(select);
+                    });
+                },
+                error: function (result) {
+                    alert('Error en la consulta.');
+                }
+            });
+        };
+
+        function GetAllIdioma() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetAllIdioma")',
+                dataType: 'json',
+                success: function (result) {
+                    $('#ddlIdioma').empty();
+                    $('#ddlIdioma').append('<option value="' + 0 + '">' + 'Seleccione una opción' + '</option>');
+                    $.each(result.objects, function (i, idioma) {
+                        var select =
+                            '<option value="' + idioma.idIdioma + '">' + idioma.nombre + '</option>';
+                        $("#ddlIdioma").append(select);
+                    });
+                },
+                error: function (result) {
+                    alert('Error en la consulta.');
+                }
+            });
+        };
+
+        function GetAllTipoMedio() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetAllTipoMedio")',
+                dataType: 'json',
+                success: function (result) {
+                    $('#ddlTipoMedio').empty();
+                    $('#ddlTipoMedio').append('<option value="' + 0 + '">' + 'Seleccione una opción' + '</option>');
+                    $.each(result.objects, function (i, tipoMedio) {
+                        var select =
+                            '<option value="' + tipoMedio.idTipoMedio + '">' + tipoMedio.nombre + '</option>';
+                        $("#ddlTipoMedio").append(select);
+                    });
+                },
+                error: function (result) {
+                    alert('Error en la consulta.');
+                }
+            });
+        };
+
+        function GetAllEditorial() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetAllEditorial")',
+                dataType: 'json',
+                success: function (result) {
+                    $('#ddlEditorial').empty();
+                    $('#ddlEditorial').append('<option value="' + 0 + '">' + 'Seleccione una opción' + '</option>');
+                    $.each(result.objects, function (i, editorial) {
+                        var select =
+                            '<option value="' + editorial.idEditorial + '">' + editorial.nombre + '</option>';
+                        $("#ddlEditorial").append(select);
+                    });
+                },
+                error: function (result) {
+                    alert('Error en la consulta.');
+                }
+            });
+        };
+
         $('#btnAdd').click(function () {
             $("#txtIdMedio").val("");
             $("#txtNombre").val("");
@@ -327,10 +387,10 @@
             $('#txtDescripcion').val("");
             $('#txtDisponibilidad').val("");
             $('#fuImagen').val("");
-            $('#ddlAutor').val("");
-            $('#ddlIdioma').val("");
-            $('#ddlTipoMedio').val("");
-            $('#ddlEditorial').val("");
+            $("#ddlAutor").val("0");
+            $('#ddlIdioma').val("0");
+            $('#ddlTipoMedio').val("0");
+            $('#ddlEditorial').val("0");
             $('#imgMedio').attr('src', '/Images/medio.png');
             $('#modal').modal('show');
         });
@@ -417,7 +477,7 @@
                     $('#ddlAutor').val(data.autor.idAutor)
                     $('#ddlIdioma').val(data.idioma.idIdioma)
                     $('#ddlTipoMedio').val(data.tipoMedio.idTipoMedio)
-                    $('#ddlEditorial').val(data.editorial.idEditorial)
+                    $('#ddlEditorial').val(data.idEditorial)
 
                     $('#subirImagen').empty();
 

@@ -3,17 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SL.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] 
     //[EnableCors]
     [EnableCors("API")]
     [ApiController]
-    public class IdiomaController : ControllerBase
+    public class TipoMedioController : ControllerBase
     {
-        // GET: IdiomaController
+        // GET: TipoMedioaController
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            ML.Result result = BL.Idioma.GetAllIdioma();
+            ML.Result result = BL.TipoMedio.GetAllTipoMedio();
 
             if (result.Correct)
             {
@@ -27,9 +27,9 @@ namespace SL.Controllers
 
         [EnableCors("API")]
         [HttpPost("add")]
-        public IActionResult Add([FromBody] ML.Idioma idioma)
+        public IActionResult Add([FromBody] ML.TipoMedio tipoMedio)
         {
-            ML.Result result = BL.Idioma.AddIdioma(idioma);
+            ML.Result result = BL.TipoMedio.AddTipoMedio(tipoMedio);
 
             if (result.Correct)
             {
@@ -42,9 +42,9 @@ namespace SL.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult Update([FromBody] ML.Idioma idioma)
+        public IActionResult Update([FromBody] ML.TipoMedio tipoMedio)
         {
-            ML.Result result = BL.Idioma.UpdateIdioma(idioma);
+            ML.Result result = BL.TipoMedio.UpdateTipoMedio(tipoMedio);
 
             if (result.Correct)
             {
@@ -56,10 +56,10 @@ namespace SL.Controllers
             }
         }
 
-        [HttpDelete("delete/{IdIdioma}")]
-        public IActionResult Delete(int IdIdioma)
+        [HttpDelete("delete/{IdTipoMedio}")]
+        public IActionResult Delete(int IdTipoMedio)
         {
-            ML.Result result = BL.Idioma.DeleteIdioma(IdIdioma);
+            ML.Result result = BL.TipoMedio.DeleteTipoMedio(IdTipoMedio);
 
             if (result.Correct)
             {
@@ -71,10 +71,10 @@ namespace SL.Controllers
             }
         }
 
-        [HttpGet("getbyid/{IdIdioma}")]
-        public IActionResult GetById(int IdIdioma)
+        [HttpGet("getbyid/{IdTipoMedio}")]
+        public IActionResult GetById(int IdTipoMedio)
         {
-            ML.Result result = BL.Idioma.GetByIdIdioma(IdIdioma);
+            ML.Result result = BL.TipoMedio.GetByIdTipoMedio(IdTipoMedio);
 
             if (result.Correct)
             {

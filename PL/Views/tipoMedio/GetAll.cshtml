@@ -1,4 +1,4 @@
-﻿@model ML.Idioma
+﻿@model ML.TipoMedio
 @{
     ViewData["Title"] = "GetAll";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,21 +7,18 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h2>Idiomas</h2>
+            <h2>TipoMedio</h2>
         </div>
     </div>
     <hr />
 
     <div class="row">
         <div class="col-md-12">
-            @*
-            @Html.ActionLink(" Agregar", "Form", "Idioma", htmlAttributes: new { @class = "btn btn-success bi bi-plus-circle-fill" }) *@
-
             <button type="button" class="btn btn-success  bi bi-plus-circle-fil" id="btnAdd"> Agregar</button>
         </div>
     </div>
     <br />
-    @if (Model.Idiomas.Count != 0)
+    @if (Model.TipoMedios.Count != 0)
     {
         <div class="row">
             <div class="col-md-12 table-responsive">
@@ -29,26 +26,13 @@
                     <thead class="table-dark">
                         <tr>
                             <th class="text-center">Editar</th>
-                            <th class="text-center" hidden>IdIdioma</th>
+                            <th class="text-center" hidden>IdTipoMedio</th>
                             <th class="text-center">Nombre</th>
                             <th class="text-center">Eliminar</th>
                         </tr>
                     </thead>
 
-                    <tbody id="tBodyIdioma">
-                        @* <tbody>
-                    @foreach (ML.Idioma idioma in Model.Idiomas)
-                    {
-                    <tr>
-                    <td class="text-center"><a class="btn btn-warning bi bi-pencil-fill" href="@Url.Action("Form", "Idioma", new { IdIdioma = idioma.IdIdioma })"></a></td>
-
-                    <td hidden>@idioma.IdIdioma</td>
-                    <td class="text-center">@idioma.Nombre</td>
-
-                    <td class="text-center"><a class="btn btn-danger bi bi-trash-fill" href="@Url.Action("Delete", "Idioma", new { IdIdioma = idioma.IdIdioma})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
-
-                    </tr>
-                    } *@
+                    <tbody id="tBodyTipoMedio">
                     </tbody>
                 </table>
             </div>
@@ -63,21 +47,21 @@
 </div>
 
 <div class="container">
-    @using (Html.BeginForm("Form", "Idioma", FormMethod.Post, new { enctype = "multipart/form-data", @id = "myForm" }))
+    @using (Html.BeginForm("Form", "TipoMedio", FormMethod.Post, new { enctype = "multipart/form-data", @id = "myForm" }))
     {
         <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Idioma</h5>
+                        <h5 class="modal-title" id="modalLabel">TipoMedio</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
 
                         <div class="row">
                             <div class="col-md-12">
-                                @Html.LabelFor(model => model.IdIdioma, null, new { @style = "display: none;" })
-                                @Html.TextBoxFor(model => model.IdIdioma, new { @style = "display: none;", @id = "txtIdIdioma" })
+                                @Html.LabelFor(model => model.IdTipoMedio, null, new { @style = "display: none;" })
+                                @Html.TextBoxFor(model => model.IdTipoMedio, new { @style = "display: none;", @id = "txtIdTipoMedio" })
                             </div>
                         </div>
                         <div class="row">
@@ -108,26 +92,26 @@
         function GetAll() {
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("GetAllIdioma")',
+                url: '@Url.Action("GetAllTipoMedio")',
                 success: function (result) {
-                    $('#tBodyIdioma').empty();
+                    $('#tBodyTipoMedio').empty();
 
-                    $.each(result.objects, function (i, idioma) {
+                    $.each(result.objects, function (i, tipoMedio) {
                         var fila =
                             '<tr>'
-                            + '<td class="text-center"><button type="button" class="btn btn-warning bi bi-pencil-fill" id="btnUpdate" onclick="Modal(this)"  value="' + idioma.idIdioma + '"></button></td>'
-                            + '<td hidden>' + idioma.idIdioma + '</td>'
-                            + '<td class="text-center">' + idioma.nombre + '</td>'
-                            + '<td class="text-center"><button type="button" class="btn btn-danger bi bi-trash-fill" onclick="Delete(this)"  value="' + idioma.idIdioma + '"></button></td>'
+                            + '<td class="text-center"><button type="button" class="btn btn-warning bi bi-pencil-fill" id="btnUpdate" onclick="Modal(this)"  value="' + tipoMedio.idTipoMedio + '"></button></td>'
+                            + '<td hidden>' + tipoMedio.idTipoMedio + '</td>'
+                            + '<td class="text-center">' + tipoMedio.nombre + '</td>'
+                            + '<td class="text-center"><button type="button" class="btn btn-danger bi bi-trash-fill" onclick="Delete(this)"  value="' + tipoMedio.idTipoMedio + '"></button></td>'
                             + '</tr>';
-                        $('#tBodyIdioma').append(fila);
+                        $('#tBodyTipoMedio').append(fila);
                     });
                 }
             });
         };
 
         $('#btnAdd').click(function () {
-            $("#txtIdioma").val("");
+            $("#txtTipoMedio").val("");
             $("#txtNombre").val("");
 
             $('#modal').modal('show');
@@ -148,23 +132,23 @@
                 success: function () {
                     $('#modal').modal('hide');
 
-                    $('#tBodyIdioma').empty();
+                    $('#tBodyTipoMedio').empty();
 
                     $.ajax({
                         type: 'GET',
-                        url: '@Url.Action("GetAllIdioma")',
+                        url: '@Url.Action("GetAllTipoMedio")',
                         success: function (result) {
-                            $('#tBodyIdioma').empty();
+                            $('#tBodyTipoMedio').empty();
 
-                            $.each(result.objects, function (i, idioma) {
+                            $.each(result.objects, function (i, tipoMedio) {
                                 var fila =
                                     '<tr>'
-                                    + '<td class="text-center"><button type="button" class="btn btn-warning bi bi-pencil-fill" id="btnUpdate" onclick="Modal(this)"  value="' + idioma.idIdioma + '"></button></td>'
-                                    + '<td hidden>' + idioma.idIdioma + '</td>'
-                                    + '<td class="text-center">' + idioma.nombre + '</td>'
-                                    + '<td class="text-center"><button type="button" class="btn btn-danger bi bi-trash-fill" id="btnDelete" onclick="Delete(this)"  value="' + idioma.idIdioma + '"></button></td>'
+                                    + '<td class="text-center"><button type="button" class="btn btn-warning bi bi-pencil-fill" id="btnUpdate" onclick="Modal(this)"  value="' + tipoMedio.idTipoMedio + '"></button></td>'
+                                    + '<td hidden>' + tipoMedio.idTipoMedio + '</td>'
+                                    + '<td class="text-center">' + tipoMedio.nombre + '</td>'
+                                    + '<td class="text-center"><button type="button" class="btn btn-danger bi bi-trash-fill" onclick="Delete(this)"  value="' + tipoMedio.idTipoMedio + '"></button></td>'
                                     + '</tr>';
-                                $('#tBodyIdioma').append(fila);
+                                $('#tBodyTipoMedio').append(fila);
                             });
                         },
                         error: function (result) {
@@ -178,12 +162,12 @@
         });
 
         function Modal(boton) {
-
+            
 
             $.ajax({
-                url: '@Url.Action("GetByIdIdioma")',
+                url: '@Url.Action("GetByIdTipoMedio")',
 
-                data: { idIdioma: boton.value },
+                data: { idTipoMedio: boton.value },
 
                 type: 'GET',
 
@@ -191,9 +175,9 @@
 
                 success: function (data) {
 
-                    $('#txtIdIdioma').val(data.idIdioma)
+                    $('#txtIdTipoMedio').val(data.idTipoMedio)
                     $('#txtNombre').val(data.nombre)
-                    
+
                     $('#modal').modal('show');
                 },
                 error: function () {
@@ -208,27 +192,27 @@
             if (checkconfirm == true) {
                 $.ajax({
                     url: '@Url.Action("Delete")',
-                    data: { idIdioma: datos.value },
+                    data: { idTipoMedio: datos.value },
                     type: 'GET',
                     dataType: 'json',
                     success: function () {
-                        $('#tBodyIdioma').empty();
+                        $('#tBodyTipoMedio').empty();
 
                         $.ajax({
                             type: 'GET',
-                            url: '@Url.Action("GetAllIdioma")',
+                            url: '@Url.Action("GetAllTipoMedio")',
                             success: function (result) {
-                                $('#tBodyIdioma').empty();
+                                $('#tBodyTipoMedio').empty();
 
-                                $.each(result.objects, function (i, idioma) {
+                                $.each(result.objects, function (i, tipoMedio) {
                                     var fila =
                                         '<tr>'
-                                        + '<td class="text-center"><button type="button" class="btn btn-warning bi bi-pencil-fill" id="btnUpdate" onclick="Modal(this)"  value="' + idioma.idIdioma + '"></button></td>'
-                                        + '<td hidden>' + idioma.idIdioma + '</td>'
-                                        + '<td class="text-center">' + idioma.nombre + '</td>'
-                                        + '<td class="text-center"><button type="button" class="btn btn-danger bi bi-trash-fill" id="btnDelete" onclick="Delete(this)"  value="' + idioma.idIdioma + '"></button></td>'
+                                        + '<td class="text-center"><button type="button" class="btn btn-warning bi bi-pencil-fill" id="btnUpdate" onclick="Modal(this)"  value="' + tipoMedio.idTipoMedio + '"></button></td>'
+                                        + '<td hidden>' + tipoMedio.idTipoMedio + '</td>'
+                                        + '<td class="text-center">' + tipoMedio.nombre + '</td>'
+                                        + '<td class="text-center"><button type="button" class="btn btn-danger bi bi-trash-fill" onclick="Delete(this)"  value="' + tipoMedio.idTipoMedio + '"></button></td>'
                                         + '</tr>';
-                                    $('#tBodyIdioma').append(fila);
+                                    $('#tBodyTipoMedio').append(fila);
                                 });
                             },
                             error: function (result) {
@@ -245,7 +229,7 @@
             }
         }
 
-     </script>
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#myTable').DataTable();

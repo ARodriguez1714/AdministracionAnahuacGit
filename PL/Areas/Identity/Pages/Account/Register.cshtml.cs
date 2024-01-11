@@ -143,16 +143,21 @@ namespace PL.Areas.Identity.Pages.Account
                     // Tu HTML existente
                     string htmlString = @"<html>
                     <body>
-                    <p>¡Hola Bienvenido!</p>";
+                    <br/>
+                    <br/>
+                    <p style='text-align: center; font-size:20px;'>¡Hola Bienvenido!</p>";
 
-                    htmlString += @"<p>Confirma tu correo dando clic al siguiente botón.</p>";
+                    htmlString += @"<p style='text-align: center; font-size:14px;'>Nos alegra que quieras formar parte de la Biblioteca AJ.</p>";
+                    htmlString += @"<p style='text-align: center; font-size:14px;'>Confirma tu correo dando clic al siguiente botón.</p><br/>";
 
                     // Concatenar la variable dentro de htmlString
-                    htmlString += $"<a href='{callbackUrl}' style='background-color: #04AA6D; border: none; color: white;padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 10px; margin: 4px 2px; cursor: pointer;' class='button'>Confirmar Correo</a>";
+                    htmlString += $"<div style='text-align: center;'><a href='{callbackUrl}' style='padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; text-decoration-line:none; font-size:20px;' class='button'>Confirmar Correo</a></div>";
 
                     // Continuación del HTML original
-                    htmlString += @"<p>Atentamente,<br>-Biblioteca AJ</br></p>
-                    </body>
+                    htmlString += @"<br/><p style='margin-left: 50px;'>Atentamente,</p>";
+                    htmlString += @"<p style='margin-left: 50px;'>-Biblioteca AJ,<br/></p>";
+                    htmlString += $"<img src='https://ajimmigrationgroup.com/wp-content/uploads/2022/06/cropped-AJIG-favicon-512x512-2.png' style='margin-left: 55px; width:35px; height:35px;'/><br/>";
+                    htmlString += @"</body>
                     </html>";
 
                     var mailMessage = new MailMessage

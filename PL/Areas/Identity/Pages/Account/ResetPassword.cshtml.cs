@@ -49,7 +49,7 @@ namespace PL.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "El {0} debe tener al menos {2} y un máximo de {1} caracteres.", MinimumLength = 6)] //The {0} must be at least {2} and at max {1} characters long.
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
@@ -58,8 +58,8 @@ namespace PL.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Confirmar Contraseña")] 
+            [Compare("Contraseña", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")] //The password and confirmation password do not match.
             public string ConfirmPassword { get; set; }
 
             /// <summary>
@@ -75,7 +75,7 @@ namespace PL.Areas.Identity.Pages.Account
         {
             if (code == null)
             {
-                return BadRequest("A code must be supplied for password reset.");
+                return BadRequest("Se debe proporcionar un código para restablecer la contraseña."); //A code must be supplied for password reset.
             }
             else
             {

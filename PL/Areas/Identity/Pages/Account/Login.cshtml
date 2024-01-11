@@ -17,10 +17,11 @@
                 <div class="inp">
                     <input asp-for="Input.Email" class="input" autocomplete="username" aria-required="true" placeholder="Correo" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
-                <br />
+                </div>
+                    <div class="inp">
                     <input asp-for="Input.Password" class="input" autocomplete="current-password" aria-required="true" placeholder="Contraseña" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
+                    </div>
                 <br />
                 <div class="checkbox mb-3">
                     <label asp-for="Input.RememberMe" class="form-label">
@@ -31,9 +32,9 @@
                 <div>
                     <button class="submit" id="login-submit">Iniciar sesión</button>
                 </div>
-                <br />
                 <div> 
                     <h6>
+                        <br />
                         <a class="link" id="forgot-password" asp-page="./ForgotPassword">¿Olvidaste tu contraseña?</a> <br />
                         <a class="link" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registrarse como usuario nuevo</a> <br />
                         <a class="link" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar confirmación por correo electrónico</a>
@@ -112,7 +113,7 @@
         outline: none;
         background: none;
         width: 260px;
-        margin-top: 40px;
+        margin-top: 30px;
         padding-right: 5px;
         font-size: 17px;
         color: #0ef;

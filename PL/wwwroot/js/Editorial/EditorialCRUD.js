@@ -77,19 +77,26 @@ function GetAll() {
         url: 'http://localhost:5138/api/Editorial/getalleditorial',
         success: function (result) {
             $('#tBodyEditorial').empty();
+            $('#errorAlert').empty();
 
-            $.each(result.objects, function (i, editorial) {
-                var fila =
-                    '<tr>'
-                    + '<td class="text-center"><button type="button" class="btn btn-warning" id="btnUpdate" onclick="Modal(' + editorial.idEditorial + ')"><i class="bi bi-pencil"></i></button></td>'
-                    + '<td hidden>' + editorial.idEditorial + '</td>'
-                    + '<td class="text-center">' + editorial.nombre + '</td>'
-                    + '<td class="text-center">' + editorial.direccion.calle + ', ' + editorial.direccion.numeroInterior
-                    + ', ' + editorial.direccion.colonia.nombre + ', ' + editorial.direccion.colonia.codigoPostal + '</td>'
-                    + '<td class="text-center"><button type="button" class="btn btn-danger" onclick="Delete(' + editorial.idEditorial + ')"><i class="bi bi-trash3"></i></button></td>'
-                    + '</tr>';
-                $('#tBodyEditorial').append(fila);
-            });
+            if (result.objects.length === 0) {
+                var alert =
+                    '<div class="alert alert-danger" role="alert">'+result.message+'</div>';
+                $('#errorAlert').append(alert);
+            } else {
+                $.each(result.objects, function (i, editorial) {
+                    var fila =
+                        '<tr>'
+                        + '<td class="text-center"><button type="button" class="btn btn-warning" id="btnUpdate" onclick="Modal(' + editorial.idEditorial + ')"><i class="bi bi-pencil"></i></button></td>'
+                        + '<td hidden>' + editorial.idEditorial + '</td>'
+                        + '<td class="text-center">' + editorial.nombre + '</td>'
+                        + '<td class="text-center">' + editorial.direccion.calle + ', ' + editorial.direccion.numeroInterior
+                        + ', ' + editorial.direccion.colonia.nombre + ', ' + editorial.direccion.colonia.codigoPostal + '</td>'
+                        + '<td class="text-center"><button type="button" class="btn btn-danger" onclick="Delete(' + editorial.idEditorial + ')"><i class="bi bi-trash3"></i></button></td>'
+                        + '</tr>';
+                    $('#tBodyEditorial').append(fila);
+                });
+            }
         }
     });
 };
@@ -259,7 +266,7 @@ function Add(editorial) {
             GetAll();
         },
         error: function (result) {
-            alert('Error en la consulta.');
+            alert(result.responseJSON.errors);
         }
     });
 };

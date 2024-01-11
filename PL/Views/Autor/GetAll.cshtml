@@ -7,6 +7,86 @@
 
 <br />
 
+<style>
+    .card {
+        position: relative;
+        width: 13em;
+        height: 20em;
+        box-shadow: 0px 1px 13px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: all 120ms;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        padding: 0.5em;
+        padding-bottom: 3.4em;
+    }
+
+        .card::after {
+            content: "\00270E  Editar";
+            padding-top: 1.25em;
+            padding-left: 1.25em;
+            position: absolute;
+            left: 0;
+            bottom: -60px;
+            background: #FFCE67;
+            color: #fff;
+            height: 4.5em;
+            width: 100%;
+            transition: all 80ms;
+            font-weight: 600;
+            text-transform: uppercase;
+            opacity: 0;
+            border-radius: 4px;
+        }
+
+        .card .title {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 0.9em;
+            position: absolute;
+            left: 0.625em;
+            bottom: 1.875em;
+            font-weight: 400;
+            color: #000;
+        }
+
+        .card .tipoAutor {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 0.9em;
+            position: absolute;
+            left: 0.625em;
+            bottom: 0.625em;
+            color: #000;
+        }
+
+        .card:hover::after {
+            bottom: 0;
+            opacity: 1;
+        }
+
+        /* .card:active {
+            transform: scale(0.98);
+        }
+
+            .card:active::after {
+                content: "Added !";
+                height: 3.125em;
+            } */
+
+    .text {
+        max-width: 55px;
+    }
+
+    .image {
+        background: rgb(241, 241, 241);
+        width: 100%;
+        height: 85%;
+        display: grid;
+        place-items: center;
+    }
+</style>
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -17,26 +97,18 @@
 
     <div class="row">
         <div class="col-md-12">
-            <button type="button" class="btn btn-success" id="btnAdd" onclick="BtnAdd()">+</button>
+            <button type="button" class="btn btn-success" id="btnAdd" onclick="BtnAdd()"><i class="bi bi-person-add"></i> Nuevo</button>
         </div>
     </div>
     <br />
-    <div class="row">
-        <div class="col-md-12 table-responsive">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th class="text-center" hidden>IdAutor</th>
-                        <th class="text-center">Nombre Completo</th>
-                        <th class="text-center">Foto</th>
-                        <th class="text-center">Tipo de Autor</th>
-                        <th class="text-center">Editar</th>
-                    </tr>
-                </thead>
-                <tbody id="tBodyAutor">
-                </tbody>
-            </table>
-        </div>
+    <br />
+</div>
+
+<div class="container">
+
+    <div class="row row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 g-4 justify-content-center" id="cardAutor">
+    </div>
+    <div class="row" id="errorAlert">
     </div>
     <br />
     <br />
@@ -116,14 +188,14 @@
                                 else
                                 {
                                 <img src="data:image/png;base64, @Convert.ToBase64String(Model.Foto)" id="imgAutor" width="150px" height="150px" />
-                                } 
+                                }
                                 @Html.HiddenFor(model => model.Foto)*@
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <input type="text" id="txtUpdateFoto" name="txtUpdateFoto" class="form-control"/>
+                            <input type="text" id="txtUpdateFoto" name="txtUpdateFoto" class="form-control" />
                         </div>
                     </div>
                 </div>

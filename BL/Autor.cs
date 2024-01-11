@@ -55,7 +55,7 @@ namespace BL
                     }
                     else
                     {
-
+                        result.Correct = true;
                         result.Message = "No se encontraron registros.";
                     }
                 }

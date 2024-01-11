@@ -9,19 +9,26 @@ function GetAll() {
         url: '/Rol/GetAllRoles',
         success: function (result) {
             $('#tBodyRol').empty();
+            $('#errorAlert').empty();
 
-            $.each(result, function (i, rol) {
-                var fila =
-                    '<tr>'
-                    + '<td style="text-align: center; vertical-align: middle;"><button type="button" class="btn btn-info" id="btnAsignar" onclick="Asignar(this)" value="' + rol.id + '"><i class="bi bi-person-fill-gear"></i></button></td>'
-                    // + '<td style="display: none;"></td>'
-                    + '<td style="text-align: center;">' + rol.name + '</td>'
-                    + '<td style="text-align: center; vertical-align: middle;"><button type="button" class="btn btn-warning" id="btnUpdate" onclick="Actualizar(this)"  value="' + rol.id + '"><i class="bi bi-pencil"></i></button></td>'
-                    // + '<td style="display: none;"></td>'
-                    + '<td style="text-align: center; vertical-align: middle;"><button type="button" class="btn btn-danger" onclick="Delete(this)"  value="' + rol.id + '"><i class="bi bi-trash3"></i></button></td>'
-                    + '</tr>';
-                $('#tBodyRol').append(fila);
-            });
+            if (result.length === 0) {
+                var alert =
+                    '<div class="alert alert-danger" role="alert">No se encontraron registros.</div>';
+                $('#errorAlert').append(alert);
+            } else {
+                $.each(result, function (i, rol) {
+                    var fila =
+                        '<tr>'
+                        + '<td style="text-align: center; vertical-align: middle;"><button type="button" class="btn btn-info" id="btnAsignar" onclick="Asignar(this)" value="' + rol.id + '"><i class="bi bi-person-fill-gear"></i></button></td>'
+                        // + '<td style="display: none;"></td>'
+                        + '<td style="text-align: center;">' + rol.name + '</td>'
+                        + '<td style="text-align: center; vertical-align: middle;"><button type="button" class="btn btn-warning" id="btnUpdate" onclick="Actualizar(this)"  value="' + rol.id + '"><i class="bi bi-pencil"></i></button></td>'
+                        // + '<td style="display: none;"></td>'
+                        + '<td style="text-align: center; vertical-align: middle;"><button type="button" class="btn btn-danger" onclick="Delete(this)"  value="' + rol.id + '"><i class="bi bi-trash3"></i></button></td>'
+                        + '</tr>';
+                    $('#tBodyRol').append(fila);
+                });
+            }
         },
         error: function (result) {
             alert('Error en la consulta.');

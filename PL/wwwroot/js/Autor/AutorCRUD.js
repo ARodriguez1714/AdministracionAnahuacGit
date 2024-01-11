@@ -16,28 +16,36 @@ function GetAll() {
         type: 'GET',
         url: 'http://localhost:5138/api/Autor/getautores',
         success: function (result) {
-            $('#tBodyAutor').empty();
+            $('#cardAutor').empty();
 
-            $.each(result.objects, function (i, autor) {
-                var imagen;
-                if (autor.foto == null) {
-                    imagen = '<img src="/Images/userDefault.jpg" width = "50px" height = "50px"/>'
-                }
-                else {
-                    imagen = '<img src="data:image/png;base64,' + autor.foto + '" width = "50px" height = "50px"/>'
-                }
-                var fila =
-                    '<tr>'
-                    + '<td hidden>' + autor.idAutor + '</td>'
-                    + '<td class="text-center">' + autor.nombre + ' ' + autor.apellidoPaterno + ' ' + autor.apellidoMaterno + '</td>'
-                    + '<td class="text-center">'
-                    + imagen
-                    + '</td>'
-                    + '<td class="text-center">' + autor.tipoAutor.nombre + '</td>'
-                    + '<td class="text-center"><button type="button" class="btn btn-warning" id="btnUpdate" onclick="ModalUpdate(this)"  value="' + autor.idAutor + '"><i class="bi bi-pencil"></i></button></td>'
-                    + '</tr>';
-                $('#tBodyAutor').append(fila);
-            });
+            $('#errorAlert').empty();
+
+            if (result.objects === null) {
+                var alert =
+                    '<div class="alert alert-danger" role="alert">' + result.message + '</div>';
+                $('#errorAlert').append(alert);
+            } else {
+                $.each(result.objects, function (i, autor) {
+                    var imagen;
+                    if (autor.foto == null) {
+                        imagen = '<img src="/Images/userDefault.jpg" width = "50px" height = "50px"/>'
+                    }
+                    else {
+                        imagen = '<img src="data:image/png;base64,' + autor.foto + '" width = "100%" height = "100%"/>'
+                    }
+                    var fila =
+                        '<div class="col-7 col-md-4 col-lg-3 ">'
+                        + '<a id="btnUpdate" onclick="ModalUpdate(' + autor.idAutor + ')">'
+                        + '<div class="card border-primary border-3 border-opacity-50">'
+                        + '<div class="image">' + imagen + '</div>'
+                        + '<span class="title">' + autor.nombre + ' ' + autor.apellidoPaterno + ' ' + autor.apellidoMaterno + '</span>'
+                        + '<span class="tipoAutor">' + autor.tipoAutor.nombre + '</span>'
+                        + '</div>'
+                        + '</a>'
+                        + '</div>';
+                    $('#cardAutor').append(fila);
+                });
+            }
         },
         error: function (result) {
             alert('Error en la consulta.');
@@ -84,7 +92,7 @@ function ModalUpdate(boton) {
 
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:5138/api/Autor/getbyid/' + boton.value,
+        url: 'http://localhost:5138/api/Autor/getbyid/' + boton,
         success: function (data) {
 
             $('#txtIdAutor').val(data.object.idAutor)
@@ -205,7 +213,7 @@ function BtnGuardarAutor() {
             Update(autor);
         }
     }
-    
+
 }
 
 function Add(autor) {

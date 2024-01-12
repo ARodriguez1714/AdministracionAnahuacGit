@@ -4,45 +4,48 @@
 @{
     ViewData["Title"] = "Iniciar Sesión";
 }
-
+<head>
+    <link rel="stylesheet" href="~/css/login_style.css" asp-append-version="true" />
+</head>
 <body>
     <div class="wrapper">
-        <div class="row">
-            <form id="account" method="post" class="form">
+        <form id="account" method="post" class="form">
 
-                <h1 class="title"> @ViewData["Title"]</h1>
+            <h1 class="title"> @ViewData["Title"]</h1>
 
-                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
-                <div class="inp">
-                    <input asp-for="Input.Email" class="input" autocomplete="username" aria-required="true" placeholder="Correo" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                    <div class="inp">
-                    <input asp-for="Input.Password" class="input" autocomplete="current-password" aria-required="true" placeholder="Contraseña" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                    </div>
-                <br />
-                <div class="checkbox mb-3">
-                    <label asp-for="Input.RememberMe" class="form-label">
-                        <input class="form-check-input" asp-for="Input.RememberMe" />
-                        @Html.DisplayNameFor(m => m.Input.RememberMe)
-                    </label>
-                </div>
-                <div>
-                    <button class="submit" id="login-submit">Iniciar sesión</button>
-                </div>
-                <div> 
-                    <h6>
-                        <br />
-                        <a class="link" id="forgot-password" asp-page="./ForgotPassword">¿Olvidaste tu contraseña?</a> <br />
-                        <a class="link" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registrarse como usuario nuevo</a> <br />
-                        <a class="link" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar confirmación por correo electrónico</a>
-                    </h6>
-                </div>
-            </form>
-            <div></div>
+            <div class="inp">
+                <input asp-for="Input.Email" class="input" autocomplete="username" aria-required="true" placeholder="Correo" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="inp">
+                <input asp-for="Input.Password" class="input" autocomplete="current-password" aria-required="true" placeholder="Contraseña" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="checkbox mb-3">
+                <label asp-for="Input.RememberMe" class="form-label">
+                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                </label>
+            </div>
+            <div>
+                <button class="submit" id="login-submit">Iniciar sesión</button>
+            </div>
+            <div>
+                <h6>
+                    <br />
+                    <a class="link" id="forgot-password" asp-page="./ForgotPassword">¿Olvidaste tu contraseña?</a> <br />
+                    <a class="link" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registrarse como usuario nuevo</a> <br />
+                    <a class="link" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar confirmación por correo electrónico</a>
+                </h6>
+            </div>
+        </form>
+        <div></div>
+        <form id="account" method="post" class="form">
             <div class="banner">
+                <br /><br />
                 <h1 class="wel_text">
                     Bienvenido
                 </h1>
@@ -50,8 +53,7 @@
                     a la Biblioteca <img src="/Images/Logo.png" heigh="40px" width="35" alt=""></a>
                 </p>
             </div>
-
-        </div>
+        </form>
     </div>
 </body>
 
@@ -59,118 +61,3 @@
     <partial name="_ValidationScriptsPartial" />
     }
 
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        font-family: arial;
-        color: #fff;
-    }
-
-
-    body {
-        width: 100vw;
-        height: 100vh;
-        background: #081b29;
-        display: grid;
-        justify-content: center;
-        align-content: center;
-    }
-
-    ::-webkit-input-placeholder {
-        color: #eee;
-    }
-
-    .wrapper {
-        position: relative;
-        width: 900px;
-        height: 65vh;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        border: 3px solid #00ffff;
-        box-shadow: 0 0 50px 0 #00a6bc;
-    }
-
-    .form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .title {
-        font-size: 35px;
-        color: #fff;
-    }
-
-    .inp {
-        padding-bottom: 5px;
-        border-bottom: 2px solid #eee;
-    }
-
-    .input {
-        border: none;
-        outline: none;
-        background: none;
-        width: 260px;
-        margin-top: 30px;
-        padding-right: 5px;
-        font-size: 17px;
-        color: #0ef;
-    }
-
-    .submit {
-        border: none;
-        outline: none;
-        width: 288px;
-        margin-top: 25px;
-        padding: 10px 0;
-        font-size: 20px;
-        border-radius: 40px;
-       /*  letter-spacing: 1px; */
-        cursor: pointer;
-        background: linear-gradient(45deg, #0ef, #c800ff);
-    }
-
-    .footer {
-        margin-top: 30px;
-        letter-spacing: 0.5px;
-        font-size: 14px;
-        color: #fff;
-    }
-
-    .link {
-        color: #0ef;
-        text-decoration: none;
-    }
-
-    .banner {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 450px;
-        height: 390px;
-        background: linear-gradient(to right,#0ef, #c800ff );
-        clip-path: polygon(0 0,100% 0,100% 100%, 60% 100%);
-        padding-right: 70px;
-        text-align: right;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-end;
-    }
-
-    .wel_text {
-        font-size: 40px;
-        margin-top: -50px;
-        line-height: 50px;
-        color: #fff;
-    }
-
-    .para {
-        margin-top: 10px;
-        font-size: 18px;
-        line-height: 24px;
-        letter-spacing: 1px;
-    }
-</style>

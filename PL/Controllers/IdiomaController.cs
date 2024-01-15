@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PL.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class IdiomaController : Controller
     {
         //public IActionResult Index()

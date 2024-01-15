@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Drawing;
 using System.Linq;
 
@@ -130,12 +131,15 @@ namespace PL.Controllers
         //    return View(medio);
         //}
 
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
-        public IActionResult Form(ML.Medio medio, IFormFile fuImagen)
+        public IActionResult Form(ML.Medio medio, IFormFile fuImagen, IFormFile archivo)
         {
+            medio.Disponibilidad = (medio.Disponibilidad == null) ? true :  medio.Disponibilidad;
+            medio.Archivo = archivo.FileName;
             ML.Result result = new ML.Result();
 
-            if (medio.IdMedio == 0)
+            if (medio.IdMedio == null)
             {
                 //add
                 medio.Imagen = ConvertToBytes(fuImagen);
@@ -242,6 +246,7 @@ namespace PL.Controllers
             }
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public JsonResult Delete(int idMedio)
         {

@@ -1,9 +1,25 @@
 ﻿@model ML.Medio
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> Rol
 @{
     ViewData["Title"] = "GetAll";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="~/js/Medio/MedioCRUD.js"></script>
+
+<style>
+    #flexSwitchCheckDefault {
+        cursor: pointer;
+        width: 4.5em;
+        height: 2em;
+        margin-right: 2.8em;
+        margin-left: 1em;
+    }
+</style>
+
+<br />
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -11,84 +27,97 @@
         </div>
     </div>
     <hr />
-
-    <div class="row">
-        <div class="col-md-12">
-            @*   @Html.ActionLink(" Agregar ", "Form", "Medio", htmlAttributes: new { @class = "btn btn-success bi bi-plus-circle-fill" }) *@
-
-            <button type="button" class="btn btn-success  bi bi-plus-circle-fil" id="btnAdd"> Agregar</button>
-        </div>
-    </div>
-    <br />
-
-    @if (Model.Medios != null)
+    @if (Rol.IsSignedIn(User))
     {
-        <div class="row">
-            <div class="col-md-12 table-responsive">
-                <table class="table table-bordered table-responsive" id="myTable">
-                    <thead class="table-dark">
-                        <tr>
-                            <th class="text-center">Editar</th>
-                            <th class="text-center" hidden>IdMedio</th>
-                            <th class="text-center">Nombre</th>
-                            <th class="text-center">Archivo</th>
-                            <th class="text-center">Descrpcion</th>
-                            <th class="text-center">Disponibilidad</th>
-                            <th class="text-center">Imagen</th>
-                            <th class="text-center">Autor</th>
-                            <th class="text-center">Idioma</th>
-                            <th class="text-center">Tipo Medio</th>
-                            <th class="text-center">Editorial</th>
-                            <th class="text-center">Eliminar</th>
-                        </tr>
-                    </thead>
-                    @* <tbody>
-                @foreach (ML.Medio medio in Model.Medios)
-                {
-                <tr>
-                <td class="text-center"><a class="btn btn-warning bi bi-pencil-fill" href="@Url.Action("Form", "Medio", new { IdMedio = medio.IdMedio })"></a></td>
+        if (User.IsInRole("Administrador"))
+        {
+            @* if (Model.Medios != null)
+    { *@
+            <div class="row">
+                <div class="col-md-12">
+                    @*   @Html.ActionLink(" Agregar ", "Form", "Medio", htmlAttributes: new { @class = "btn btn-success bi bi-plus-circle-fill" }) *@
 
-                <td hidden>@medio.IdMedio</td>
-                <td class="text-center">@medio.Nombre</td>
-                <td class="text-center">@medio.Archivo</td>
-                <td class="text-center">@medio.Descripcion</td>
-                <td class="text-center">@medio.Disponibilidad</td>
-                <td class="text-center">
-                @if (medio.Imagen == null)
-                {
-                <img src="~/Images/medio.png" width="50px" height="50px" />
-                }
-                else
-                {
-                <img src="data:image/png;base64, @Convert.ToBase64String(medio.Imagen)" width="50px" height="50px" />
-                }
-                </td>
-                <td class="visually-hidden">@medio.Autor.IdAutor</td>
-                <td class="text-center">@medio.Autor.Nombre</td>
-                <td class="visually-hidden">@medio.Idioma.IdIdioma</td>
-                <td class="text-center">@medio.Idioma.Nombre</td>
-                <td class="visually-hidden">@medio.TipoMedio.IdTipoMedio</td>
-                <td class="text-center">@medio.TipoMedio.Nombre</td>
-                <td class="visually-hidden">@medio.Editorial.IdEditorial</td>
-                <td class="text-center">@medio.Editorial.Nombre</td>
-
-                <td class="text-center"><a class="btn btn-danger bi bi-trash-fill" href="@Url.Action("Delete", "Medio", new { IdMedio = medio.IdMedio})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
-
-                </tr>
-                } *@
-                    <tbody id="tBodyMedio">
-                    </tbody>
-                </table>
+                    <button type="button" class="btn btn-success  bi bi-plus-circle-fil" id="btnAdd" onclick="addBtn()"> Agregar</button>
+                </div>
             </div>
-        </div>
-    }
+            <br />
+            <div class="row">
+                <div class="col-md-12 table-responsive">
+                    <table class="table table-bordered table-responsive border-primary border-3" id="myTable">
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="text-center">Editar</th>
+                                <th class="text-center" hidden>IdMedio</th>
+                                <th class="text-center">Nombre</th>
+                                <th class="text-center">Archivo</th>
+                                <th class="text-center">Descripción</th>
+                                <th class="text-center">Disponibilidad</th>
+                                <th class="text-center">Imagen</th>
+                                <th class="text-center">Autor</th>
+                                <th class="text-center">Idioma</th>
+                                <th class="text-center">Tipo Medio</th>
+                                <th class="text-center">Editorial</th>
+                                <th class="text-center">Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tBodyMedioAdmin">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @* }
     else
-    {
-        <div class="alert alert-danger" role="alert">
-            @ViewBag.Error
+    { *@
+            @* <div class="alert alert-danger" role="alert">
+    No se encontraron registros.
+    </div> *@
+            @* } *@
+        }
+        else
+        {
+            @* if (Model.Medios != null)
+    { *@
+            <div class="row">
+                <div class="col-md-12 table-responsive">
+                    <table class="table table-bordered table-responsive border-primary border-3" id="tableUser">
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="text-center" hidden>IdMedio</th>
+                                <th class="text-center">Nombre</th>
+                                <th class="text-center">Archivo</th>
+                                <th class="text-center">Descripción</th>
+                                <th class="text-center">Imagen</th>
+                                <th class="text-center">Autor</th>
+                                <th class="text-center">Idioma</th>
+                                <th class="text-center">Tipo Medio</th>
+                                <th class="text-center">Editorial</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tBodyMedioUser">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @* }
+    else
+    { *@
+            @* <div class="alert alert-danger" role="alert">
+    @ViewBag.Error
+    </div> *@
+            @* } *@
+
+            <div id="alertBodyUser">
+            </div>
+        }
+
+        <div id="alertBody">
         </div>
     }
 </div>
+
+<br />
+<br />
+<br />
 
 <div class="container">
     @using (Html.BeginForm("Form", "Medio", FormMethod.Post, new { enctype = "multipart/form-data", @id = "myForm" }))
@@ -119,7 +148,7 @@
                             <div class="col-md-6">
                                 @Html.LabelFor(model => model.Archivo)
 
-                                <input type="file" id="file" name="myFile" />
+                                <input type="file" id="archivo" name="archivo" />
                             </div>
                         </div>
                         <br />
@@ -130,31 +159,16 @@
                             </div>
                         </div>
                         <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                @Html.LabelFor(model => model.Disponibilidad)
-                                @if (Model.Disponibilidad == null)
-                                {
-                                    <td style="text-align: center; vertical-align: middle;">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked onchange="ChangeStatus(medio.IdMedio, this)">
-                                        </div>
-                                    </td>
-
-                                }
-                                else
-                                {
-                                    <td style="text-align: center; vertical-align: middle;">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onchange="ChangeStatus(medio.IdMedio, this);">
-                                        </div>
-                                    </td>
-                                }
-                            </div>
-                        </div>
+                        @* <div class="row">
+                    <div class="col-md-6">
+                    @Html.LabelFor(model => model.Disponibilidad)
+                    <div>
+                    <input type="text" value="1" name="Disponibilidad" id="Disponibilidad" />
+                    </div>
+                    </div>
+                    </div> *@
 
 
-                        <br />
                         <div class="row">
                             <div class="col-md-12">
                                 @Html.LabelFor(model => model.Imagen)
@@ -227,7 +241,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" id="btnGuardar"> Guardar</button>
+                        <button type="button" class="btn btn-success" id="btnGuardar" onclick="guardarBtn()"> Guardar</button>
                         <button type="button" class="btn btn-danger bi bi-box-arrow-left" data-bs-dismiss="modal"> Salir</button>
                     </div>
                 </div>
@@ -236,341 +250,20 @@
     }
 </div>
 
-@section Scripts {
+@* @section Scripts {
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> *@
 
-    @* <script type="text/javascript">
+@* <script type="text/javascript">
         $(document).ready(function () {
             $('#myTable').DataTable();
         });
     </script> *@
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            GetAll();
-            GetAllAutor();
-            GetAllIdioma();
-            GetAllTipoMedio();
-            GetAllEditorial();
-        });
+@*  <script type="text/javascript">
 
-        function PreviewImage(event) {
-            var output = document.getElementById('imgMedio');
-            output.src = URL.createObjectURL(event.target.files[0]);
-            output.onload = function () {
-                URL.revokeObjectURL(output.src)
-            }
-        };
-
-        function GetAll() {
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetAllMedio")',
-                success: function (result) {
-                    $('#tBodyMedio').empty();
-
-                    $.each(result.objects, function (i, medio) {
-                        var imagen;
-                        if (medio.Imagen == null) {
-                            imagen = '<img src="/Images/medio.png"  width = "50px" height = "50px"/>'
-                        }
-                        else {
-                            imagen = '<img src="data:image/png;base64,' + medio.imagen + '" width = "50px" height = "50px"/>'
-                        }
-                        var fila =
-                            '<tr>'
-                            + '<td class="text-center"><button type="button" class="btn btn-warning bi bi-pencil-fill" id="btnUpdate" onclick="Modal(this)"  value="' + medio.idMedio + '"></button></td>'
-                            + '<td hidden>' + medio.idMedio + '</td>'
-                            + '<td class="text-center">' + medio.nombre + '</td>'
-                            + '<td class="text-center">' + medio.archivo + ' </td>'
-                            + '<td class="text-center">' + medio.descripcion + ' </td>'
-                            + '<td class="text-center">' + medio.disponibilidad + ' </td>'
-                            + '<td class="text-center">' + imagen + '</td>'
-                            + '<td class="text-center">' + medio.autor.nombre + '</td>'
-                            + '<td class="text-center">' + medio.idioma.nombre + '</td>'
-                            + '<td class="text-center">' + medio.tipoMedio.nombre + '</td>'
-                            + '<td class="text-center">' + medio.editorial.nombre + '</td>'
-                            + '<td class="text-center"><button type="button" class="btn btn-danger bi bi-trash-fill" onclick="Delete(this)"  value="' + medio.idMedio + '"></button></td>'
-                            + '</tr>';
-                        $('#tBodyMedio').append(fila);
-                    });
-                }
-            });
-        };
-
-        function GetAllAutor() {
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("GetAllAutor")',
-                dataType: 'json',
-                success: function (result) {
-                    $('#ddlAutor').empty();
-                    $('#ddlAutor').append('<option value="' + 0 + '">' + 'Seleccione una opción' + '</option>');
-                    $.each(result.objects, function (i, autor) {
-                        var select =
-                            '<option value="' + autor.idAutor + '">' + autor.nombre + '</option>';
-                        $("#ddlAutor").append(select);
-                    });
-                },
-                error: function (result) {
-                    alert('Error en la consulta.');
-                }
-            });
-        };
-
-        function GetAllIdioma() {
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("GetAllIdioma")',
-                dataType: 'json',
-                success: function (result) {
-                    $('#ddlIdioma').empty();
-                    $('#ddlIdioma').append('<option value="' + 0 + '">' + 'Seleccione una opción' + '</option>');
-                    $.each(result.objects, function (i, idioma) {
-                        var select =
-                            '<option value="' + idioma.idIdioma + '">' + idioma.nombre + '</option>';
-                        $("#ddlIdioma").append(select);
-                    });
-                },
-                error: function (result) {
-                    alert('Error en la consulta.');
-                }
-            });
-        };
-
-        function GetAllTipoMedio() {
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("GetAllTipoMedio")',
-                dataType: 'json',
-                success: function (result) {
-                    $('#ddlTipoMedio').empty();
-                    $('#ddlTipoMedio').append('<option value="' + 0 + '">' + 'Seleccione una opción' + '</option>');
-                    $.each(result.objects, function (i, tipoMedio) {
-                        var select =
-                            '<option value="' + tipoMedio.idTipoMedio + '">' + tipoMedio.nombre + '</option>';
-                        $("#ddlTipoMedio").append(select);
-                    });
-                },
-                error: function (result) {
-                    alert('Error en la consulta.');
-                }
-            });
-        };
-
-        function GetAllEditorial() {
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("GetAllEditorial")',
-                dataType: 'json',
-                success: function (result) {
-                    $('#ddlEditorial').empty();
-                    $('#ddlEditorial').append('<option value="' + 0 + '">' + 'Seleccione una opción' + '</option>');
-                    $.each(result.objects, function (i, editorial) {
-                        var select =
-                            '<option value="' + editorial.idEditorial + '">' + editorial.nombre + '</option>';
-                        $("#ddlEditorial").append(select);
-                    });
-                },
-                error: function (result) {
-                    alert('Error en la consulta.');
-                }
-            });
-        };
-
-        $('#btnAdd').click(function () {
-            $("#txtIdMedio").val("");
-            $("#txtNombre").val("");
-            $("#txtArchivo").val("");
-            $('#txtDescripcion').val("");
-            $('#txtDisponibilidad').val("");
-            $('#fuImagen').val("");
-            $("#ddlAutor").val("0");
-            $('#ddlIdioma').val("0");
-            $('#ddlTipoMedio').val("0");
-            $('#ddlEditorial').val("0");
-            $('#imgMedio').attr('src', '/Images/medio.png');
-            $('#modal').modal('show');
-        });
-
-
-        $('#btnGuardar').click(function () {
-
-            var formData = new FormData(document.getElementById('myForm'));
-
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Form")',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function () {
-                    $('#modal').modal('hide');
-
-                    $('#tBodyMedio').empty();
-
-                    $.ajax({
-                        type: 'GET',
-                        url: '@Url.Action("GetAllMedio")',
-                        success: function (result) {
-                            $('#tBodyMedio').empty();
-
-                            $.each(result.objects, function (i, medio) {
-                                var imagen;
-                                if (medio.Imagen == null) {
-                                    imagen = '<img src="/Images/medio.png"  width = "50px" height = "50px"/>'
-                                }
-                                else {
-                                    imagen = '<img src="data:image/png;base64,' + medio.imagen + '" width = "50px" height = "50px"/>'
-                                }
-                                var fila =
-                                    '<tr>'
-                                    + '<td class="text-center"><button type="button" class="btn btn-warning bi bi-pencil-fill" id="btnUpdate" onclick="Modal(this)"  value="' + medio.idMedio + '"></button></td>'
-                                    + '<td hidden>' + medio.idMedio + '</td>'
-                                    + '<td class="text-center">' + medio.nombre + '</td>'
-                                    + '<td class="text-center">' + medio.archivo + ' </td>'
-                                    + '<td class="text-center">' + medio.descripcion + ' </td>'
-                                    + '<td class="text-center">' + medio.disponibilidad + ' </td>'
-                                    + '<td class="text-center">' + imagen + '</td>'
-                                    + '<td class="text-center">' + medio.autor.nombre + '</td>'
-                                    + '<td class="text-center">' + medio.idioma.nombre + '</td>'
-                                    + '<td class="text-center">' + medio.tipoMedio.nombre + '</td>'
-                                    + '<td class="text-center">' + medio.editorial.nombre + '</td>'
-                                    + '<td class="text-center"><button type="button" class="btn btn-danger bi bi-trash-fill" onclick="Delete(this)"  value="' + medio.idMedio + '"></button></td>'
-                                    + '</tr>';
-                                $('#tBodyMedio').append(fila);
-                            });
-                        },
-                        error: function (result) {
-                            alert('Error en la consulta.');
-                        }
-
-                    });
-
-                }
-            });
-        });
-
-        function Modal(boton) {
-
-
-            $.ajax({
-                url: '@Url.Action("GetByIdMedio")',
-
-                data: { idMedio: boton.value },
-
-                type: 'GET',
-
-                dataType: 'json',
-
-                success: function (data) {
-
-                    $('#txtIdMedio').val(data.idMedio)
-                    $('#txtNombre').val(data.nombre)
-
-                    $("#txtArchivo").val(data.archivo)
-                    $('#txtDescripcion').val(data.descripcion)
-                    $('#txtDisponibilidad').val(data.disponibilidad)
-                    // $('#fuImagen').val(data.imagen)
-                    $('#ddlAutor').val(data.autor.idAutor)
-                    $('#ddlIdioma').val(data.idioma.idIdioma)
-                    $('#ddlTipoMedio').val(data.tipoMedio.idTipoMedio)
-                    $('#ddlEditorial').val(data.idEditorial)
-
-                    $('#subirImagen').empty();
-
-                    var imagen;
-
-                    if (data.Imagen == null) {
-                        imagen = '<img src="/Images/medio.png"  id="imgMedio" width = "50px" height = "50px"/>'
-                    }
-                    else {
-                        imagen = '<img src="data:image/png;base64,' + data.imagen + '"id="imgMedio" width = "50px" height = "50px"/>'
-                    }
-                    $('#subirImagen').append(imagen);
-
-                    $('#modal').modal('show');
-
-                },
-                error: function () {
-                    alert('Error en la consulta');
-                },
-            });
-        };
-
-
-        function Delete(datos) {
-            var checkconfirm = confirm('¿Estas seguro que desea elimianr este registro?');
-            if (checkconfirm == true) {
-                $.ajax({
-                    url: '@Url.Action("Delete")',
-                    data: { idMedio: datos.value },
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function () {
-                        $('#tBodyMedio').empty();
-
-                        $.ajax({
-                            type: 'GET',
-                            url: '@Url.Action("GetAllMedio")',
-                            success: function (result) {
-                                $('#tBodyMedio').empty();
-
-                                $.each(result.objects, function (i, medio) {
-                                    var imagen;
-                                    if (medio.Imagen == null) {
-                                        imagen = '<img src="/Images/medio.png"  width = "50px" height = "50px"/>'
-                                    }
-                                    else {
-                                        imagen = '<img src="data:image/png;base64,' + medio.imagen + '" width = "50px" height = "50px"/>'
-                                    }
-                                    var fila =
-                                        '<tr>'
-                                        + '<td class="text-center"><button type="button" class="btn btn-warning bi bi-pencil-fill" id="btnUpdate" onclick="Modal(this)"  value="' + medio.idMedio + '"></button></td>'
-                                        + '<td hidden>' + medio.idMedio + '</td>'
-                                        + '<td class="text-center">' + medio.nombre + '</td>'
-                                        + '<td class="text-center">' + medio.archivo + ' </td>'
-                                        + '<td class="text-center">' + medio.descripcion + ' </td>'
-                                        + '<td class="text-center">' + medio.disponibilidad + ' </td>'
-                                        + '<td class="text-center">' + imagen + '</td>'
-                                        + '<td class="text-center">' + medio.autor.nombre + '</td>'
-                                        + '<td class="text-center">' + medio.idioma.nombre + '</td>'
-                                        + '<td class="text-center">' + medio.tipoMedio.nombre + '</td>'
-                                        + '<td class="text-center">' + medio.editorial.nombre + '</td>'
-                                        + '<td class="text-center"><button type="button" class="btn btn-danger bi bi-trash-fill" onclick="Delete(this)"  value="' + medio.idMedio + '"></button></td>'
-                                        + '</tr>';
-                                    $('#tBodyMedio').append(fila);
-                                });
-                            },
-                            error: function (result) {
-                                alert('Error en la consulta.');
-                            }
-                        });
-                    },
-                    error: function (result) {
-                        alert('Error en la consulta.');
-                    }
-                });
-            } else {
-                return false;
-            }
-        }
-        function ChangeStatus(idMedio, e) {
-            var disponibilidad = e.checked
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("CambiarStatus")',
-                dataType: 'json',
-                data: { idMedio, disponibilidad },
-                success: {},
-                error: function (ex) {
-                    alert('Failed.' + ex);
-                }
-            });
-        }
     </script>
-}
+} *@
 
 

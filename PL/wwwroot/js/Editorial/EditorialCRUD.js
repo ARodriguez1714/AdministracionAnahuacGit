@@ -81,7 +81,7 @@ function GetAll() {
 
             if (result.objects.length === 0) {
                 var alert =
-                    '<div class="alert alert-danger" role="alert">'+result.message+'</div>';
+                    '<div class="alert alert-danger" role="alert">' + result.message + '</div>';
                 $('#errorAlert').append(alert);
             } else {
                 $.each(result.objects, function (i, editorial) {
@@ -90,8 +90,9 @@ function GetAll() {
                         + '<td class="text-center"><button type="button" class="btn btn-warning" id="btnUpdate" onclick="Modal(' + editorial.idEditorial + ')"><i class="bi bi-pencil"></i></button></td>'
                         + '<td hidden>' + editorial.idEditorial + '</td>'
                         + '<td class="text-center">' + editorial.nombre + '</td>'
-                        + '<td class="text-center">' + editorial.direccion.calle + ', ' + editorial.direccion.numeroInterior
-                        + ', ' + editorial.direccion.colonia.nombre + ', ' + editorial.direccion.colonia.codigoPostal + '</td>'
+                        + '<td class="text-center">Calle. ' + editorial.direccion.calle + ',' + editorial.direccion.numeroInterior + ' , ' + editorial.direccion.numeroExterior
+                        + ', ' + editorial.direccion.colonia.nombre + ', CP. ' + editorial.direccion.colonia.codigoPostal + ', ' + editorial.direccion.colonia.municipio.nombre
+                        + ', ' + editorial.direccion.colonia.municipio.estado.nombre +'</td>'
                         + '<td class="text-center"><button type="button" class="btn btn-danger" onclick="Delete(' + editorial.idEditorial + ')"><i class="bi bi-trash3"></i></button></td>'
                         + '</tr>';
                     $('#tBodyEditorial').append(fila);

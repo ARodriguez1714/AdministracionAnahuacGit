@@ -68,8 +68,13 @@ function GetAll() {
                         + '</tr>';
                     $('#tBodyMedioAdmin').append(fila);
                 });
+
+                var contador = 0;
                 $.each(result.objects, function (i, medio) {
-                    if (medio.disponibilidad == true) {
+                    if (medio.disponibilidad == false) {
+                        contador++;
+                    } else {
+                        $('#tableUser').show();
                         var imagen;
                         if (medio.imagen == null) {
                             imagen = '<img src="/Images/medio.png"  width = "50px" height = "50px"/>'
@@ -90,12 +95,12 @@ function GetAll() {
                             + '<td class="text-center">' + medio.editorial.nombre + '</td>'
                             + '</tr>';
                         $('#tBodyMedioUser').append(filaUser);
-                    } else {
+                    }
+                    if (contador == result.objects.length) {
                         $('#tableUser').hide();
                         filaUser = '<div class="alert alert-danger" role="alert">No existen medios disponibles.</div>';
                         $('#alertBodyUser').append(filaUser);
                     }
-                    
 
                 });
             } else {
@@ -187,7 +192,7 @@ function GetAllEditorial() {
 function addBtn() {
     $("#txtIdMedio").val("");
     $("#txtNombre").val("");
-    $("#txtArchivo").val("");
+    $("#archivo").val("");
     $('#txtDescripcion').val("");
     $('#txtDisponibilidad').val("");
     $('#fuImagen').val("");
@@ -200,15 +205,175 @@ function addBtn() {
 };
 function guardarBtn() {
 
-    var formData = new FormData(document.getElementById('myForm'));
+    var fd = new FormData();
+    var files;
+    var imagen = document.getElementById('fuImagen');
+    var imagenUpdate = document.getElementById('imagenUpdate');
+    var archivo = document.getElementById('archivo');
+    var archivoUpdate = document.getElementById('archivoUpdate');
 
+    if (imagen.value == "" && imagenUpdate.value == "") {
+        fetch('/Images/medio.png')
+            .then(response => response.blob())
+            .then(blob => {
+                fd.append('fuImagen', blob, 'medio.png');
+
+                AjaxGuardar(fd);
+            });
+    } else {
+
+        if (imagen.value != "" && archivoUpdate.value == "") {
+
+            $('#txtUpdateFoto').val("");
+            var files = $('#fuImagen')[0].files[0];
+            fd.append('fuImagen', files);
+            AjaxGuardar(fd, archivo.value);
+
+        } else if (imagen.value != "" && archivoUpdate.value != "") {
+
+            $('#txtUpdateFoto').val("");
+            var files = $('#fuImagen')[0].files[0];
+            fd.append('fuImagen', files);
+            AjaxGuardar(fd, archivoUpdate.value);
+
+        } else if (imagen.value == "" && archivo.value != "") {
+
+            AjaxGuardarUpdate(imagenUpdate.value, archivo.value);
+
+        } else {
+
+            AjaxGuardarUpdate(imagenUpdate.value, archivoUpdate.value);
+
+        }
+    }
+
+    function AjaxGuardar(formData, archivoUpdate) {
+        var archivo = archivoUpdate;
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:5138/api/Medio/convertimagen',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (foto) {
+                var byteFoto = foto;
+                var medio =
+                {
+                    "idMedio": Number($('#txtIdMedio').val()),
+                    "nombre": $('#txtNombre').val(),
+                    "archivo": archivo,
+                    "descripcion": $('#txtDescripcion').val(),
+                    "disponibilidad": true,
+                    "imagen": byteFoto,
+                    "autor": {
+                        "idAutor": Number($('#ddlAutor').val())
+                    },
+                    "idioma": {
+                        "idIdioma": Number($('#ddlIdioma').val()),
+                        "nombre": "string",
+                        "idiomas": [
+                            "string"
+                        ]
+                    },
+                    "editorial": {
+                        "idEditorial": Number($('#ddlEditorial').val()),
+                        "nombre": "string",
+                        "editoriales": [
+                            "string"
+                        ]
+                    },
+                    "tipoMedio": {
+                        "idTipoMedio": Number($('#ddlTipoMedio').val())
+                    },
+                    "medios": [
+                        "string"
+                    ]
+                }
+                if (medio.idMedio == 0) {
+                    Add(medio);
+                } else {
+                    Update(medio);
+                }
+
+            },
+            error: function (result) {
+                alert('Error en la consulta.');
+            }
+
+        });
+    }
+
+    function AjaxGuardarUpdate(imagenUpdate, archivoUpdate) {
+
+        var medio =
+        {
+            "idMedio": Number($('#txtIdMedio').val()),
+            "nombre": $('#txtNombre').val(),
+            "archivo": archivoUpdate,
+            "descripcion": $('#txtDescripcion').val(),
+            "disponibilidad": true,
+            "imagen": imagenUpdate,
+            "autor": {
+                "idAutor": Number($('#ddlAutor').val())
+            },
+            "idioma": {
+                "idIdioma": Number($('#ddlIdioma').val()),
+                "nombre": "string",
+                "idiomas": [
+                    "string"
+                ]
+            },
+            "editorial": {
+                "idEditorial": Number($('#ddlEditorial').val()),
+                "nombre": "string",
+                "editoriales": [
+                    "string"
+                ]
+            },
+            "tipoMedio": {
+                "idTipoMedio": Number($('#ddlTipoMedio').val())
+            },
+            "medios": [
+                "string"
+            ]
+        }
+        if (medio.idMedio == 0) {
+            Add(medio);
+        } else {
+            Update(medio);
+        }
+    }
+
+    //var formData = new FormData(document.getElementById('myForm'));
+
+    //$.ajax({
+    //    type: 'POST',
+    //    url: '/Medio/Form',
+    //    data: formData,
+    //    processData: false,
+    //    contentType: false,
+    //    success: function () {
+    //        $('#modal').modal('hide');
+
+    //        GetAll();
+    //    },
+    //    error: function (result) {
+    //        alert('Error en la consulta.');
+    //    }
+    //});
+};
+
+function Add(medio) {
     $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
         type: 'POST',
-        url: '/Medio/Form',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function () {
+        url: 'http://localhost:5138/api/Medio/add',
+        dataType: 'json',
+        data: JSON.stringify(medio),
+        success: function (result) {
             $('#modal').modal('hide');
 
             GetAll();
@@ -217,42 +382,67 @@ function guardarBtn() {
             alert('Error en la consulta.');
         }
     });
-};
+}
+
+function Update(medio) {
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        type: 'PUT',
+        url: 'http://localhost:5138/api/Medio/update',
+        dataType: 'json',
+        data: JSON.stringify(medio),
+        success: function (result) {
+            $('#modal').modal('hide');
+
+            GetAll();
+        },
+        error: function (result) {
+            alert('Error en la consulta.');
+        }
+    });
+}
 function Modal(boton) {
 
 
     $.ajax({
-        url: '/Medio/GetByIdMedio',
-
-        data: { idMedio: boton.value },
+        url: 'http://localhost:5138/api/Medio/getbyid/' + boton.value,
 
         type: 'GET',
 
-        dataType: 'json',
-
         success: function (data) {
 
-            $('#txtIdMedio').val(data.idMedio)
-            $('#txtNombre').val(data.nombre)
+            $('#txtIdMedio').val(data.object.idMedio);
+            $('#txtNombre').val(data.object.nombre);
 
-            $("#txtArchivo").val(data.archivo)
-            $('#txtDescripcion').val(data.descripcion)
-            $('#txtDisponibilidad').val(data.disponibilidad)
-            // $('#fuImagen').val(data.imagen)
-            $('#ddlAutor').val(data.autor.idAutor)
-            $('#ddlIdioma').val(data.idioma.idIdioma)
-            $('#ddlTipoMedio').val(data.tipoMedio.idTipoMedio)
-            $('#ddlEditorial').val(data.idEditorial)
+            $("#archivo").val("");
+            $('#txtDescripcion').val(data.object.descripcion);
+            $('#txtDisponibilidad').val(data.object.disponibilidad);
+            $('#fuImagen').val("");
+            $('#ddlAutor').val(data.object.autor.idAutor);
+            $('#ddlIdioma').val(data.object.idioma.idIdioma);
+            $('#ddlTipoMedio').val(data.object.tipoMedio.idTipoMedio);
+            $('#ddlEditorial').val(data.object.editorial.idEditorial);
+            $('#archivoUpdate').val(data.object.archivo);
+            $('#imagenUpdate').val(data.object.imagen);
+
+
+            $("#archivoUpdate").prop("readonly", true);
+            $('#archivoUpdate').hide();
+            $("#imagenUpdate").prop("readonly", true);
+            $('#imagenUpdate').hide();
 
             $('#subirImagen').empty();
 
             var imagen;
 
-            if (data.Imagen == null) {
+            if (data.object.imagen == null) {
                 imagen = '<img src="/Images/medio.png"  id="imgMedio" width = "50px" height = "50px"/>'
             }
             else {
-                imagen = '<img src="data:image/png;base64,' + data.imagen + '"id="imgMedio" width = "50px" height = "50px"/>'
+                imagen = '<img src="data:image/png;base64,' + data.object.imagen + '"id="imgMedio" width = "50px" height = "50px"/>'
             }
             $('#subirImagen').append(imagen);
 
@@ -268,10 +458,8 @@ function Delete(datos) {
     var checkconfirm = confirm('¿Estas seguro que desea elimianr este registro?');
     if (checkconfirm == true) {
         $.ajax({
-            url: '/Medio/Delete',
-            data: { idMedio: datos.value },
-            type: 'GET',
-            dataType: 'json',
+            url: 'http://localhost:5138/api/Medio/delete/' + datos.value,
+            type: 'DELETE',
             success: function () {
                 GetAll();
             },

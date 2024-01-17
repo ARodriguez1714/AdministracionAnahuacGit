@@ -9,7 +9,8 @@
 body {
     width: 100vw;
     height: 100vh;
-    background: #081b29;
+    background-image: url("https://st3.depositphotos.com/1269993/13160/i/450/depositphotos_131601504-stock-photo-brown-scratched-recycled-paper-texture.jpg");
+    background-color: #cccccc;
     display: grid;
     justify-content: center;
     align-content: center;
@@ -21,6 +22,7 @@ body {
 
 @media (min-width: 1200px) {
     .wrapper {
+        background: #081b29;
         position: relative;
         width: 900px;
         height: 65vh;
@@ -36,6 +38,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background: #081b29;
 }
 
 .title {

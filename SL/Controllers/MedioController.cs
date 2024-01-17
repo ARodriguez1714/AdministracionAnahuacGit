@@ -29,6 +29,7 @@ namespace SL.Controllers
         [HttpPost("add")]
         public IActionResult Add([FromBody] ML.Medio medio)
         {
+            medio.Archivo = medio.Archivo.Replace("C:\\fakepath\\", "");
             ML.Result result = BL.Medio.AddMedio(medio);
 
             if (result.Correct)
@@ -44,6 +45,7 @@ namespace SL.Controllers
         [HttpPut("update")]
         public IActionResult Update([FromBody] ML.Medio medio)
         {
+            medio.Archivo = medio.Archivo.Replace("C:\\fakepath\\","");
             ML.Result result = BL.Medio.UpdateMedio(medio);
 
             if (result.Correct)
@@ -83,6 +85,31 @@ namespace SL.Controllers
             else
             {
                 return BadRequest(result);
+            }
+        }
+
+        [HttpPost("convertimagen")]
+        public IActionResult Convert(IFormFile fuImagen)
+        {
+            ML.Medio medio = new ML.Medio();
+            medio.Imagen = ConvertToBytes(fuImagen);
+            if (medio.Imagen != null)
+            {
+                return Ok(medio.Imagen);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [NonAction]
+        public byte[] ConvertToBytes(IFormFile fuImagen)
+        {
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                fuImagen.CopyTo(memoryStream);
+                return memoryStream.ToArray();
             }
         }
 

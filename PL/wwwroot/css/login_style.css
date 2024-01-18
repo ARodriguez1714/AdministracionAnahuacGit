@@ -10,10 +10,14 @@ body {
     width: 100vw;
     height: 100vh;
     background-image: url("https://st3.depositphotos.com/1269993/13160/i/450/depositphotos_131601504-stock-photo-brown-scratched-recycled-paper-texture.jpg");
-    background-color: #cccccc;
+    background-color: #e71212;
     display: grid;
     justify-content: center;
     align-content: center;
+    /*justify-content: center;
+    align-content: stretch;
+    align-items: start;
+    justify-items: stretch;*/
 }
 
 ::-webkit-input-placeholder {
@@ -22,14 +26,15 @@ body {
 
 @media (min-width: 1200px) {
     .wrapper {
-        background: #081b29;
+        background: #bf9a6c;
         position: relative;
         width: 900px;
         height: 65vh;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        border: 3px solid #00ffff;
-        box-shadow: 0 0 50px 0 #00a6bc;
+        border: 3px solid #b79649;
+        box-shadow: 10px 10px 20px 0 #bca100;
+        /* 0 0 50px 0*/
     }
 }
 
@@ -38,7 +43,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #081b29;
+    background: #bf9a6c;
 }
 
 .title {
@@ -48,7 +53,7 @@ body {
 
 .inp {
     padding-bottom: 5px;
-    border-bottom: 2px solid #eee;
+    border-bottom: 2px solid #110101e0;
 }
 
 .input {
@@ -59,7 +64,7 @@ body {
     margin-top: 30px;
     padding-right: 5px;
     font-size: 17px;
-    color: #0ef;
+    color: #fff;
 }
 
 .submit {
@@ -72,7 +77,7 @@ body {
     border-radius: 40px;
     /*  letter-spacing: 1px; */
     cursor: pointer;
-    background: linear-gradient(45deg, #0ef, #c800ff);
+    background: linear-gradient(45deg, #000e00, #ff7000);
 }
 
 .footer {
@@ -83,7 +88,7 @@ body {
 }
 
 .link {
-    color: #0ef;
+    color: #fff;
     text-decoration: none;
 }
 
@@ -94,7 +99,7 @@ body {
         right: 0;
         width: 450px;
         height: 390px;
-        background: linear-gradient(to right,#0ef, #c800ff );
+        background: linear-gradient(to right,#000, #ffa700 );
         clip-path: polygon(0 0,100% 0,100% 100%, 60% 100%);
         padding-right: 70px;
         text-align: right;

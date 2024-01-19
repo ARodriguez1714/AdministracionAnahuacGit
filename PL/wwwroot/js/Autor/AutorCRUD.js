@@ -36,7 +36,7 @@ function GetAll() {
                     var fila =
                         '<div class="col-7 col-md-4 col-lg-3 ">'
                         + '<a id="btnUpdate" onclick="ModalUpdate(' + autor.idAutor + ')">'
-                        + '<div class="card border-primary border-3 border-opacity-50">'
+                        + '<div class="card border-danger border-3 border-opacity-50">'
                         + '<div class="image">' + imagen + '</div>'
                         + '<span class="title">' + autor.nombre + ' ' + autor.apellidoPaterno + ' ' + autor.apellidoMaterno + '</span>'
                         + '<span class="tipoAutor">' + autor.tipoAutor.nombre + '</span>'

@@ -78,9 +78,9 @@ namespace PL.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(7, ErrorMessage = "El {0} debe tener al menos {2} y un máximo de {1} caracteres.", MinimumLength = 6)] //The {0} must be at least {2} and at max {1} characters long.
             [DataType(DataType.Text)]
-            [Display(Name = "Verification Code")]
+            [Display(Name = "Verification Code")] // Verification Code
             public string Code { get; set; }
         }
 
@@ -89,7 +89,7 @@ namespace PL.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"No se puede cargar el usuario con Identificaión '{_userManager.GetUserId(User)}'."); //Unable to load user with ID
             }
 
             await LoadSharedKeyAndQrCodeUriAsync(user);
@@ -102,7 +102,7 @@ namespace PL.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"No se puede cargar el usuario con Identificaión '{_userManager.GetUserId(User)}'.");//Unable to load user with ID
             }
 
             if (!ModelState.IsValid)
@@ -119,16 +119,16 @@ namespace PL.Areas.Identity.Pages.Account.Manage
 
             if (!is2faTokenValid)
             {
-                ModelState.AddModelError("Input.Code", "Verification code is invalid.");
+                ModelState.AddModelError("Input.Code", "El código de verificación no es válido.");//Verification code is invalid.
                 await LoadSharedKeyAndQrCodeUriAsync(user);
                 return Page();
             }
 
             await _userManager.SetTwoFactorEnabledAsync(user, true);
             var userId = await _userManager.GetUserIdAsync(user);
-            _logger.LogInformation("User with ID '{UserId}' has enabled 2FA with an authenticator app.", userId);
+            _logger.LogInformation("Usuario con identificación '{UserId}' ha habilitado 2FA con una aplicación de autenticación.", userId); //User with ID '{UserId}' has enabled 2FA with an authenticator app.
 
-            StatusMessage = "Your authenticator app has been verified.";
+            StatusMessage = "Su aplicación de autenticación ha sido verificada."; //Your authenticator app has been verified.
 
             if (await _userManager.CountRecoveryCodesAsync(user) == 0)
             {

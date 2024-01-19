@@ -2,30 +2,32 @@
     ViewData["Title"] = "GetAll";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="~/js/Autor/AutorCRUD.js"></script>
 
 <head>
     <link rel="stylesheet" href="~/css/modulos.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
 </head>
 <body>
 <br />
 
 <style>
-    .card {
-        position: relative;
-        width: 13em;
-        height: 20em;
-        box-shadow: 0px 1px 13px rgba(0,0,0,0.1);
-        cursor: pointer;
-        transition: all 120ms;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #fff;
-        padding: 0.5em;
-        padding-bottom: 3.4em;
-    }
+        .card {
+            position: relative;
+            width: 13em;
+            height: 20em;
+            box-shadow: 0px 1px 13px rgb(255 74 0);
+            cursor: pointer;
+            transition: all 120ms;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: beige;
+            padding: 0.5em;
+            padding-bottom: 3.4em;
+        }
 
         .card::after {
             content: "\00270E  Editar";
@@ -100,7 +102,7 @@
     <hr />
 
     <div class="row">
-        <div class="col-md-12">
+            <div class="col-md-12">
             <button type="button" class="btn btn-success" id="btnAdd" onclick="BtnAdd()"><i class="bi bi-person-add"></i> Nuevo</button>
         </div>
     </div>

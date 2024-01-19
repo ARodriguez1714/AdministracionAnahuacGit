@@ -69,7 +69,7 @@ namespace PL.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [Required]
             [EmailAddress]
-            [Display(Name = "New email")]
+            [Display(Name = "Nuevo Correo Electronico")] //New email
             public string NewEmail { get; set; }
         }
 
@@ -91,7 +91,7 @@ namespace PL.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"No se puede cargar el usuario con Identificación '{_userManager.GetUserId(User)}'."); //Unable to load user with ID
             }
 
             await LoadAsync(user);
@@ -103,7 +103,7 @@ namespace PL.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"No se puede cargar el usuario con Identificación '{_userManager.GetUserId(User)}'.");//Unable to load user with ID
             }
 
             if (!ModelState.IsValid)
@@ -125,14 +125,15 @@ namespace PL.Areas.Identity.Pages.Account.Manage
                     protocol: Request.Scheme);
                 await _emailSender.SendEmailAsync(
                     Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "confirme su Correo Electronico", //Confirm your email
+                    $"Por favor confirme su cuenta por <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>haciendo clic aquí</a>.");
+                //$"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                StatusMessage = "Confirmation link to change email sent. Please check your email.";
+                StatusMessage = "Enlace de confirmación para cambiar el correo electrónico enviado. Por favor revise su correo electrónico."; //Confirmation link to change email sent. Please check your email.
                 return RedirectToPage();
             }
 
-            StatusMessage = "Your email is unchanged.";
+            StatusMessage = "Su correo electrónico no ha cambiado."; //Your email is unchanged.
             return RedirectToPage();
         }
 
@@ -141,7 +142,7 @@ namespace PL.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"No se puede cargar el usuario con Identificación '{_userManager.GetUserId(User)}'.");//Unable to load user with ID
             }
 
             if (!ModelState.IsValid)
@@ -161,10 +162,10 @@ namespace PL.Areas.Identity.Pages.Account.Manage
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
                 email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                "Confirme su Correo Electronico", //Confirm your email
+                $"Por favor confirma tu cuenta <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>haciendo clic aquí</a>."); //Please confirm your account by///
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = "El mensaje de verificación ha sido enviado. Por favor revise su correo electrónico."; //Verification email sent. Please check your email
             return RedirectToPage();
         }
     }

@@ -10,175 +10,175 @@
     <link rel="stylesheet" href="~/css/modulos.css" asp-append-version="true" />
 </head>
 <body>
-<br />
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h2>Editoriales</h2>
-        </div>
-    </div>
-    <hr />
-
-    <div class="row">
-        <div class="col-md-12">
-            <button type="button" class="btn btn-success" id="btnAdd" onclick="btnAdd()"><i class="bi bi-journal-plus"></i> Nueva</button>
-        </div>
-    </div>
     <br />
-    <div class="row">
-        <div class="col-md-12 table-responsive">
-            <table class="table table-striped table-bordered border-primary border-3">
-                <thead class="table-dark">
-                    <tr>
-                        <th class="text-center">Editar</th>
-                        <th class="text-center" hidden>IdEditorial</th>
-                        <th class="text-center">Nombre Editorial</th>
-                        <th class="text-center">Dirección</th>
-                        <th class="text-center">Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody id="tBodyEditorial">
-                </tbody>
-            </table>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Editoriales</h2>
+            </div>
         </div>
-    </div>
-    <div class="row" id="errorAlert">
-    </div>
-    <br />
-    <br />
-</div>
+        <hr />
 
-<div class="container">
-    @using (Html.BeginForm("Form", "Autor", FormMethod.Post, new { enctype = "multipart/form-data", @id = "myForm" }))
-    {
-        <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Editorial</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                @Html.LabelFor(model => model.IdEditorial, null, new { @style = "display: none;" })
-                                @Html.TextBoxFor(model => model.IdEditorial, new { @style = "display: none;", @id = "txtIdEditorial" })
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                @Html.LabelFor(model => model.Nombre)
-                                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre" })
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                @Html.LabelFor(model => model.Direccion.IdDireccion, new { @style = "display: none;" })
-                                @Html.TextBoxFor(model => model.Direccion.IdDireccion, new { @style = "display: none;", @id = "txtIdDireccion" })
-                            </div>
-                        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-success" id="btnAdd" onclick="btnAdd()"><i class="bi bi-journal-plus"></i> Nueva</button>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12 table-responsive">
+                <table class="table table-striped table-bordered border-primary border-3">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="text-center">Editar</th>
+                            <th class="text-center" hidden>IdEditorial</th>
+                            <th class="text-center">Nombre Editorial</th>
+                            <th class="text-center">Dirección</th>
+                            <th class="text-center">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tBodyEditorial">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row" id="errorAlert">
+        </div>
+        <br />
+        <br />
+    </div>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                @Html.Label("*", null, new { @style = "color: red;" })
-                                @Html.LabelFor(model => model.Direccion.Colonia.Municipio.Estado.Pais.Nombre, new { @class = "control-label" })
-                                @if (Model.Direccion.Colonia.Municipio.Estado.Pais.Paises == null)
-                                {
-                                    @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.Estado.Pais.IdPais,
-                                             new SelectList(string.Empty, "Value", "Text"), "Seleccione un País", new { @id = "ddlPais", @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.Direccion.Colonia.Municipio.Estado.Pais.IdPais, null, new { @class = "text-danger" })
-                                }
-                                else
-                                {
-                                    @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.Estado.Pais.IdPais, new SelectList(Model.Direccion.Colonia.Municipio.Estado.Pais.Paises,
-                                             "IdPais", "Nombre"), "Selecciona un País", new { @id = "ddlPais", @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.Direccion.Colonia.Municipio.Estado.Pais.IdPais, null, new { @class = "text-danger" })
-                                }
+    <div class="container">
+        @using (Html.BeginForm("Form", "Autor", FormMethod.Post, new { enctype = "multipart/form-data", @id = "myForm" }))
+        {
+            <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel">Editorial</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(model => model.IdEditorial, null, new { @style = "display: none;" })
+                                    @Html.TextBoxFor(model => model.IdEditorial, new { @style = "display: none;", @id = "txtIdEditorial" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(model => model.Nombre)
+                                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(model => model.Direccion.IdDireccion, new { @style = "display: none;" })
+                                    @Html.TextBoxFor(model => model.Direccion.IdDireccion, new { @style = "display: none;", @id = "txtIdDireccion" })
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.Label("*", null, new { @style = "color: red;" })
+                                    @Html.LabelFor(model => model.Direccion.Colonia.Municipio.Estado.Pais.Nombre, new { @class = "control-label" })
+                                    @if (Model.Direccion.Colonia.Municipio.Estado.Pais.Paises == null)
+                                    {
+                                        @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.Estado.Pais.IdPais,
+                                                 new SelectList(string.Empty, "Value", "Text"), "Seleccione un País", new { @id = "ddlPais", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Direccion.Colonia.Municipio.Estado.Pais.IdPais, null, new { @class = "text-danger" })
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.Estado.Pais.IdPais, new SelectList(Model.Direccion.Colonia.Municipio.Estado.Pais.Paises,
+                                                 "IdPais", "Nombre"), "Selecciona un País", new { @id = "ddlPais", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Direccion.Colonia.Municipio.Estado.Pais.IdPais, null, new { @class = "text-danger" })
+                                    }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.Label("*", null, new { @style = "color: red;" })
+                                    @Html.LabelFor(model => model.Direccion.Colonia.Municipio.Estado.Nombre, new { @class = "control-label" })
+                                    @if (Model.Direccion.Colonia.Municipio.Estado.Estados == null)
+                                    {
+                                        @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.Estado.IdEstado, new SelectList(string.Empty, "Value", "Text"),
+                                                 "Selecciona un Estado", new { @id = "ddlEstado", @class = "form-control" })
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.Estado.IdEstado,
+                                                 new SelectList(Model.Direccion.Colonia.Municipio.Estado.Estados, "IdEstado", "Nombre"), "Selecciona un Estado", new { @id = "ddlEstado", @class = "form-control" })
+                                    }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.Label("*", null, new { @style = "color: red;" })
+                                    @Html.LabelFor(model => model.Direccion.Colonia.Municipio.Nombre, new { @class = "control-label" })
+                                    @if (Model.Direccion.Colonia.Municipio.Municipios == null)
+                                    {
+                                        @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.IdMunicipio, new SelectList(string.Empty, "Value", "Text"),
+                                                 "Selecciona un municipio", new { @id = "ddlMunicipio", @class = "form-control" })
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.IdMunicipio,
+                                                 new SelectList(Model.Direccion.Colonia.Municipio.Municipios, "IdMunicipio", "Nombre"), "Selecciona un municipio", new { @id = "ddlMunicipio", @class = "form-control" })
+                                    }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.Label("*", null, new { @style = "color: red;" })
+                                    @Html.LabelFor(model => model.Direccion.Colonia.Nombre, new { @class = "control-label" })
+                                    @if (Model.Direccion.Colonia.Municipio.Municipios == null)
+                                    {
+                                        @Html.DropDownListFor(model => model.Direccion.Colonia.IdColonia, new SelectList(string.Empty, "Value", "Text"),
+                                                 "Selecciona un colonia", new { @id = "ddlColonia", @class = "form-control" })
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownListFor(model => model.Direccion.Colonia.IdColonia,
+                                                 new SelectList(Model.Direccion.Colonia.Colonias, "IdColonia", "Nombre"), "Selecciona un colonia", new { @id = "ddlColonia", @class = "form-control" })
+                                    }
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.Label("*", null, new { @style = "color: red;" })
+                                    @Html.LabelFor(model => model.Direccion.Calle)
+                                    @Html.TextBoxFor(model => model.Direccion.Calle, new { @class = "form-control", @id = "txtCalle" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.Label("*", null, new { @style = "color: red;" })
+                                    @Html.LabelFor(model => model.Direccion.NumeroInterior)
+                                    @Html.TextBoxFor(model => model.Direccion.NumeroInterior, new { @class = "form-control", @id = "txtNumeroInterior" })
+                                    <label id="txtNumeroInterior"></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.Label("*", null, new { @style = "color: red;" })
+                                    @Html.LabelFor(model => model.Direccion.NumeroExterior)
+                                    @Html.TextBoxFor(model => model.Direccion.NumeroExterior, new { @class = "form-control", @id = "txtNumeroExterior" })
+                                    <label id="txtNumeroExterior"></label>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                @Html.Label("*", null, new { @style = "color: red;" })
-                                @Html.LabelFor(model => model.Direccion.Colonia.Municipio.Estado.Nombre, new { @class = "control-label" })
-                                @if (Model.Direccion.Colonia.Municipio.Estado.Estados == null)
-                                {
-                                    @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.Estado.IdEstado, new SelectList(string.Empty, "Value", "Text"),
-                                             "Selecciona un Estado", new { @id = "ddlEstado", @class = "form-control" })
-                                }
-                                else
-                                {
-                                    @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.Estado.IdEstado,
-                                             new SelectList(Model.Direccion.Colonia.Municipio.Estado.Estados, "IdEstado", "Nombre"), "Selecciona un Estado", new { @id = "ddlEstado", @class = "form-control" })
-                                }
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" id="btnGuardar" onclick="BtnGuardar()">Guardar</button>
+                            <button type="button" class="btn btn-danger bi bi-box-arrow-left" data-bs-dismiss="modal"> Salir</button>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                @Html.Label("*", null, new { @style = "color: red;" })
-                                @Html.LabelFor(model => model.Direccion.Colonia.Municipio.Nombre, new { @class = "control-label" })
-                                @if (Model.Direccion.Colonia.Municipio.Municipios == null)
-                                {
-                                    @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.IdMunicipio, new SelectList(string.Empty, "Value", "Text"),
-                                             "Selecciona un municipio", new { @id = "ddlMunicipio", @class = "form-control" })
-                                }
-                                else
-                                {
-                                    @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.IdMunicipio,
-                                             new SelectList(Model.Direccion.Colonia.Municipio.Municipios, "IdMunicipio", "Nombre"), "Selecciona un municipio", new { @id = "ddlMunicipio", @class = "form-control" })
-                                }
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                @Html.Label("*", null, new { @style = "color: red;" })
-                                @Html.LabelFor(model => model.Direccion.Colonia.Nombre, new { @class = "control-label" })
-                                @if (Model.Direccion.Colonia.Municipio.Municipios == null)
-                                {
-                                    @Html.DropDownListFor(model => model.Direccion.Colonia.IdColonia, new SelectList(string.Empty, "Value", "Text"),
-                                             "Selecciona un colonia", new { @id = "ddlColonia", @class = "form-control" })
-                                }
-                                else
-                                {
-                                    @Html.DropDownListFor(model => model.Direccion.Colonia.IdColonia,
-                                             new SelectList(Model.Direccion.Colonia.Colonias, "IdColonia", "Nombre"), "Selecciona un colonia", new { @id = "ddlColonia", @class = "form-control" })
-                                }
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-12">
-                                @Html.Label("*", null, new { @style = "color: red;" })
-                                @Html.LabelFor(model => model.Direccion.Calle)
-                                @Html.TextBoxFor(model => model.Direccion.Calle, new { @class = "form-control", @id = "txtCalle" })
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                @Html.Label("*", null, new { @style = "color: red;" })
-                                @Html.LabelFor(model => model.Direccion.NumeroInterior)
-                                @Html.TextBoxFor(model => model.Direccion.NumeroInterior, new { @class = "form-control", @id = "txtNumeroInterior" })
-                                <label id="txtNumeroInterior"></label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                @Html.Label("*", null, new { @style = "color: red;" })
-                                @Html.LabelFor(model => model.Direccion.NumeroExterior)
-                                @Html.TextBoxFor(model => model.Direccion.NumeroExterior, new { @class = "form-control", @id = "txtNumeroExterior" })
-                                <label id="txtNumeroExterior"></label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-success" id="btnGuardar" onclick="BtnGuardar()">Guardar</button>
                     </div>
                 </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
 </body>
 @*
 @section scripts {

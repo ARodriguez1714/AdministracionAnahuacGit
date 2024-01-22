@@ -11,128 +11,128 @@
     <link rel="stylesheet" href="~/css/modulos.css" asp-append-version="true" />
 </head>
 <body>
-<br />
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h2>Roles</h2>
-        </div>
-    </div>
-    <hr />
-    <div class="row">
-        <div class="col-md-12">
-            <button type="button" class="btn btn-success" id="btnAdd" onclick="BtnAdd()"><i class="bi bi-plus-circle"></i> Nuevo</button>
-        </div>
-    </div>
     <br />
-    <div class="row">
-        <div class="col-md-12 table-responsive">
-            <table class="table table-striped table-bordered border-primary border-3">
-                <thead class="table-dark">
-                    <tr>
-                        <td style="display: none;">id</td>
-                        <th class="text-center">Asignar Rol</th>
-                        <th class="text-center">Nombre Rol</th>
-                        <th class="text-center">Editar Rol</th>
-                        <th class="text-center">Eliminar Rol</th>
-                    </tr>
-                </thead>
-                <tbody id="tBodyRol">
-                </tbody>
-            </table>
 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Roles</h2>
+            </div>
         </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-success" id="btnAdd" onclick="BtnAdd()"><i class="bi bi-plus-circle"></i> Nuevo</button>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12 table-responsive">
+                <table class="table table-striped table-bordered border-primary border-3">
+                    <thead class="table-dark">
+                        <tr>
+                            <td style="display: none;">id</td>
+                            <th class="text-center">Asignar Rol</th>
+                            <th class="text-center">Nombre Rol</th>
+                            <th class="text-center">Editar Rol</th>
+                            <th class="text-center">Eliminar Rol</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tBodyRol">
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="row" id="errorAlert">
+        </div>
+        <br />
+        <br />
     </div>
 
-    <div class="row" id="errorAlert">
+
+    <div class="container">
+        <form id="formAgregar" enctype="multipart/form-data" method="post">
+            <div class="modal fade" id="modalAgregar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel">Rol</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-12" style="display: none;">
+                                @* @Html.TextBoxFor(model => model.Id, new { @class = "form-control", @id = "txtIdRol" }) *@
+                                <input type="text" class="form-control" name="id" id="txtIdRol" />
+                            </div>
+
+                            <div class="col-md-12">
+                                @Html.Label("Nombre del Rol:")
+                                @* @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @id = "txtNombre", @placeholder = "ejem. Administrador" })
+                                @Html.TextBoxFor(model => model.Id, new { @class = "visually-hidden" }) *@
+                                <input type="text" class="form-control" name="name" id="txtNombre" placeholder="ejem. Administrador" />
+                                <label id="lblNombre"></label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" id="btnGuardar" onclick="BtnGuardar()">Guardar</button>
+                            <button type="button" class="btn btn-danger bi bi-box-arrow-left" data-bs-dismiss="modal"> Salir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-    <br />
-    <br />
-</div>
 
+    <div class="container">
+        <form id="formAsignar" enctype="multipart/form-data" method="post">
+            <div class="modal fade" id="modalAsignar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel">Rol</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-12" style="display: none;">
+                                <input type="text" name="roleId" class="form-control" id="txtIdRole" />
+                            </div>
+                            <div class="col-md-12">
+                                <select id="ddlAsignar" name="idUsuario" class="form-control">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" id="btnAsignar" onclick="BtnAsignar()">Asignar</button>
+                            <button type="button" class="btn btn-danger bi bi-box-arrow-left" data-bs-dismiss="modal"> Salir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
-<div class="container">
-    <form id="formAgregar" enctype="multipart/form-data" method="post">
-        <div class="modal fade" id="modalAgregar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="container">
+        <div class="modal fade" id="modalAsignado" tabindex="-1" aria-labelledby="modalAsignadoLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Rol</h5>
+                        <h5 class="modal-title" id="modalAsignadoLabel">Exito</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="col-md-12" style="display: none;">
-                            @* @Html.TextBoxFor(model => model.Id, new { @class = "form-control", @id = "txtIdRol" }) *@
-                            <input type="text" class="form-control" name="id" id="txtIdRol" />
-                        </div>
-
-                        <div class="col-md-12">
-                            @Html.Label("Nombre del Rol:")
-                            @* @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @id = "txtNombre", @placeholder = "ejem. Administrador" })
-                            @Html.TextBoxFor(model => model.Id, new { @class = "visually-hidden" }) *@
-                            <input type="text" class="form-control" name="name" id="txtNombre" placeholder="ejem. Administrador" />
-                            <label id="lblNombre"></label>
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            Se asignó el rol correctamente.
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-success" id="btnGuardar" onclick="BtnGuardar()">Guardar</button>
+                        <button type="button" class="btn btn-danger bi bi-box-arrow-left" data-bs-dismiss="modal"> Salir</button>
                     </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-
-<div class="container">
-    <form id="formAsignar" enctype="multipart/form-data" method="post">
-        <div class="modal fade" id="modalAsignar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Rol</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-md-12" style="display: none;">
-                            <input type="text" name="roleId" class="form-control" id="txtIdRole" />
-                        </div>
-                        <div class="col-md-12">
-                            <select id="ddlAsignar" name="idUsuario" class="form-control">
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-success" id="btnAsignar" onclick="BtnAsignar()">Asignar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-
-<div class="container">
-    <div class="modal fade" id="modalAsignado" tabindex="-1" aria-labelledby="modalAsignadoLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalAsignadoLabel">Exito</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        Se asignó el rol correctamente.
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 @* @section scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
